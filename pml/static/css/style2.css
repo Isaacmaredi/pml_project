@@ -1,0 +1,62 @@
+.navbar-brand img {
+    position: relative;
+    image-rendering: auto;
+    width: 100px;
+    left: 5px;
+  
+    max-height: 100px; /* height of the navbar */
+}
+
+.navbar {
+    overflow: hidden;
+    background-color: #4B515D;
+    color:white;
+    position:fixed;
+    top:0; 
+}
+
+.navbar a:hover{
+    background:#ff9100;
+}
+
+card-header{
+    /* background-color:#4B515D; */
+    margin-top: 5px;
+    height: 50px;
+    color: white;
+    font-weight: bold;
+    font-size: large;
+    
+}
+
+.card{
+    margin-top: 15px;
+    background-color:#b1bace;
+    border-color: rgb(217,83,79);
+    padding: 5%;
+}
+
+form{
+    box-align: center;
+}
+
+.form-group{
+   text-align: left;
+   color: rgb(0,0,0);
+}
+
+/* .alert{
+    background-color: #4B515D;
+    color: white;
+    text-align: center;
+    margin-top: 5%;
+} */
+
+/* .btn-info{
+    background-color:#4B515D;
+} */
+
+/* .jumbotron{
+    text-align: center;
+    columns:rgb(245, 243, 243);
+} */

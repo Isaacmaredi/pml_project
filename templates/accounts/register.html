@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+
+{% block content %}
+
+<section lass="page-section" id="contact">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Register</h2>
+            <h3 class="section-subheading text-muted">Please fill out the form below to register.</h3>
+        </div>
+        {% include 'partials/_alerts.html' %}
+        <form action= "{% url 'accounts:register' %}"  method="POST">
+            {% csrf_token %} 
+            <div class="row align-items-stretch mb-5">
+                <!-- Alerts -->
+
+            <div class="col-xl-5 col-lg-10 col-md-6 col-sm-10 mx-auto text-center text-white form p-4">
+            
+            
+                <div class="form-group">
+                    <label for="first_name" ></label>
+                    <input type="text" name="first_name" placeholder="First Name" class="form-control text-center" required>
+                </div>
+                <div class="form-group">
+                    <label for="last_name"></label>
+                    <input type="text" name="last_name" placeholder="Last Name"class="form-control text-center"  required>
+                </div>
+                <div class="form-group">
+                    <label for="username"></label>
+                    <input type="text" name="username" placeholder="Username"class="form-control text-center" required>
+                </div>
+                <div class="form-group">
+                    <label for="email"></label>
+                    <input type="email" name="email" placeholder="Email"class="form-control text-center"  required>
+                </div>
+                <div class="form-group" >
+                    <label for="password2"></label>
+                    <input  type="password" name="password" placeholder="Password" class="form-control text-center"  required>
+                </div>
+                <div class="form-group">
+                    <label for="password"></label>
+                    <input type="password" name="password2" placeholder="Confirm password" class="form-control text-center"  required>                       
+            </div>
+                <br>
+        <input type="submit" value="Submit" class="btn btn-secondary btn-block text-warning">
+        </form>
+        
+        <div class="mx-auto text-white">
+            <br>
+            <br>
+            <small class="text-muted "> Already have an Account? </small><span font> <a href="{% url 'accounts:login_view' %}">Click Here</a> <span class='text-muted'>to Login</span> </span>
+        </div>
+        </div>
+    </section>
+
+{% endblock %}
