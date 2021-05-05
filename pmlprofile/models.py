@@ -69,7 +69,7 @@ class Profile(models.Model):
     town_city = models.CharField(max_length=200)
     district_metro = models.CharField(max_length=250)
     province = models.CharField(choices = provinces, max_length=100)
-    photo = models.ImageField(upload_to='photos/%Y/%m/%d')
+    photo = models.ImageField(default='/static/img/avatar.png', upload_to='photos/%Y/%m/%d')
     alt_address = models.TextField(blank='True',null='True')
     alt_phone = models.CharField(max_length=50, blank='True', null='True')
     
