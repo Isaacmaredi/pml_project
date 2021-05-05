@@ -12,10 +12,11 @@
             <h3 class="section-subheading text-muted">Please note: Only bona fide members of PML are allowed to login.</h3>
         </div>
         {% include 'partials/_alerts.html' %}
-        <form >
+        <form action=""  method= "POST">
+        {% csrf_token %}
             <div class="row align-items-stretch mb-5">
 
-<div class="col-xl-5 col-lg-10 col-md-6 col-sm-10 mx-auto text-center text-white form p-4">
+        <div class="col-xl-5 col-lg-10 col-md-6 col-sm-10 mx-auto text-center text-white form p-4">
             
                 <div class="form-group">
                     <label for="username"></label>

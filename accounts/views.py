@@ -38,8 +38,8 @@ def register(request):
 
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username')
+        password= request.POST.get('password')
 
         user = auth.authenticate(username=username, password=password)
 
@@ -49,11 +49,16 @@ def login_view(request):
                 username:"username"
             }
             messages.success(request, 'You are now logged in')
-            
-            return redirect('pmlmain:index')
+            return redirect('pmlprofile:profile_home')
         else:
             messages.error(request, 'Invalid credentials')
             return redirect('accounts:login_view')
     else:
         return render(request, 'accounts/login.html')
+
+def logout(request):
+    if request.method == 'POST':
+        auth.logout(request)
+        messages.success(request, 'You are now logged out')
+        return redirect('accounts:login_view')
 
