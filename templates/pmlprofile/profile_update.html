@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% comment %} {% load crispy_forms_tags %} {% endcomment %}
+
+{% block title %}User Profile Update{% endblock title %}
+
+{% block content %}
+<form   method="POST" enctype ="multipart/form-data">
+        {% csrf_token %} 
+    <fieldset class="form-group"> 
+        <legend class='border-bottom mb-4'> User profile update</legend>
+        {% comment %} {{u_form}} {% endcomment %}
+        {{p_form}}
+
+        </fieldset>
+        
+        <input type="submit" value="Update" class="btn btn-info btn-lg text-warning">
+        </form>
+
+{% endblock content %}

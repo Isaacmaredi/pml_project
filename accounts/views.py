@@ -49,7 +49,7 @@ def login_view(request):
                 username:"username"
             }
             messages.success(request, 'You are now logged in')
-            return redirect('pmlprofile:profile_home')
+            return redirect('pmlprofile:profiles')
         else:
             messages.error(request, 'Invalid credentials')
             return redirect('accounts:login_view')

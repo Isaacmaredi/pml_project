@@ -23,8 +23,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('pmlmain.urls')),
     path('accounts/', include('accounts.urls'), name='accounts'),
-    path('pmlprofile', include('pmlprofile.urls'), name='pmlprofile'),
+    path('pmlprofile/', include('pmlprofile.urls'), name='pmlprofile'),
 ]
+
+
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    
+admin.site.site_header ='PML Admin Portal' 
