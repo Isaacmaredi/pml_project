@@ -1,20 +1,132 @@
 {% extends 'layout.html' %}
+{% load crispy_forms_tags %}
 
 {% comment %} {% load crispy_forms_tags %} {% endcomment %}
 
-{% block title %}User Profile Update{% endblock title %}
+{% block title %}Profile Update{% endblock title %}
 
 {% block content %}
-<form   method="POST" enctype ="multipart/form-data">
-        {% csrf_token %} 
-    <fieldset class="form-group"> 
-        <legend class='border-bottom mb-4'> User profile update</legend>
-        {% comment %} {{u_form}} {% endcomment %}
-        {{p_form}}
 
-        </fieldset>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>User Profile Update: {{user.profile.username}}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Profile Update {{profile.shortname}}</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+</section>
+    <!-- Main content -->
+<section class="content">
+<div class="container-fluid">   
+    <form method="POST" enctype="multipart/form">
+        {% csrf_token %}        
+    <div class="row">    
         
-        <input type="submit" value="Update" class="btn btn-info btn-lg text-warning">
-        </form>
+        <!-- left column -->
+        <div class="col-md-6">
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">General Particulars</h3>
+                </div>
+                                    <!-- /.card-header -->
+            
+          
+                <div class="card-body">
+                        
+                    <div class="row">
+                        <div class="col-sm-12">
+                        <!-- text input -->  
+                        <div class="form-group">
+                            {{form.shortname|as_crispy_field}}
+                        </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                {{form.middlename|as_crispy_field}}
+                            </div>
+                            </div>
+                    </div>
+                        
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                        <!-- textarea -->
+                            <div class="form-group">
+                                {{form.address|as_crispy_field}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                        <div class="form-group">
+                            {{form.alt_address|as_crispy_field}}
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                        <!-- text input -->  
+                        <div class="form-group">
+                            {{form.mobile_phone|as_crispy_field}}
+                        </div>
+                        </div>
+                        <div class="col-sm-6">
+                        <div class="form-group">
+                            {{form.alt_phone|as_crispy_field}}
+                        </div>
+                        </div>
+                    </div> 
+                    <br>
+                </div>   
+                         <!-- /.card-body -->
+            </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Additional Details</h3>
+                    </div>
+                    <div class="card-body class="justify-center">
+                        <div>
+                            <img class="rounded-circle justify-center mx-auto" src="{{profile.photo.url}}" alt="Member Photo" width="150" height="150" >
+                        </div>                         
+                        <br>
+                        <br>
+                        {{form.photo|as_crispy_field}}
+                        <br>
+                        {{form.town_city|as_crispy_field}}
+                        <br>
+                        {{form.district_metro|as_crispy_field}}
+                        <br>
+                        {{form.province|as_crispy_field}}
+                    </div>  
+                    <!-- /.card-body -->
+                </div>
+            </div> <!--Right column end-->
+            <div class="card-footer">
+                <button type="submit" class="btn btn-info btn-block">Submit</button>
+            </div>
+                    
+        </form>  
+        <!--/.col (left) ends-->
+                    <!--Right column starts->
+                </div>
+            /.row -->
+        <!-- /.container-fluid -->
+    </section>
+</div> <!-- /.content -->
+
 
 {% endblock content %}

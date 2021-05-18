@@ -85,12 +85,8 @@ class Profile(models.Model):
     alt_address = models.TextField(blank=True,null=True)
     alt_phone = models.CharField(max_length=50, blank=True, null=True)
     
-    def age(self):
-            birth_year = self.birth_date.year
-            this_year = datetime.now().year
-            member_age = this_year - birth_year
-            return member_age
-    
+    def get_absolute_url(self):
+        return reverse('pmlprofile:profile_detail' ,kwargs={'pk': self.pk})
     
     def __str__(self):
         return self.shortname
@@ -120,6 +116,23 @@ class Beneficiary(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Committee(models.Model):
+    name = models.CharField(max_length=200,choices=committees)
+    portfolio = models.CharField(max_length=200, choices=portfolios)
+    profile = models.ForeignKey(Profile, null=True, on_delete=models.CASCADE)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    
+    class Meta:
+        ordering =['id']
+        
+    def get_absolute_url(self):
+            return reverse('profile_detail', kwargs={'pk': self.pk})
+    
+    def __str__(self):
+        return f'{self.portfolio} of {self.name}: {self.profile}'
+    
     
     
 

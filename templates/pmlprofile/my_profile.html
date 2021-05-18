@@ -107,6 +107,16 @@
     <div class="container-fluid">
         <div class="row">
         <div class="col-12">
+            
+                {% if user.is_authenticated %}                    
+                <li class="list-group-item">
+                    <div class="btn btn-info btn-large">
+                        <a href="{% url 'pmlprofile:profile_update' pk=user.id %}"> <span class="text-white"> <h4>Update Your Profile</h4></span> </a> 
+                    </div>
+                
+                </li>
+                {% endif %}
+           
 
             <div class="card align-center">
                 

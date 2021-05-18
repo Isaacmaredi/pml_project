@@ -3,6 +3,7 @@ from django.contrib import auth, messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
+from pmlprofile.models import Profile
 
 # Create your views here.
 

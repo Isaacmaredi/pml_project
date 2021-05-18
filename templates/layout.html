@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <!-- Font Awesome -->
 <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+<!--Favicon-->
+<link rel="shortcut icon"  type ="image/png" href="{% static 'img/favicon.ico' %}"/>
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <!-- Tempusdominus Bootstrap 4 -->
@@ -32,7 +34,7 @@
 <!-- summernote -->
 <link rel="stylesheet" href="{% static 'plugins/summernote/summernote-bs4.min.css' %}">
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
 <div class="wrapper">
 
 <!-- Preloader -->
@@ -48,7 +50,7 @@
     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-    <a href="{% url 'index' %}" class="nav-link" target="_blank">Home</a>
+    <a href="{% url 'index' %}" class="nav-link" target="_blank"> <strong> Dashboard</strong> </a>
     </li>
 
 
@@ -92,12 +94,12 @@
         <li class="nav-item dropdown ">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-user-circle text-warning" aria-hidden="true">
-                </i> <span class="font-italic text-lowercase">my</span>PML 
+                </i> <span class="font-italic text-lowercase"></span>&nbsp;my</span>PML &nbsp;WELCOME {{user.first_name}}
             </a>
 
             <div class="dropdown-menu bg-dark">
                 <div class="text-warning">
-                    <a class="dropdown-item text-warning" href="{% url 'pmlprofile:profile_detail' pk=request.user.id %} ">
+                    <a class="dropdown-item text-warning" href="{% url 'pmlprofile:my_profile' pk=request.user.id %} ">
                         <span class="font-italic text-lowercase">my</span>Profile
                     </a>
                     <div class="dropdown-divider"></div>
@@ -137,9 +139,9 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
 <!-- Brand Logo -->
-<a href="index3.html" class="brand-link">
+<a href="{% url 'index' %}" class="brand-link">
     <img src="{% static 'img/pml_logo3.png' %}" alt="PML Logo" class="brand-image img-circle elevation-3" width="100"0 height="100" style="opacity: .95">
-    <span class="brand-text font-weight-light"> <strong class="text-warning"> PML Portal </strong></span>
+    <span class="brand-text font-weight-light"> <strong class="text-warning"> PML Home </strong></span>
 </a>
 
 
@@ -162,19 +164,12 @@
 
         <a href="#" class="nav-link">
             <i class="nav-icon fas fa-tachometer-alt"></i>
-            <p>
-            <strong class="text-warning">Dashboard</strong>
-
+            <p class="text-warning">
+                Profile Summary
             <i class="right fas fa-angle-left"></i>
             </p>
         </a>
         <ul class="nav nav-treeview">
-            <li class="nav-item">
-            <a href="./index.html" class="nav-link active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Profile Summary</p>
-            </a>
-            </li>
             <li class="nav-item">
             <a href="./index2.html" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
@@ -193,8 +188,8 @@
         <li class="nav-item menu-open">
             <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
-                <p>
-                <strong class="text-warning">Financials</strong>
+                <p class="text-warning">
+                Financials</strong>
     
                 <i class="right fas fa-angle-left"></i>
                 </p>
@@ -227,8 +222,8 @@
         <li class="nav-item menu-open">
         <a href="#" class="nav-link">
             <i class="nav-icon fas fa-calendar-alt"></i>
-            <p>
-            <strong class="text-warning"> Events </strong>
+            <p class="text-warning">
+                Events 
             <i class="fas fa-angle-left right"></i>
             </p>
         </a>
@@ -251,8 +246,8 @@
         <li class="nav-item">
         <a href="pages/gallery.html" class="nav-link">
             <i class="nav-icon far fa-image"></i>
-            <p>
-        <strong class="text-warning"> Member Locations </strong>  
+            <p class="text-warning">
+            Member Locations 
             </p>
         </a>
         </li>                    

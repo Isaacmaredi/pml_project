@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.views.generic import (View,TemplateView,ListView,
-                                DetailView,CreateView,
-                                UpdateView,DeleteView
-                                )
+from django.views.generic import ListView,DetailView
+                                
+from django.views.generic.edit import UpdateView, CreateView
 from .models import Profile, Beneficiary
 from .forms import UserUpdateForm, ProfileUpdateForm 
+from django.urls import reverse_lazy
 # from .forms import UserUpdateForm, ProfileUpdateForm
 # Create your views here.
 
@@ -17,75 +18,52 @@ class ProfileListView(ListView):
     context_object_name = "profiles"
     model = Profile
     template_name = 'pmlprofile/member_list.html'
-    paginate_by = 15
+
 
 
 class ProfileDetails(DetailView):
     context_object_name = 'profile_detail'
     model = Profile
     template_name = 'pmlprofile/profile_details.html'
-  
+
+class MyProfile(DetailView):
+    context_object_name = 'profile_detail'
+    model = Profile
+    template_name = 'pmlprofile/my_profile.html'
     
-# def profile_detail_view(request):
-#     return render(request, 'pmlprofile/profile_details.html')
+    
+
+class ProfileCreate(CreateView):
+    model = Profile
+    fields = ['shortname','mobile_phone', 'photo','address','town_city' ,
+                'district_metro','province','alt_phone','alt_address',
+            ]
+    
+    def form_valid(self, form):
+        self.profile = form.save(commit=False)
+        self.profile  = self.instance.user
+        self.profile.save()
+        return super().form_valid(form)    
+
+
+class ProfileUpdate(UpdateView):
+    model = Profile
+    fields = ['shortname','middlename','birth_date', 'mobile_phone', 'photo','address','town_city' ,
+                'district_metro','province','alt_phone','alt_address',
+            ]   
+    template_name = 'pmlprofile/profile_update.html'
+    
+    success_url = reverse_lazy('profile_detail')
+    
+    
 
 class BeneficiaryList(ListView):
     context_object_name = "beneficiaries"
     model = Beneficiary
     template_name = 'pmlprofile/beneficiary_list.hml'
     
-@login_required
-def profile_update(request):
-    # u_form = UserUpdateForm()
-    p_form = ProfileUpdateForm()
-    
-    context = {
-        # 'u_form': u_form,
-        'p_form': p_form
-    }
-    
-    return render(request, 'pmlprofile/profile_details.html', context)
     
     
     
-
     
-    
-    
-
-# def beneficiary_list_view(request):
-#     return render(request, 'pmlprofile/beneficiary_list.html')
-
-
-def profile_create_view(request):
-    return render(request, 'pmlprofile/profile_create.html')
-
-
-def profile_update_view(request):
-    return render(request, 'pmlprofile/profile_update.html')
-
-
-def committee_create_view(request):
-    return render(request, 'pmlprofile/committee_create.html')
-
-
-def committee_list_view(request):
-    return render(request, 'pmlprofile/committee_list.html')
-
-
-def committee_update_view(request):
-    return render(request, 'pmlprofile/committee_update.html')
-
-
-@login_required
-def profile_update(request):
-    u_form = UserUpdateForm()
-    p_form = UserUpdateForm()
-    
-    context = {
-        'u_form':u_form,
-        'p_form':p_form
-    }
-    
-    return render(request, 'pmlprofile/profile_update.html', context)
     
