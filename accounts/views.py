@@ -49,6 +49,7 @@ def login_view(request):
             context= {
                 username:"username"
             }
+        
             messages.success(request, 'You are now logged in')
             return redirect('pmlprofile:profiles')
         else:
@@ -57,9 +58,9 @@ def login_view(request):
     else:
         return render(request, 'accounts/login.html')
 
-def logout(request):
+def logout_view(request):
     if request.method == 'POST':
         auth.logout(request)
         messages.success(request, 'You are now logged out')
-        return redirect('accounts:login_view')
+        return redirect('index')
 

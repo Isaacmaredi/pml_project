@@ -3,8 +3,8 @@
 {% load static %}
 
 {% block content %} 
-
-<div class="content-wrapper">
+ 
+<div class="content-wrapper">     
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
@@ -21,30 +21,40 @@
         </div>
         </div><!-- /.container-fluid -->
     </section>
-
+{% include 'partials/_alerts.html' %}
+ 
     <!-- Main content -->
 <section class="content">
     <!-- Default box -->
     <div class="card card-solid">
         <div class="card-body pb-0">
-            <div class="row">
+            <div class="row" >
         {% for profile in profiles %}
                 <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
                 <div class="card bg-light d-flex flex-fill">
                 <div class="card-header text-muted border-bottom-0">
                 {% if  profile.status == 'Active' %}
-                   <h5>Member in Good Standing - ID: {{profile.id}} </h5> 
+                    <h5>Member in Good Standing - ID: {{profile.id}} </h5> 
                 {% elif profile.status == 'Deceased' %}
-                    <span class='text-danger'> <h5>Rest in Progress - Forever in our Memories</h5></span>
+                    <h5>Rest in Progress - Forever in our Memories</h5>
                 {% else %}
-                    <span class='text-warning'> <h5>Member {{profile.status}} </h5></span>
+                    <h5>Member {{profile.status}} </h5>
                 {% endif %}
                 </div>
                 <div class="card-body pt-0">
                     <div class="row">
                     <div class="col-7">
                         <h2 class="lead"><b> <strong> {{profile.shortname}}</strong>  </b></h2>
-                        <p class="text-muted text-sm"> <span class="text-info"><b>Membership Status:  </b> {{profile.status}}</span>  </p>
+                        <p class="text-muted text-sm"> 
+                            <strong >Membership Status:   </strong>  
+                            {% if profile.status == 'Deceased' %} 
+                                <span class="text-danger">{{profile.status}}</span>
+                            {% elif  profile.status == 'Suspended' %} 
+                                <span class="text-warning">{{profile.status}}</span>
+                            {% else %}
+                                <span class="text-info">{{profile.status}}</span>  
+                            {% endif %}        
+                        </p>
                         <ul class="ml-4 mb-0 fa-ul text-muted">
                         <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: {{profile.address}}</li>
                         <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: {{profile.mobile_phone}}</li>
@@ -72,6 +82,7 @@
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
+
             <nav aria-label="Contacts Page Navigation">
             <ul class="pagination justify-content-center m-0">
                 <li class="page-item active"><a class="page-link" href="#">1</a></li>
@@ -83,13 +94,14 @@
                 <li class="page-item"><a class="page-link" href="#">7</a></li>
                 <li class="page-item"><a class="page-link" href="#">8</a></li>
             </ul>
-            </nav>
+            </nav> 
         </div>
         <!-- /.card-footer -->
     </div>
         <!-- /.card -->
-
 </section>
     <!-- /.content -->
+</div>
+<!-- /.Content Wrapper ends -->
 
 {% endblock %}

@@ -39,8 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Third Party APPS
-    
+    'django.contrib.humanize',
     'crispy_forms',
+    'sorl.thumbnail',
     #Custom Apps
     'accounts',
     'pmlmain',
@@ -135,3 +136,11 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGIN_REDIRECT_URL = 'pmlprofile:profiles'
+LOGIN_URL = 'accounts:login_view'
+
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger'
+}

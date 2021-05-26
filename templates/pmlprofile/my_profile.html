@@ -5,7 +5,7 @@
 
 
 {% block content %}
-
+{% if user.is_authenticated %}
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
@@ -14,12 +14,7 @@
     <div class="row mb-2">
         <div class="col-sm-6 text-center">
         <h1>
-            Personal Profile of  
-            {{profile_detail.user.last_name}} {{profile_detail.user.first_name}} 
-                {% if profile_detail.middlename == None %} &nbsp;
-                {% else %}
-                {{profile_detail.middlename}}
-                {% endif %}
+            {{user.username}} Profile
         </h1> 
         </div>
         <div class="col-sm-6">
@@ -34,7 +29,7 @@
 
 <!-- Main content -->
 <section class="content">
-
+{% include 'partials/_alerts.html'%}
     <!-- Default box -->
     <div class="card card-solid">
     <div class="card-body">
@@ -44,7 +39,9 @@
             <div class="col-12">
                 <div class="col-4 bg-light">
                     <div class="card text-justify " style="width: 40rem;">
-                        <img class="rounded-circle justify-center mx-auto" src="{{profile_detail.photo.url}} " height="250" width="250"  class="card-img-top" alt="...">
+                        <img class="rounded-circle justify-center mx-auto" src="{{user.profile.photo.url}} " height="250" width="250"  class="card-img-top" alt="...">
+                        
+                        <h4>{{user.email}}</h4>
                     <div class="card-body"> 
                         <h4 class="card-title"> 
                         <strong class="text-center"> 
@@ -52,17 +49,17 @@
                             {% if profile_detail.status == 'Active' %}
                                 <span class="text-info"> {{profile_detail.status}} </span> 
                             {% elif profile_detail.status == 'Deceased' %}
-                                <span class="text-danger"> {{profile_detail.status}} </span> 
+                                <span class="text-danger"> {{object.status}} </span> 
                             {%elif profile_detail.status == 'Suspended' or profile_detail.status == 'Terminated' %}
-                                <span class="text-warning"> {{profile_detail.status}} </span> 
+                                <span class="text-warning"> {{object.status}} </span> 
                             {% endif %}
                         </strong>
                         </h4>
                         
                     </div>
                         <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;{{profile_detail.mobile_phone}} &nbsp;&nbsp;&nbsp;
-                            <a href="mailto:{{profile_detail.user.email}}"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp; {{profile_detail.user.email}}</a>
+                        <li class="list-group-item"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;{{object.mobile_phone}} &nbsp;&nbsp;&nbsp;
+                            <a href="mailto:{{object.user.email}}"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp; {{object.user.email}}</a>
                         </li>
                         </ul>            
                     </div>
@@ -77,7 +74,7 @@
                 <div class="card-body bg-info ">
                     <h4 class="card-title"> 
                     <strong class="text-center"> 
-                        Date of Birth: {{profile_detail.birth_date}}
+                        Date of Birth: {{object.birth_date}}
                     </strong>
                     </h4>
                     
@@ -86,10 +83,10 @@
                     <li class="list-group-item">
                         <h4> Residential Address </h3> 
                     </li>
-                    <li class="list-group-item"> <h6>{{profile_detail.address}} </h6></li>
-                    <li class="list-group-item"> <h6>{{profile_detail.town_city}}</h6> </li>
-                    <li class="list-group-item"> <h6>{{profile_detail.district_metro}}</h6></li> 
-                    <li class="list-group-item"><h6>{{profile_detail.province}} </h6></li>   
+                    <li class="list-group-item"> <h6>{{object.address}} </h6></li>
+                    <li class="list-group-item"> <h6>{{object.town_city}}</h6> </li>
+                    <li class="list-group-item"> <h6>{{object.district_metro}}</h6></li> 
+                    <li class="list-group-item"><h6>{{object.province}} </h6></li>   
                         
                     
                         <br>
@@ -111,12 +108,11 @@
                 {% if user.is_authenticated %}                    
                 <li class="list-group-item">
                     <div class="btn btn-info btn-large">
-                        <a href="{% url 'pmlprofile:profile_update' pk=user.id %}"> <span class="text-white"> <h4>Update Your Profile</h4></span> </a> 
+                        <a href="{% url 'pmlprofile:profile_update' %}"> <span class="text-white"> <h4>Update Your Profile</h4></span> </a> 
                     </div>
                 
                 </li>
                 {% endif %}
-           
 
             <div class="card align-center">
                 
@@ -186,5 +182,5 @@
 </div>
 <!-- /.content-wrapper -->
 
-
+{% endif %}
 {% endblock content %}

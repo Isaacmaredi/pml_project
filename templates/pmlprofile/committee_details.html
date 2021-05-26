@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}| Committee Details{% endblock title %}
+
+
+{% block content %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper"> 
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6 text-center">
+                <h1>
+                    Members of {{committees.name}}
+                    
+                </h1> 
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'pmlprofile:committees' %}">Committees</a></li>
+                    <li class="breadcrumb-item active">{{committees.shortname}}</li>
+                </ol>
+            </div>
+        </div>
+        <div class="jumbotron">
+            {% for member in committees.incumbents.all %}
+            <p> <b>{{member.portfolio}}: </b> &nbsp;&nbsp; {{member.member.user.last_name}} {{member.member.user.first_name}} {{member.member.middlename}} </p>
+            {% endfor %}
+        </div>
+    </div><!-- /.container-fluid -->
+
+</section>
+</div>
+<!-- Main content -->
+
+<!-- /.content -->
+
+<!-- /.content-wrapper -->
+
+
+{% endblock content %}

@@ -3,6 +3,7 @@ from django.db.models import Count, Q
 from django.contrib.auth.models import User
 from datetime import datetime, date
 from django.urls import  reverse
+from sorl.thumbnail import ImageField
 
 
 
@@ -59,7 +60,8 @@ portfolios = [
     ('Events Coordinator', 'Events Cordinator'),
     ('Member of EXCO', 'Member of Exco'),
     ('Convenor','Convenor'),
-    ('Ex Officio','Ex Officio'),
+    ('Member','Member'),
+    ('Ex Officio Member','Ex Officio Member'),
 ]
 
 proxy=[
@@ -81,7 +83,7 @@ class Profile(models.Model):
     town_city = models.CharField(max_length=200)
     district_metro = models.CharField(max_length=250)
     province = models.CharField(choices = provinces, max_length=100)
-    photo = models.ImageField(default='/static/img/default.png', upload_to='member_photos/%Y')
+    photo = models.ImageField(default='default2.png', upload_to='member_photos/%Y')
     alt_address = models.TextField(blank=True,null=True)
     alt_phone = models.CharField(max_length=50, blank=True, null=True)
     
@@ -119,19 +121,37 @@ class Beneficiary(models.Model):
     
 class Committee(models.Model):
     name = models.CharField(max_length=200,choices=committees)
-    portfolio = models.CharField(max_length=200, choices=portfolios)
-    profile = models.ForeignKey(Profile, null=True, on_delete=models.CASCADE)
-    start_date = models.DateField()
-    end_date = models.DateField()
+    SHORTNAMES = [
+        ('EXCO','EXCO'),
+        ('FINCOM','FINCOM'),
+        ('CONCOM','CONCOM'),
+        ('DC','DC'),
+        ('COMPCOM','COMPCOM'),
+        ('ECOM','ECOM'),
+        ]
+    shortname = models.CharField(max_length=100, choices=SHORTNAMES)
+    term_starts = models.DateField()
+    term_ends = models.DateField()
     
     class Meta:
         ordering =['id']
-        
-    def get_absolute_url(self):
-            return reverse('profile_detail', kwargs={'pk': self.pk})
-    
+  
     def __str__(self):
-        return f'{self.portfolio} of {self.name}: {self.profile}'
+        return self.name 
+    
+
+class Incumbent(models.Model):
+    committee = models.ForeignKey(Committee, on_delete=models.CASCADE, related_name='incumbents')
+    member = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    portfolio = models.CharField(max_length=200, choices=portfolios)
+    term_starts = models.DateField()
+    term_ends = models.DateField()
+    
+    class Meta:
+        ordering = ['id']
+        
+    def __str__(self):
+        return f'{self.member} - {self.portfolio} of {self.committee}'
     
     
     

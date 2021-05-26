@@ -1,0 +1,141 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load humanize %} 
+
+{% block content %} 
+
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+    <div class="row mb-2">
+        <div class="col-sm-6">
+        <h1>PML Committees</h1>
+        </div>
+        <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'pmlprofile:profiles' %}">Home</a></li>
+            <li class="breadcrumb-item active">Committees</li>
+        </ol>
+        </div>
+    </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Committee List</h3>
+
+        <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+            <i class="fas fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+            <i class="fas fa-times"></i>
+        </button>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <table class="table table-striped projects">
+            <thead>
+                <tr>
+                    <th style="width: 1%">
+                        #
+                    </th>
+                    <th style="width: 20%">
+                        Name
+                    </th>
+                    <th style="width: 35%">
+                        Committee Members
+                    </th>
+                    <th style="width: 8%" class="text-center">
+                        Term Starts
+                    </th>
+                    <th style="width: 8%" class="text-center">
+                        Term Ends
+                    </th> 
+                    <th style="width: 8%" class="text-center">
+                        Time in Office
+                    </th> 
+                    <th style="width: 8%" class="text-center">
+                        Time Remaining
+                    </th> 
+                    <th style="width: 20%" class="project-actions text-right"> 
+                        <a class="btn btn-success btn-sm" href="{% url 'pmlprofile:committee_create' %}">
+                            <i class="fas fa-plus-circle">
+                            </i>
+                        <strong> Add Incumbent</strong>
+                        </a> 
+                    </th>                
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+            {% for committee in committees %}
+                    <td>
+                        {{ committee.id}}
+                    </td>
+                    <td>
+                        <a href="{% url 'pmlprofile:committee_detail' committee.id %}">
+                            {{ committee.name}}
+                        </a>
+                    </td>
+                    <td>
+                        <ul class="list-inline">
+                        {% for incumbent in committee.incumbents.all %}
+
+                            <li class="list-inline-item">
+                                <img alt="Avatar" class="table-avatar" src="{{incumbent.member.photo.url}}">
+                            </li>  
+                        {% endfor %}
+                        </ul>
+                    </td>
+
+                    <td>
+                        {{ committee.term_starts|date:'d M Y'}}
+                    </td>
+                    <td>
+                        {{ committee.term_ends|date:'d M Y'}}
+                    </td>
+
+                    <td>
+                        {{committee.term_starts|timesince}}
+                    </td>
+                    <td>
+                        {{committee.term_ends|timeuntil }}
+                    </td>
+
+                    <td class="project-actions text-right">
+                    <ul class="list-inline"> 
+                        <a class="btn btn-primary btn-sm" href="{% url 'pmlprofile:committee_detail' committee.id %}">
+                            <i class="fas fa-folder">
+                            </i>
+                            View
+                        </a>
+                        <a class="btn btn-info btn-sm" href="#">
+                            <i class="fas fa-pencil-alt">
+                            </i>
+                            Edit
+                        </a> 
+                    </ul>
+                            
+                    </td>
+                </tr>   
+        {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock %}

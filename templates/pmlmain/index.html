@@ -2,19 +2,22 @@
 {% load static %}
 
 {% block content %}
-          <!-- Masthead-->
+        <!-- Masthead-->
+       
         <header class="masthead" style="background-image: url({% static 'img/header-bg.jpg' %})";>
             <div class= "container-fluid">
-                 
+                
                     <div class="masthead-heading text-uppercase">Welcome To PML Website!</div>
                     <div class="masthead-subheading">united in progress for social upliftment</div>
                     <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Find out More</a>
                 
             </div>
         </header>
+         {% include 'partials/_alerts.html'%}
 
         <!-- About-->
-         <section class="page-section" id="about"> 
+    
+        <section class="page-section" id="about"> 
             <div class="container">
                 <div class="text-center">
                     <h2 class="section-heading text-uppercase">About</h2>
@@ -67,11 +70,10 @@
       <!-- Strategic Intent-->
         <section class="page-section bg-light" id="services">
             <div class="container">
-                
+               
                 <div class="text-center">
                     <h2 class="section-heading text-uppercase">Our Stategic Intent</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-                </div>
+                    <h3 class="section-subheading text-muted">We subscribe to a set of well formulated strtategic goals and objectives</h3>
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="team-member">
