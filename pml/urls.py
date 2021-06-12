@@ -24,6 +24,8 @@ urlpatterns = [
     path('', include('pmlmain.urls')),
     path('accounts/', include('accounts.urls'), name='accounts'),
     path('pmlprofile/', include('pmlprofile.urls'), name='pmlprofile'),
+    path('events/',include('events.urls'), name='events'),
+    path('docs/', include('docs.urls'), name='docs'),
 ]
 
 

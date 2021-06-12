@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}| Add Minutes {% endblock title %}
+
+
+{% block content%}
+
+<div class="content-wrapper">  
+
+    <section class="content-header">
+        <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            <h1>Upload Minutes Document</h1>
+            </div>
+            <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{% url 'docs:minutes_list' %}">Minutes List</a></li>
+                <li class="breadcrumb-item active">Upload Minutes</li>
+            </ol>
+            </div>
+        </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+<section class="content">  
+        <div class="row">
+        <!-- left column -->
+    {% if user.is_staff %}
+
+        <div class="col-md-6 mx-auto">
+            <!-- general form elements -->
+        <div class="pd-3">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Add Minutes</h3>
+                </div>
+                <div class="pl-3 pr-3">
+                    <form action=""  method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{form|crispy}}                   
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-info btn-block">Upload Minutes</button>
+                            </div>
+                    </form>
+                    <hr>
+                    <br>
+                    <h4>{{test}}</h4>
+                </div>
+            </div>
+
+        </div>
+            
+        </div>
+        {% else %}
+
+        <div class="jumbotron">
+            <h2> <span class='text-danger'> Embagored!! </span> </br>
+                You are not authorised to edit this page.
+            </h2>
+            <a href="{% url 'docs:minutes_list' %}">Go Back</a>
+        </div>
+        
+        {% endif %}
+        
+
+    </div> 
+</section>
+</div>
+
+{% endblock %}

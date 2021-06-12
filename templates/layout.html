@@ -8,6 +8,9 @@
 
 <!-- Google Font: Source Sans Pro -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+ <!-- Google Font: Sacrameto Cursive-->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
 <!-- Font Awesome -->
 <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
 <!--Favicon-->
@@ -68,11 +71,26 @@
         </div>
     </li>
 
+    <li class="nav-item dropdown nav-item d-none d-sm-inline-block" >
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+        Resources
+    
+        </a>
+        <div class="dropdown-menu bg-dark">
+            <div class="text-warning">
+                <a class="dropdown-item text-warning" href="{% url 'docs:minutes_list' %}"> Minutes</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-warning" href="#">Policies</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-warning" href="#">Reports</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-warning" href="#">Announcements</a>
+            </div>
+            
+        </div>
+
     <li class="nav-item d-none d-sm-inline-block">
-        <a href="../../index3.html" class="nav-link">Events</a>
-    </li>
-    <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Documents</a>
+        <a href="{% url 'events:meetings' %}" class="nav-link">Events</a>
     </li>
     </li>
 </ul>
@@ -89,7 +107,7 @@
             {% if request.user.is_authenticated %}
             <div class="dropdown-menu bg-dark">
                 <div class="text-warning">
-                    <a class="dropdown-item text-warning" href="{% url 'pmlprofile:my_profile'  %} ">
+                    <a class="dropdown-item text-warning" href="{% url 'pmlprofile:my_profile' profile.id %} ">
                         <span class="font-italic text-lowercase">my</span>Profile
                     </a>
             
@@ -155,16 +173,15 @@
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
         <li class="nav-item menu-open">
-
-        <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
-            <p class="text-warning">
-                PML Profile Summary
-            <i class="right fas fa-angle-left"></i>
-            </p>
-        </a>
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p class="text-warning">
+                    Profile Summary
+                <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
         <ul class="nav nav-treeview">
-            <li class="nav-item">
+            <li class="nav-item ">
             <a href="./index2.html" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Membership</p>
@@ -239,9 +256,9 @@
 
         <li class="nav-item">
         <a href="pages/gallery.html" class="nav-link">
-            <i class="nav-icon far fa-image"></i>
+            <i class="nav-icon fa fa-map-marker"></i>
             <p class="text-warning">
-            Member Locations 
+            Where Am I Online?
             </p>
         </a>
         </li>                    
@@ -311,6 +328,8 @@ $.widget.bridge('uibutton', $.ui.button)
 <script src="{% static 'dist/js/demo.js' %}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{% static 'dist/js/pages/dashboard.js' %}"></script>
+<!--Custom js-->
+<script src="{% static 'js/custom.js' %}"></script>"
 <!--Data Tables js-->
 
 <script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
@@ -325,7 +344,7 @@ $.widget.bridge('uibutton', $.ui.button)
 <script src="{% static 'plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
 <script src="{% static 'plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
 <script src="{% static 'plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
-<script src="{% static 'js/custom.js' %}"></script>"
+
 
 <!--JS for specfic data tables -->
 <script>

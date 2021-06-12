@@ -1,0 +1,133 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}-{{certificate.shortname}} Profile{% endblock title %}
+
+
+{% block content %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+
+<!-- Main content -->
+<div class="container">
+
+
+<section class="content">
+    <div class="col-md-12">
+        <!-- Profile Image -->
+        <div class="card card-primary card-outline">
+        <div class="card-body box-profile">
+            <div class="text-center">
+                <img  class="img-fluid iheight="300" width="200"mg-circle"
+                    src="{% static 'img/pml-logo1.png' %}"
+                    alt="User profile picture"> <br>
+                <!-- <img height="300" width="250" class="iprofile-user-img img-fluid"
+                    src="{% static 'img/cert/pmlcert6.jpg' %}"
+                    alt="User profile picture"> -->
+            </div>
+        
+            <div class="text-center" class="cert">
+        <span style="font-family: 'Sacramento', cursive; font-size:46px;" > 
+            <b> <i>Certificate of Membership </i>  </b> 
+            </span> 
+
+            </div>
+
+            <br>
+            <br>
+            <h3 class="profile-username text-center">THIS CERTIFICATE IS PRESENTED TO</h3>
+            <br>
+            <ul class="list-group list-group-unbordered mb-3 text-center">
+                <li class="list-group-item" style="font-size:x-large;" >
+                <b> <u> {{certificate.user.first_name}} {{certificate.user.last_name}} {{certificate.middlename}}</u> </b> 
+                <br>
+                <hr>
+                <p class="text-muted text-center" style ="font-size:large;">as a <i> 'bona fides'</i> member of 
+                    <b>Progress Men's League</b>, with all
+                    <br>
+                    privilages, rights and obligations as espoused in the League's constitution 
+                
+                    <br>
+                    <span class="text-muted text-center" style ="font-size:large;"> and, with his duly registered beneficiaries 
+                    as listed below.
+                    </span> 
+                
+                    <br>       
+            </li>
+        </ul>    
+    </div>
+        <!-- /.card-body -->
+</div>
+</div>
+</section>
+
+<section class="content">
+    <div class="container">
+        <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Beneficiaries</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                <th style="width: 10px">#</th>
+                                <th>Name </th>
+                                <th>Relation</th>
+                                <th>Date of Birth</th>
+                                <th style="width: 40px">Status</th>
+                                <th>Paid-up</th>
+                                <th>Paid-up Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for beneficiary in certificate.beneficiaries.all %}
+                                {% if beneficiary.beneficiary_status == 'Deceased' %}
+                                <tr class="text-muted">     
+                                <td>{{beneficiary.id}}</td>
+                                <td>{{beneficiary.name}}</td>
+                                <td>{{beneficiary.beneficiary_type}}</td>
+                                <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
+                                <td><span class="badge bg-danger">{{beneficiary.beneficiary_status}}</span></td>
+                                <td>{{beneficiary.is_paid}}</td>
+                                <td>{{beneficiary.paid_date|date:'d F, Y'}}</td>                   
+                                </tr>
+                                <tr>
+                                {% elif beneficiary.beneficiary_status == 'Inactive' or beneficiary.beneficiary_status == 'Article 20.3' %}                               
+                                <tr class="text-muted">     
+                                    <td>{{beneficiary.id}}</td>
+                                    <td>{{beneficiary.name}}</td>
+                                    <td>{{beneficiary.beneficiary_type}}</td>
+                                    <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
+                                    <td><span class="badge bg-warning">{{beneficiary.beneficiary_status}}</span></td>
+                                    <td>{{beneficiary.is_paid}}</td>
+                                    <td>{{beneficiary.paid_date|date:'d F, Y'}}</td>                   
+                                    </tr>
+                                    <tr>
+                                {% else %}
+                                <tr>     
+                                    <td>{{beneficiary.id}}</td>
+                                    <td>{{beneficiary.name}}</td>
+                                    <td>{{beneficiary.beneficiary_type}}</td>
+                                    <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
+                                    <td><span class="badge bg-success">{{beneficiary.beneficiary_status}}</span></td>
+                                    <td>{{beneficiary.is_paid}}</td>
+                                    <td>{{beneficiary.paid_date|date:'d F, Y'}}</td>                   
+                                    </tr>
+                                <tr>
+                                {% endif %}
+                            {% endfor %}
+                            </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- End New Table for Beneficiaries -->
+
+{% endblock content %}

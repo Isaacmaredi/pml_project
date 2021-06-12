@@ -62,7 +62,7 @@
                         Time in Office
                     </th> 
                     <th style="width: 8%" class="text-center">
-                        Time Remaining
+                        Time Left
                     </th> 
                     <th style="width: 20%" class="project-actions text-right"> 
                         <a class="btn btn-success btn-sm" href="{% url 'pmlprofile:committee_create' %}">
@@ -89,7 +89,7 @@
                         {% for incumbent in committee.incumbents.all %}
 
                             <li class="list-inline-item">
-                                <img alt="Avatar" class="table-avatar" src="{{incumbent.member.photo.url}}">
+                                <img data-toggle="tooltip" title="{{incumbent.member.shortname}} : {{incumbent.portfolio}}"  alt="Avatar" class="table-avatar" src="{{incumbent.member.photo.url}}">                              
                             </li>  
                         {% endfor %}
                         </ul>
@@ -108,7 +108,6 @@
                     <td>
                         {{committee.term_ends|timeuntil }}
                     </td>
-
                     <td class="project-actions text-right">
                     <ul class="list-inline"> 
                         <a class="btn btn-primary btn-sm" href="{% url 'pmlprofile:committee_detail' committee.id %}">
@@ -137,5 +136,9 @@
 <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+});
+</script>
 {% endblock %}

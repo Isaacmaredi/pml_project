@@ -36,144 +36,141 @@
 <section class="content">
 
     <!-- Default box -->
-    <div class="card card-solid">
-    <div class="card-body">
-        <div class="row">
-        <div class="col-12 col-sm-6">
-            <!-- <h3 class="d-inline-block d-sm-none">LOWA Men’s Renegade GTX Mid Hiking Boots Review</h3> -->
-            <div class="col-12">
-                <div class="col-4 bg-light">
-                    <div class="card text-justify " style="width: 40rem;">
-                        <img class="rounded-circle justify-center mx-auto" src="{{profile_detail.photo.url}} " height="250" width="250"  class="card-img-top" alt="...">
-                    <div class="card-body"> 
-                        <h4 class="card-title"> 
-                        <strong class="text-center"> 
-                            Membership Status: 
-                            {% if profile_detail.status == 'Active' %}
-                                <span class="text-info"> {{profile_detail.status}} </span> 
-                            {% elif profile_detail.status == 'Deceased' %}
-                                <span class="text-danger"> {{profile_detail.status}} </span> 
-                            {%elif profile_detail.status == 'Suspended' or profile_detail.status == 'Terminated' %}
-                                <span class="text-warning"> {{profile_detail.status}} </span> 
-                            {% endif %}
-                        </strong>
-                        </h4>
-                        
+<div class="card card-solid">
+            <div class="card-body">
+                <div class="row">
+                <div class="col-6">
+                    <!-- <h3 class="d-inline-block d-sm-none">LOWA Men’s Renegade GTX Mid Hiking Boots Review</h3> -->
+                    <div class="col-6">
+                        <div class="col-4 bg-light">
+                            <div class="card text-justify " style="width: 40rem;">
+                                <img class="rounded-circle justify-center mx-auto" src="{{profile_detail.photo.url}} " height="250" width="250"  class="card-img-top" alt="...">
+                            <div class="card-body"> 
+                                <h4 class="card-title"> 
+                                <strong class="text-center"> 
+                                    Membership Status: 
+                                    {% if profile_detail.status == 'Active' %}
+                                        <span class="text-info"> {{profile_detail.status}} </span> 
+                                    {% elif profile_detail.status == 'Deceased' %}
+                                        <span class="text-danger"> {{profile_detail.status}} </span> 
+                                    {%elif profile_detail.status == 'Suspended' or profile_detail.status == 'Terminated' %}
+                                        <span class="text-warning"> {{profile_detail.status}} </span> 
+                                    {% endif %}
+                                </strong>
+                                </h4>
+                                
+                            </div>
+                                <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;{{profile_detail.mobile_phone}} &nbsp;&nbsp;&nbsp;
+                                    <a href="mailto:{{profile_detail.user.email}}"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp; {{profile_detail.user.email}}</a>
+                                </li>
+                                </ul>            
+                            </div>
+                        </div>
                     </div>
+
+                </div>
+                <div class="col-6 col-sm-6">          
+                    <div class="col-4 bg-light">
+                        <div class="card text-justify " style="width: 45rem;">
+                            
+                        <div class="card-body bg-info ">
+                            <h4 class="card-title"> 
+                            <strong class="text-center"> 
+                                Date of Birth: {{profile_detail.birth_date|date:'d F Y'}}
+                            </strong>
+                            </h4>
+                            
+                        </div>
                         <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;{{profile_detail.mobile_phone}} &nbsp;&nbsp;&nbsp;
-                            <a href="mailto:{{profile_detail.user.email}}"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp; {{profile_detail.user.email}}</a>
-                        </li>
-                        </ul>            
+                            <li class="list-group-item">
+                                <h4> Residential Address </h3> 
+                            </li>
+                            <li class="list-group-item"> <h6>{{profile_detail.address|safe}} </h6></li>
+                            <li class="list-group-item"> <h6>{{profile_detail.town_city}}</h6> </li>
+                            <li class="list-group-item"> <h6>{{profile_detail.district_metro}}</h6></li> 
+                            <li class="list-group-item"><h6>{{profile_detail.province}} </h6></li>   
+                                
+                            
+                                <br>
+                            </ul>             
+                        </div>         
                     </div>
-                </div>
+                    </div>
             </div>
-
         </div>
-        <div class="col-12 col-sm-6">          
-            <div class="col-4 bg-light">
-                <div class="card text-justify " style="width: 45rem;">
-                    
-                <div class="card-body bg-info ">
-                    <h4 class="card-title"> 
-                    <strong class="text-center"> 
-                        Date of Birth: {{profile_detail.birth_date}}
-                    </strong>
-                    </h4>
-                    
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <h4> Residential Address </h3> 
-                    </li>
-                    <li class="list-group-item"> <h6>{{profile_detail.address}} </h6></li>
-                    <li class="list-group-item"> <h6>{{profile_detail.town_city}}</h6> </li>
-                    <li class="list-group-item"> <h6>{{profile_detail.district_metro}}</h6></li> 
-                    <li class="list-group-item"><h6>{{profile_detail.province}} </h6></li>   
-                        
-                    
-                        <br>
-                    </ul>             
-                </div>         
-            </div>
-            </div>
-    </div>
 </div>
-
 <!-- Beneficiary Data Table -->
-<div class="row mt-0">
+<!-- <div class="row mt-0"> -->
     
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-        <div class="col-12">
+            <div class="col-12">
+                <div class="card mx-auto">
+                    <div class="card-header text-center bg-light">                     
+                        <li class="list-group-item">
+                            <h4> <strong class="bg-light">Registered Beneficiaries</strong>  </h4> 
+                        </li>
+                    </div>
+                <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead> 
+                                    <tr>
+                                       <th>Member ID</th> 
+                                        <th>Beneficiary ID</th>
+                                        <th>Beneficiary Name</th>
+                                        <th>Beneficiary Type</th>
+                                        <th>Date of Birth </th>
+                                        <th>Age this Year</th>
+                                        <th>Status</th>
+                                        <th>Paid-up</th>
+                                        <th>Paid-up date</th>
+                                    </tr>
+                                </thead>    
+                                <tbody>
+                                    {% for beneficiary in profile_detail.beneficiaries.all %}
 
-            <div class="card align-center">
-                
-                <div class="card-header text-center bg-light">                     
-                    <li class="list-group-item">
-                        <h4> <strong class="bg-light">Registered Beneficiaries</strong>  </h4> 
-                    </li>
-                </div>
-            <!-- /.card-header -->
-                <div class="card-body">
-                    <table id="example2" class="table table-bordered table-striped">
-                    <thead> 
-                        <tr>
-                            <th>Principal Member</th>
-                            <th>Beneficiary ID</th>
-                            <th>Beneficiary Name</th>
-                            <th>Beneficiary Type</th>
-                            <th>Birth Date</th>
-                            <th>Age this Year</th>
-                            <th>Status</th>
-                            <th>Paid-up</th>
-                            <th>Paid-up date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for beneficiary in profile_detail.beneficiaries.all %}
+                                    {% if beneficiary.beneficiary_status == 'Deceased' %}
+                                        <tr class="text-danger">                      
+                                            <td>{{beneficiary.member.id}}</td>
+                                            <td>{{beneficiary.id}}</td>
+                                            <td>{{beneficiary.name}}</td>
+                                            <td>{{beneficiary.beneficiary_type}}</td>
+                                            <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
+                                            <td> N/A </td>
+                                            <td>{{beneficiary.beneficiary_status}}</td>
+                                            <td>{{beneficiary.is_paid}}</td>
+                                            <td>{{beneficiary.paid_date}}</td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>                              
+                                            <td>{{beneficiary.member.id}} 
+                                            <td>{{beneficiary.id}}</td>
+                                            <td>{{beneficiary.name}}</td>
+                                            <td>{{beneficiary.beneficiary_type}}</td>
+                                            <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
+                                            <td> {{beneficiary.age}}</td>
+                                            <td>{{beneficiary.beneficiary_status}}</td>
+                                            <td>{{beneficiary.is_paid}}</td>
+                                            <td>{{beneficiary.paid_date}}</td>
+                                        </tr>    
 
-                        {% if beneficiary.beneficiary_status == 'Deceased' %}
-                            <tr class="text-danger">                      
-                                <td>{{beneficiary.member.user.last_name}} {{beneficiary.member.user.first_name}} {{beneficiary.member.middlename}}
-                                <td>{{beneficiary.id}}</td>
-                                <td>{{beneficiary.name}}</td>
-                                <td>{{beneficiary.beneficiary_type}}</td>
-                                <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
-                                <td> N/A </td>
-                                <td>{{beneficiary.beneficiary_status}}</td>
-                                <td>{{beneficiary.is_paid}}</td>
-                                <td>{{beneficiary.paid_date}}</td>
-                            </tr>
-                        {% else %}
-                            <tr>                              
-                                <td>{{beneficiary.member.user.last_name}} {{beneficiary.member.user.first_name}} {{beneficiary.member.middlename}}</td>
-                                <td>{{beneficiary.id}}</td>
-                                <td>{{beneficiary.name}}</td>
-                                <td>{{beneficiary.beneficiary_type}}</td>
-                                <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
-                                <td> {{beneficiary.age}}</td>
-                                <td>{{beneficiary.beneficiary_status}}</td>
-                                <td>{{beneficiary.is_paid}}</td>
-                                <td>{{beneficiary.paid_date}}</td>
-                            </tr>    
-
-                        {% endif %}
-                    {% endfor %}
-                </tfoot>
-                    </table>
+                                    {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                 </div>
             </div>
         </div>
-    </div>
     <!-- /.card-body -->
     </div>
     <!-- /.card -->
-
 </section>
 <!-- /.content -->
-</div>
+<!-- </div> -->
 <!-- /.content-wrapper -->
 
 

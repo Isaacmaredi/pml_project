@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'accounts',
     'pmlmain',
     'pmlprofile',
+    'events',
+    'docs',
 ]
 
 MIDDLEWARE = [

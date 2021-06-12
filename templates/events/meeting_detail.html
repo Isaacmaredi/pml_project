@@ -1,0 +1,114 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}| Meeting Details{% endblock title %}
+
+
+{% block content %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper"> 
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6 text-center">
+                <h1>
+                    Meeting Date: &nbsp;&nbsp; {{meeting.date|date:'jS F Y'}}
+                    
+                </h1> 
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'events:meetings' %}">Meetings</a></li>
+                    <li class="breadcrumb-item active">{{meeting.meeting_type}}</li>
+                </ol>
+            </div>
+        </div>
+        <div class="jumbotron">
+            <p><b>Meeting Host:</b> {{meeting.host.user.last_name}} 
+                    {{meeting.host.user.first_name}}
+                {{meeting.host.middlename}}
+            </p>
+            <p> <b>Address: </b> &nbsp;&nbsp; {{meeting.host.address}} </p>
+            <p> <b>Town: </b> &nbsp;&nbsp; {{meeting.host.town_city}} </p> </br>
+            <p> <b>Email: </b> &nbsp;&nbsp; {{meeting.host.user.email}} </p>
+            <p> <b>Phone: </b> &nbsp;&nbsp; {{meeting.host.mobile_phone}} </p>
+            <p> </p>
+
+        </div>
+    </div><!-- /.container-fluid -->
+
+</section>
+
+<section class="content">
+<div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                    <h3 class="card-title">Choose format for printing or column display</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>                    
+                        <th>Event</th>
+                        <th>Member</th>
+                        <th>Is Present</th>
+                        <th>Absence Reaason</th>
+                        
+                    </tr>
+                    </thead>
+
+                <tbody>
+                {% for attendance in meeting.attendances.all %} 
+
+                {% if attendance.is_present  %}
+                    <tr>
+                        <td>{{attendance.register.meeting}}</td>
+                        <td>{{attendance.register.member.user.last_name}} {{attendance.member.user.first_name}} {{attendance.member.middlename}}</td>
+                        <td>{{attendance.register.is_present}}</td>
+                        <td>{{attendance.register.absence_reason}}</td>
+                    </tr>
+                {% else %}
+                    <tr class="text-danger">
+                        <td>{{attendance.register.meeting}}</td>
+                        <td>{{attendance.register.member.user.last_name}} {{attendance.member.user.first_name}} {{attendance.member.middlename}}</td>
+                        <td>{{attendance.register.is_present}}</td>
+                        <td>{{attendance.register.absence_reason}}</td>
+                    </tr>    
+
+                {% endif %}
+
+                    
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Event</th>
+                        <th>Member</th>
+                        <th>Is Present</th>
+                        <th>Absence Reaason</th>
+                    </tr>
+                </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>  
+                
+</div>
+</div>
+
+</section>
+</div>
+<!-- Main content -->
+
+<!-- /.content -->
+
+<!-- /.content-wrapper -->
+
+
+{% endblock content %}

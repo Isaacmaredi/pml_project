@@ -74,7 +74,7 @@
                 <div class="card-body bg-info ">
                     <h4 class="card-title"> 
                     <strong class="text-center"> 
-                        Date of Birth: {{object.birth_date}}
+                        Date of Birth: {{profile_detail.birth_date}}
                     </strong>
                     </h4>
                     
@@ -95,24 +95,35 @@
             </div>
             </div>
     </div>
+                
 </div>
+        <div class="mx-auto">
+            {% if user.is_authenticated %}         
+                <li class="list-group-item">
+                    <div class="btn btn-info">
+                        <a href="{% url 'pmlprofile:profile_update' %}"> <span class="text-white"> Edit Profile</span> </a> 
+                    </div> 
+                    <div class="btn btn-info ml-3">
+                        <a href="{% url 'pmlprofile:certificate' %}"> 
+                            <span class="text-white">
+                            <i class="class="fa fa-file-pdf" aria-hidden="true"></i>
+                            Print Certificate</span> 
+                        </a> 
+                    </div>                
+                </li>                                
+            {% endif %}
+        </div> 
+
 
 <!-- Beneficiary Data Table -->
-<div class="row mt-0">
+
     
 <section class="content">
     <div class="container-fluid">
         <div class="row">
         <div class="col-12">
             
-                {% if user.is_authenticated %}                    
-                <li class="list-group-item">
-                    <div class="btn btn-info btn-large">
-                        <a href="{% url 'pmlprofile:profile_update' %}"> <span class="text-white"> <h4>Update Your Profile</h4></span> </a> 
-                    </div>
-                
-                </li>
-                {% endif %}
+
 
             <div class="card align-center">
                 
@@ -126,7 +137,6 @@
                     <table id="example2" class="table table-bordered table-striped">
                     <thead> 
                         <tr>
-                            <th>Principal Member</th>
                             <th>Beneficiary ID</th>
                             <th>Beneficiary Name</th>
                             <th>Beneficiary Type</th>
@@ -142,7 +152,6 @@
 
                         {% if beneficiary.beneficiary_status == 'Deceased' %}
                             <tr class="text-danger">                      
-                                <td>{{beneficiary.member.user.last_name}} {{beneficiary.member.user.first_name}} {{beneficiary.member.middlename}}
                                 <td>{{beneficiary.id}}</td>
                                 <td>{{beneficiary.name}}</td>
                                 <td>{{beneficiary.beneficiary_type}}</td>
@@ -153,8 +162,7 @@
                                 <td>{{beneficiary.paid_date}}</td>
                             </tr>
                         {% else %}
-                            <tr>                              
-                                <td>{{beneficiary.member.user.last_name}} {{beneficiary.member.user.first_name}} {{beneficiary.member.middlename}}</td>
+                            <tr>                             
                                 <td>{{beneficiary.id}}</td>
                                 <td>{{beneficiary.name}}</td>
                                 <td>{{beneficiary.beneficiary_type}}</td>
@@ -164,7 +172,6 @@
                                 <td>{{beneficiary.is_paid}}</td>
                                 <td>{{beneficiary.paid_date}}</td>
                             </tr>    
-
                         {% endif %}
                     {% endfor %}
                 </tfoot>
@@ -179,7 +186,6 @@
 
 </section>
 <!-- /.content -->
-</div>
 <!-- /.content-wrapper -->
 
 {% endif %}

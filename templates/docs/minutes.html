@@ -1,0 +1,102 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% load humanize %} 
+
+{% block content %} 
+
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+    <div class="row mb-2">
+        <div class="col-sm-6">
+        <h1>PML Minutes</h1>
+        </div>
+        <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'pmlprofile:profiles' %}">Home</a></li>
+            <li class="breadcrumb-item active">Minutes</li>
+        </ol>
+        </div>
+    </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Minutes Documents</h3>
+
+        <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+            <i class="fas fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+            <i class="fas fa-times"></i>
+        </button>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <table class="table table-striped projects">
+            <thead>
+                <tr>
+                    <th style="width: 1%">
+                        No.
+                    </th>
+                    <th style="width: 30%">
+                        Description 
+                    </th>
+                    <th style="width: 20%">
+                        Upload Date
+                    </th>
+                    <th style="width: 10%" class="project-actions text-right"> 
+                        <a class="btn btn-success btn-sm" href="{% url 'docs:upload_minutes' %}">
+                            <i class="fas fa-plus-circle">
+                            </i>
+                        <strong> Add Minutes</strong>
+                        </a> 
+                    </th>                
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+            {% for minute in minutes %}
+                    <td>
+                        {{ minute.id}}
+                    </td>
+                    <td>
+                        <a href="#">
+                            Minutes of {{minute.title}} hosted by -  {{minute.title.host.shortname}}
+                        </a>
+                    </td>
+                    <td>
+                        {{minute.date}}
+                    </td>
+                                                
+                    <td >
+                    
+                        <a href="{{minute.doc.url}}" target="_blank"> 
+                            <button type="button" class="btn btn-info float-right" style="margin-right: 5px;">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                        </a>
+                    </td>
+                </tr>   
+        {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock %}

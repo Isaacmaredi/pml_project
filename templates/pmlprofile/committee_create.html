@@ -36,7 +36,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Add Committee</h3>
                 </div>
-                <div>
+                <div class="pl-3 pr-3">
                     <form action=""  method="POST">
                             {% csrf_token %}
                             {{form|crispy}}                   
@@ -49,11 +49,14 @@
             </div>
         </div>
         {% else %}
-
-        <div class="jumbotron">
-            <h2>Your are not authorised to edit this information</h2>
-            <a href="{% url 'pmlprofile:committees' %}">Go Back</a>
-        </div>
+        
+        <div class="col-md-6 mx-auto ">
+            <div class="jumbotron">
+                <h2> <span class='text-danger'> Embagored!!</span>You are not authorised to edit this page.</h2>
+                <a href="{% url 'pmlprofile:committees' %}">Go Back</a>
+            </div>
+          </div>
+        
         
         {% endif %}
         
