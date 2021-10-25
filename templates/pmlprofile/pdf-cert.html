@@ -1,134 +1,266 @@
-{% extends 'layout.html' %}
-{% load static %}
+<!DOCTYPE html>
 
-{% block title %}-{{my_cert.shortname}} Profile{% endblock title %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet" type="text/css">
 
+    <title>{{cert_pdf.user.username}}-Certificate</title>
 
-{% block content %}
+  <style> @page {
+        size: A4 portrait; 
+        left: 50pt;
+        width: 512pt;
+        top: 50pt;
+        height: 692pt; -pdf-frame-border:2;
+        border-image: url(/Users/ikemaredi/Desktop/DEV-PROJECTS/pml_project/static/img/border2.jpg);
+     
+      }
+   
+      h1 {
+        font-family: 'Brush Script MT', cursive;
+        text-align: center;
+        font-size:25px;
+        padding-top: 5px;
+      }
+      .deceased {
+        color:darkred;
+        font-weight: bold;
+      }
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+      table { 
+        -pdf-keep-with-next: true;
+        -pdf-keep-in-frame-mode: shrink;
+        margin-left: 5;
+        border:2px; 
+        margin-left: 3px;
+        text-align:left;
+        justify-content:center!important;   
+      }
+      thead,th { 
+        text-align:left;
+        font-weight: bold;
+        text-justify:auto;
+        text-decoration: none;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        height:30px;
+        background-color: rgba(236, 164, 30, 0.534);
+      }
 
-<!-- Main content -->
-<div class="container">
+      tbody,tr {
+        font-weight: lighter;
+        text-decoration: none;
+        text-justify: auto;
+        padding-top: 2px;
+        height:30px;
+      }
+    .table2 {
+      border: none;
+      height: 60px!important;
+      text-justify:auto!important;
+    }
 
+    tr.table2 {
+      height:90px!important;
+      border: 2px;
+      border-style: solid;
+      border-color: black;
+    
+    }
 
-<section class="content">
-    <div class="col-md-12">
-        <!-- Profile Image -->
-        <div class="card card-primary card-outline">
-        <div class="card-body box-profile">
-            <div class="text-center">
-                <img  class="profile-user-img img-fluid img-circle"
-                    src="{% static 'img/pml-logo1.png' %}"
-                    alt="User profile picture"> <br>
-                <!-- <img height="300" width="250" class="iprofile-user-img img-fluid"
-                    src="{% static 'img/cert/pmlcert6.jpg' %}"
-                    alt="User profile picture"> -->
-            </div>
-        
-            <div class="text-center" class="cert">
-        <span style="font-family: 'Sacramento', cursive; font-size:46px;" > 
-            <b> <i>Certificate of Membership </i>  </b> 
-            </span> 
+      p{ 
+        text-decoration: none;
+      }
 
-            </div>
+    tr:nth-child(even){background-color: #f2f2f2a1;}
 
-            <br>
-            <br>
-            <h3 class="profile-username text-center">THIS CERTIFICATE IS PRESENTED TO</h3>
-            <br>
-            <ul class="list-group list-group-unbordered mb-3 text-center">
-                <li class="list-group-item" style="font-size:x-large;" >
-                <b> <u> {{my_cert.user.first_name}} {{my_cert.user.last_name}} {{my_cert.middlename}}</u> </b> 
-                <br>
-                <hr>
-                <p class="text-muted text-center" style ="font-size:large;">as a <i> 'bona fides'</i> member of 
-                    <b>Progress Men's League</b>, with all
-                    <br>
-                    privilages, rights and obligations as espoused in the League's constitution 
-                    <br>
-                
-                    <br>
-                    <span class="text-muted text-center" style ="font-size:large;"> and, with his duly registered beneficiaries 
-                    as listed below.
-                    </span> 
-                
-                    <br>       
-            </li>
-        </ul>    
+      h1,h2 {
+        text-align:center;
+      }
+    
+    img {
+      margin-left: 320px;
+    }
+
+      .image {
+        width: 320px;
+        padding: 10px;
+        padding-left:300px;
+        border: 5px solid gray;
+        margin: 0;
+      }
+
+    div.image{
+      justify-content:center;
+    }
+
+   * {
+      box-sizing: border-box;
+    }
+
+    .column {
+      float: left;
+      width: 33.33%;
+      padding: 5px;
+    }
+    
+    /* Clearfix (clear floats) */
+    .row::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+    
+    .img-container {
+      float: inline-end;
+      width: 33.33%;
+      
+    }
+
+    .clearfix::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+      p { margin: 2; -pdf-keep-with-next: true; text-align: center;}
+      p.separator { -pdf-keep-with-next: false; font-size: 6pt; }
+  </style>
+</head>
+<body>     
+  <div >
+    <div style="text-align:center; padding-top:5px;" >
+      <img src="/Users/ikemaredi/Desktop/DEV-PROJECTS/pml_project/static/img/pml-logo1.png" alt="" width="120" height="100" >
     </div>
-        <!-- /.card-body -->
-</div>
-</div>
-</section>
+  </div>
+  <br>
+  {% if cert_pdf.status != "Deceased" %}
+  <div style="text-align:center; padding-top:5px;" >
+    <img src="/Users/ikemaredi/Desktop/DEV-PROJECTS/pml_project/static/img/pmlcert-5.png" alt="" >
+  </div>
+  {% else %}
+  <h1> <u>Record of Closure for the Deceased Member </u></h1>
+  {% endif %}
+  <!-- <div style="font-family: 'Brush Script MT', cursive;">
+    <h1> <i>Certificate of Membership</i>  </h1>
+  </div> --> 
 
-<section class="content">
-    <div class="container">
-        <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Beneficiaries</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                <th style="width: 10px">#</th>
-                                <th>Name </th>
-                                <th>Relation</th>
-                                <th>Date of Birth</th>
-                                <th style="width: 40px">Status</th>
-                                <th>Paid-up</th>
-                                <th>Paid-up Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {% for beneficiary in my_cert.beneficiaries.all %}
-                                {% if beneficiary.beneficiary_status == 'Deceased' %}
-                                <tr class="text-muted">     
-                                <td>{{beneficiary.id}}</td>
-                                <td>{{beneficiary.name}}</td>
-                                <td>{{beneficiary.beneficiary_type}}</td>
-                                <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
-                                <td><span class="badge bg-danger">{{beneficiary.beneficiary_status}}</span></td>
-                                <td>{{beneficiary.is_paid}}</td>
-                                <td>{{beneficiary.paid_date|date:'d F, Y'}}</td>                   
-                                </tr>
-                                <tr>
-                                {% elif beneficiary.beneficiary_status == 'Inactive' or beneficiary.beneficiary_status == 'Article 20.3' %}                               
-                                <tr class="text-muted">     
-                                    <td>{{beneficiary.id}}</td>
-                                    <td>{{beneficiary.name}}</td>
-                                    <td>{{beneficiary.beneficiary_type}}</td>
-                                    <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
-                                    <td><span class="badge bg-warning">{{beneficiary.beneficiary_status}}</span></td>
-                                    <td>{{beneficiary.is_paid}}</td>
-                                    <td>{{beneficiary.paid_date|date:'d F, Y'}}</td>                   
-                                    </tr>
-                                    <tr>
-                                {% else %}
-                                <tr>     
-                                    <td>{{beneficiary.id}}</td>
-                                    <td>{{beneficiary.name}}</td>
-                                    <td>{{beneficiary.beneficiary_type}}</td>
-                                    <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
-                                    <td><span class="badge bg-success">{{beneficiary.beneficiary_status}}</span></td>
-                                    <td>{{beneficiary.is_paid}}</td>
-                                    <td>{{beneficiary.paid_date|date:'d F, Y'}}</td>                   
-                                    </tr>
-                                <tr>
-                                {% endif %}
-                            {% endfor %}
-                            </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-<!-- End New Table for Beneficiaries -->
+  {% if cert_pdf.status == "Deceased" %}
+    <h3 style="text-align:center;">PRESENTED TO THE FAMILY OF THE LATE </h3>
 
-{% endblock content %}
+    <div> 
+      <h1 class="text-center"> <i> {{cert_pdf.user.first_name}} {{cert_pdf.middlename}} {{cert_pdf.user.last_name}}</i></h1> 
+
+
+        <p class="text-muted text-center" style ="font-size:medium;"><i>as a former 'bona fides' member of </i>
+          <b>Progress Men's League.</b> <br>
+          <i>In line with </i><b>Article 20.3 </b> <i>of the League's constitution, 
+          the surviving beneficiaries, as listed below,  are eligible for funeral benefit on submision of a valid death certificate.</i><br>
+        </p> 
+          <h1 class="text-center text-danger" style ="font-size:large; color:darkred "><class="deceased"> Cover lapses on: {{ cert_pdf.lapse_date|date:'d F Y'}}</h1> 
+      </p>
+  
+
+    {% else %}
+
+    
+    <h3 style="text-align:center;">THIS CERTIFICATE IS PRESENTED TO</h3>
+    <div> 
+      <h1 > <u> {{cert_pdf.user.first_name}} {{cert_pdf.middlename}} {{cert_pdf.user.last_name}}</h1> 
+
+
+        <p class="text-center" style ="font-size:large;"><i>in recognition of his bona fides membership of </i>
+          <b>Progress Men's League</b>, <br>
+          <i>with all the privileges and rights as espoused by the League's constitution, and <br>
+        
+          <span class="text-muted text-center" style ="font-size:large;"> his duly registered beneficiaries 
+          and their prevailing statusses as listed below.</i>
+          </span> 
+      </p>
+
+    {% endif %}
+<hr>
+
+    <table class="table">
+      <thead>
+          <tr>    
+          <th>Name </th>
+          <th>Relation</th>
+          <th>Date of Birth</th>
+          <th >Status</th> 
+          <th>Paid-up Date</th>
+          </tr>
+      </thead>
+      <tbody>
+        {% for beneficiary in cert_pdf.beneficiaries.all %}
+          <tr>
+            <td>{{beneficiary.name}}</td>
+            <td>{{beneficiary.beneficiary_type}}</td>
+            <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
+          
+            <td>
+              {% if beneficiary.beneficiary_status == "Deceased"%}
+              <div class="deceased">
+                {{beneficiary.beneficiary_status}}
+              </div>
+              {% else %}
+              {{beneficiary.beneficiary_status}}
+            {% endif%}
+            </td>
+
+            <td>
+            {% if beneficiary.is_paid %} 
+            {{beneficiary.paid_date|date:'d-m-Y'}}
+              {% else %}
+              N/A
+              {% endif %}
+            </td>    
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+ <hr>
+
+    <table class="table2" >
+    
+  <tbody>
+    <tr>
+  
+        <td style ="height:100px; text-align:center;">
+          <img src="/Users/ikemaredi/Desktop/DEV-PROJECTS/pml_project/static/img/dp_sign.png" alt="Signature" width="120" height="90"> <br>
+          <b> <u>Chairperson: </u> DP Mahlangu </b> 
+        </td>
+    
+        <td style ="height:250px;width:250; text-align:center;">
+          <img src="/Users/ikemaredi/Desktop/DEV-PROJECTS/pml_project/static/img/pmlcert-6.png" alt="Seal" width="250" height="250">
+        </td>
+          
+        <td style ="height:100px; text-align: center;">
+          <img src="/Users/ikemaredi/Desktop/DEV-PROJECTS/pml_project/static/img/ssmtsweni_signature.png" alt="Signature" width="120" height="90"> <br>
+          <b> <u>Secretary-General: </u> SS Mtsweni</b> 
+        </td>    
+    </tr>
+    <tr>
+
+      <td></td>
+      
+      <td style = "text-align:center;">
+        Issued without alteration : {{today| date:'d F Y'}}
+      </td>
+    </tr>
+  </tbody>
+
+    
+</table>
+
+</body>
+</html>
+    
+    
+

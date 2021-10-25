@@ -1,0 +1,199 @@
+{% extends 'layout.html' %}
+{% load humanize %}
+
+{% block title %} Member Accounts{% endblock %}
+
+{% block content %}
+
+
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+    <div class="row mb-2">
+        <div class="col-sm-6">
+        <h1>Member Individual Accounts</h1>
+        </div>
+        <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Accounts</li>
+        </ol>
+        </div>
+    </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+    <div class="card-header">
+
+        <h3 class="card-title">Summary of Member Accounts for {{first_rec.month_date}}</h3>
+
+        <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+            <i class="fas fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+            <i class="fas fa-times"></i>
+        </button>
+        </div>
+    </div>
+    <div class="card-body">
+            
+            <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                            <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Total Outstanding</th>                   
+                            </tr>
+                    </thead>
+            <tbody>
+            {% for account in accounts %}
+                    <tr>
+                        <th scope="row">{{account.id}}</th>
+                        {% if account.total_outstanding <= -3000 %}  
+                            <!-- <td ></td> -->
+                            <th scope="row" class="bg-success">
+                                {{account.name.user.last_name}} 
+                                {{account.name.user.first_name}} 
+                                {{account.name.middlename}}
+                            </th>
+                            <td>
+                                <span style="color: #68da80";>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>  
+                                </span>
+                            </td>  
+                            <td> Diamond</td>  
+
+                        {% elif account.total_outstanding <= -2000 %}
+                            <!-- <td ></td> -->
+                            <th scope="row" class="bg-info">
+                                {{account.name.user.last_name}} 
+                                {{account.name.user.first_name}} 
+                                {{account.name.middlename}}
+                            </th>
+                            <td>
+                                <span style="color: #b4a483"">
+                                    <i class="fas fa-star"></i>                              
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </span>
+                            </td>
+                            <td>Platinum</td>                                     
+                
+                        {% elif account.total_outstanding <= -1000 %}
+                            <!-- <td ></td> -->
+                            <th scope="row" class="bg-primary">
+                                {{account.name.user.last_name}} 
+                                {{account.name.user.first_name}} 
+                                {{account.name.middlename}}
+                            </th>
+                            <td>
+                                <span style="color:#d4af37";>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>                            
+                                </span>
+                            </td>              
+                            <td>Gold</td>
+
+                        {% elif account.total_outstanding <= 0 %}
+                            <!-- <td ></td> -->
+                            <th scope="row" class="bg-primary">
+                                {{account.name.user.last_name}} 
+                                {{account.name.user.first_name}} 
+                                {{account.name.middlename}}
+                            </th>
+                            <td>
+                                <span style="color:#cac2c2";>          
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </span>
+                            </td>
+                            <td>Silver</td>
+        
+                        {% elif account.total_outstanding < 500 %}
+                            <th scope="row" class="bg-light">
+                                {{account.name.user.last_name}} 
+                                {{account.name.user.first_name}} 
+                                {{account.name.middlename}}
+                            </th>
+                            <td>
+                                <span style="color:#d8d788";>
+                                    <i class="fas fa-flag"></i>
+                                    <!-- <span class="text-md">♦</span>  -->
+                                </span>
+                            </td>
+                            <td>Silent</td>
+                        
+                        {% elif account.total_outstanding < 1000 %}
+                            <th scope="row" class="bg-warning">
+                                {{account.name.user.last_name}} 
+                                {{account.name.user.first_name}} 
+                                {{account.name.middlename}}
+                            </th>
+                            <td>
+                                <span class="text-warning">
+                                    <!-- <span class="text-md">♦</span>  -->
+                                    <i class="fas fa-flag"></i>
+                                </span>
+                            </td>
+                            <td>Yellow Flag</td>
+
+                        {% else %}
+                            <th scope="row" class="bg-danger">
+                                {{account.name.user.last_name}} 
+                                {{account.name.user.first_name}} 
+                                {{account.name.middlename}}
+                            </th>
+                            <td>
+                                <span class="text-danger">
+                                    <!-- <span class="text-md">♦</span> -->
+                                    <i class="fas fa-flag"></i> 
+                                </span>
+                            </td>
+                            <td>Red Flag</td>
+                        {% endif %}
+                        <th scope="row">{{ account.total_outstanding|floatformat:2|intcomma}}</th>
+                    </tr>   
+            {% endfor %}
+            </tbody>
+                <tfoot>
+                    
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Total Balance</th>                        
+                            </tr>
+                        
+                </tfoot>
+            </table>
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+        Footer
+    </div>
+    <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+{% endblock %}
+

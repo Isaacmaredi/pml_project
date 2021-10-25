@@ -1,15 +1,37 @@
 {% extends 'layout.html' %}
 {% load static %}
 
-{% block title %}-{{certificate.shortname}} Profile{% endblock title %}
+{% block title %}-{{cert.shortname}} Certificate {% endblock title %}
 
 
 {% block content %}
-
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 
 <!-- Main content -->
+
+<section class="content-header">
+    <div class="container-fluid">
+    <div class="row mb-2">
+        <div class="col-sm-6 text-center">
+            <div class="btn btn-info ml-3">
+                <a href="{% url 'pmlprofile:pdf_cert' request.user.id%}" target="_blank"> 
+                    <span class="text-white">
+                    <i class="fa fa-file-download" aria-hidden="true"></i>
+                    Print Certificate</span> 
+                </a> 
+            </div>   
+        </div>
+        <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'pmlprofile:profiles' %}">Membership List</a></li>
+            <li class="breadcrumb-item active">Member Certificate</li>
+        </ol>
+        </div>
+    </div>
+    </div><!-- /.container-fluid -->
+</section>
+
 <div class="container">
 
 
@@ -19,7 +41,7 @@
         <div class="card card-primary card-outline">
         <div class="card-body box-profile">
             <div class="text-center">
-                <img  class="img-fluid iheight="300" width="200"mg-circle"
+                <img  class="img-fluid mg-circle height="200" width="150" "
                     src="{% static 'img/pml-logo1.png' %}"
                     alt="User profile picture"> <br>
                 <!-- <img height="300" width="250" class="iprofile-user-img img-fluid"
@@ -28,41 +50,42 @@
             </div>
         
             <div class="text-center" class="cert">
-        <span style="font-family: 'Sacramento', cursive; font-size:46px;" > 
-            <b> <i>Certificate of Membership </i>  </b> 
+            <span style="font-family: 'Sacramento', cursive; font-size:46px;" > 
+                <b> <i>Certificate of Membership </i>  </b> 
             </span> 
 
             </div>
+            <hr>
+            <h3 class="profile-username text-center">THIS CERTIFICATE SERVES TO AFFIRM THAT</h3>
+            <br>
 
-            <br>
-            <br>
-            <h3 class="profile-username text-center">THIS CERTIFICATE IS PRESENTED TO</h3>
-            <br>
+        <div class="border border-secondary border-large border-solid border-15">
+
             <ul class="list-group list-group-unbordered mb-3 text-center">
                 <li class="list-group-item" style="font-size:x-large;" >
-                <b> <u> {{certificate.user.first_name}} {{certificate.user.last_name}} {{certificate.middlename}}</u> </b> 
+                <b> <u> {{cert.user.first_name}} {{cert.middlename}} {{cert.user.last_name}} </u> </b> 
                 <br>
                 <hr>
-                <p class="text-muted text-center" style ="font-size:large;">as a <i> 'bona fides'</i> member of 
-                    <b>Progress Men's League</b>, with all
-                    <br>
-                    privilages, rights and obligations as espoused in the League's constitution 
-                
-                    <br>
-                    <span class="text-muted text-center" style ="font-size:large;"> and, with his duly registered beneficiaries 
-                    as listed below.
-                    </span> 
-                
-                    <br>       
-            </li>
-        </ul>    
+                <small>
+                    <p class="text-muted text-center" style ="font-size:large;">is a <i> fully subscribed member</i> of 
+                        <b>Progress Men's League</b>, with all the privileges and rights
+                        as espoused in the League's constitution, 
+                        <br>
+                        <span class="text-muted text-center" style ="font-size:large;"> with the recognition of his duly registered beneficiaries 
+                        and their prevailing statusses as listed below.
+                        </span> 
+                    </p>
+                </small>      
+                </li>
+            </ul> 
+        </div>   
     </div>
         <!-- /.card-body -->
 </div>
 </div>
 </section>
 
-<section class="content">
+<section class="content"> 
     <div class="container">
         <div class="row">
                 <div class="col-md-12">
@@ -85,14 +108,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            {% for beneficiary in certificate.beneficiaries.all %}
+                            {% for beneficiary in cert.beneficiaries.all %}
                                 {% if beneficiary.beneficiary_status == 'Deceased' %}
                                 <tr class="text-muted">     
                                 <td>{{beneficiary.id}}</td>
                                 <td>{{beneficiary.name}}</td>
                                 <td>{{beneficiary.beneficiary_type}}</td>
                                 <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
-                                <td><span class="badge bg-danger">{{beneficiary.beneficiary_status}}</span></td>
+                                <td>
+                                    <i class="fas fa-circle fa-2x text-red"></i>
+                                    </div>      
+                                </td>
+                                <!-- <td><span class="badge bg-danger">{{beneficiary.beneficiary_status}}</span></td> -->
                                 <td>{{beneficiary.is_paid}}</td>
                                 <td>{{beneficiary.paid_date|date:'d F, Y'}}</td>                   
                                 </tr>
@@ -103,7 +130,10 @@
                                     <td>{{beneficiary.name}}</td>
                                     <td>{{beneficiary.beneficiary_type}}</td>
                                     <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
-                                    <td><span class="badge bg-warning">{{beneficiary.beneficiary_status}}</span></td>
+                                    <td>
+                                      
+                                    </td>
+                                    <!-- <td><span class="badge bg-warning">{{beneficiary.beneficiary_status}}</span></td> -->
                                     <td>{{beneficiary.is_paid}}</td>
                                     <td>{{beneficiary.paid_date|date:'d F, Y'}}</td>                   
                                     </tr>
@@ -114,7 +144,15 @@
                                     <td>{{beneficiary.name}}</td>
                                     <td>{{beneficiary.beneficiary_type}}</td>
                                     <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
-                                    <td><span class="badge bg-success">{{beneficiary.beneficiary_status}}</span></td>
+                                    <td>                                     
+                
+                        
+                                                <i class="fas fa-circle fa-2x text-green"></i>
+                                            
+                                        </div>
+
+                                    </td>
+                                    <!-- <td><span class="badge bg-success">{{beneficiary.beneficiary_status}}</span></td> -->
                                     <td>{{beneficiary.is_paid}}</td>
                                     <td>{{beneficiary.paid_date|date:'d F, Y'}}</td>                   
                                     </tr>
@@ -128,6 +166,40 @@
                 </div>
             </div>
         </div>
+   
+</section>
+
+<section class="content">
+    <div class="container">
+        <div class="row">
+                <div class="col-md-12">
+                    
+
+                    <div class="card-group border-primary" >
+                        <div class="card">
+                        <img height="80" width="220" src="{% static 'img/dp_sign.png' %}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Chairperson</h5>
+                        </div>
+                        </div>
+                        <div class="card">
+                        <img height="250" width="350" src="{% static 'img/pmlseal11.png' %}" alt="Card image cap">
+                        
+                        </div>
+                        <div class="card">
+                        <img height="80" width="220" height="80" width="30" src="{% static 'img/ssmtsweni_sign.png' %}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Secretary-General</h5>                
+                        </div>
+                        </div>
+                    </div>
+                        Date: <script>document.write(new Date().getFullYear());</script>
+
+                </div>
+            </div>
+        </div>
+</section>
+
 <!-- End New Table for Beneficiaries -->
 
 {% endblock content %}

@@ -1,11 +1,10 @@
 from django.db import models
 from django.db.models import Count, Q
 from django.contrib.auth.models import User
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
+from django.utils import timezone
 from django.urls import  reverse
-from sorl.thumbnail import ImageField
-
-
+from phonenumber_field.modelfields import PhoneNumberField
 
 status_choices = [     
         ('Active','Active'),
@@ -83,12 +82,34 @@ class Profile(models.Model):
     town_city = models.CharField(max_length=200)
     district_metro = models.CharField(max_length=250)
     province = models.CharField(choices = provinces, max_length=100)
-    photo = models.ImageField(default='default2.png', upload_to='member_photos/%Y')
+    photo = models.ImageField(default='static/img/default2.png', upload_to='member_photos/%Y')
     alt_address = models.TextField(blank=True,null=True)
     alt_phone = models.CharField(max_length=50, blank=True, null=True)
+    lapse_date = models.DateField(auto_now=False, blank=True, null=True)
+    age_group = models.CharField(max_length=50, blank=True, null=True)
     
     def get_absolute_url(self):
         return reverse('pmlprofile:profile_detail' ,kwargs={'pk': self.pk})
+    
+    def age(self):
+        if self.birth_date and self.status == 'Active' or self.status == 'Suspended':
+            birth_year = self.birth_date.year
+            this_year = datetime.now().year
+            member_age = this_year - birth_year
+            return member_age
+        else:
+            return 'N/A'
+    
+        
+    def save(self, *args, **kwargs):
+        lapse_delta= timedelta(days=365)
+        if self.status_date:
+            self.lapse_date = self.status_date + lapse_delta
+        super(Profile,self).save(*args, **kwargs)
+    
+        print(timezone.now())
+        print(self.lapse_date)
+        
     
     def __str__(self):
         return self.shortname
@@ -103,21 +124,41 @@ class Beneficiary(models.Model):
     beneficiary_status = models.CharField(max_length=100,choices=beneficiary_status, default="Active")
     is_paid = models.BooleanField(default=False)
     paid_date = models.DateField(blank=True, null=True)
+    lapse_date = models.DateField(blank=True, null=True)
     
     class Meta:
-        ordering = ('member__id','id')
-    
+        verbose_name_plural = 'Beneficiaries'
+        ordering = ('member__id',)
+        
+    def save(self, *args, **kwargs):
+        print(self.member.status)
+        print(date.today())
+        print(self.member.lapse_date)
+        
+        if self.member.lapse_date is not None:
+            print(date.today() <= self.member.lapse_date)
+        else:
+            print('Lapse date not yet calculated')
+        
+        if self.member.lapse_date and self.member.status == "Deceased":
+            if date.today() <= self.member.lapse_date and self.beneficiary_status != "Deceased":
+                self.beneficiary_status = "Article 20.3" 
+            else:
+                self.beneficiary_status = 'Inactive'
+        elif self.member.status == "Suspended":
+            self.beneficiary_status = "Inactive"
+                 
+        super(Beneficiary, self).save(args, kwargs)
+        
     def age(self):
-            birth_year = self.birth_date.year
-            this_year = datetime.now().year
-            ben_age = this_year-birth_year
-            return ben_age
+        birth_year = self.birth_date.year
+        this_year = datetime.now().year
+        ben_age = this_year-birth_year
+        return ben_age
     
-    def active_count(self):
-        actives= Beneficiary.objects.annotate(active_count=Count("active", filter=Q(beneficiary_status='Active')))
-
     def __str__(self):
         return self.name
+    
     
 class Committee(models.Model):
     name = models.CharField(max_length=200,choices=committees)
@@ -135,7 +176,7 @@ class Committee(models.Model):
     
     class Meta:
         ordering =['id']
-  
+
     def __str__(self):
         return self.name 
     

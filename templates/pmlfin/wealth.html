@@ -1,0 +1,391 @@
+{% extends "layout.html" %}
+{% load humanize %}
+{% load static %}
+
+
+{% block title  %}| Wealth {% endblock title  %}
+
+{% block content %}
+
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+    <div class="row mb-2">
+        <div class="col-sm-6">
+        <h1 class="m-0">Total Net Wealth Over Time</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'dash:summary' %}">Main Dashboard</a></li>
+            <li class="breadcrumb-item active">Wealth</li>
+        </ol>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6" >
+    
+        <div class="card" style="background-color:rgb(226, 225, 230)"> 
+            <div class="card  card-outline" style="background-color: rgb(226, 225, 230)">
+            <div class="card-header border-0" style="background-color:rgb(44, 74, 102)" style>
+                <h3 class="card-title text-white">Latest Total Net Wealth as at  {{latest_date|date:'d F Y'}}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                    <strong>
+                        (Total: R {{latest_net_wealth|floatformat:2|intcomma}})
+                    </strong>
+
+                        </h3>
+                
+            </div>
+            <div class="card-body">
+                <div class="position-relative mb-4">
+                    <canvas id="investmentValues" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!--  Go away  -->
+        
+
+
+        <div class="card" style="background-color:rgb(226, 225, 230)">
+            <div class="card  card-outline" style="background-color:rgb(226, 225, 230)">
+                <div class="card-header text-white border-0" style="background-color: rgb(44, 74, 102)">
+                    <div class="d-flex justify-content-between">
+                        <h3 class="card-title">Net Wealth Summary Statistics</h3>          
+                    </div>
+                </div>
+                <div class="card-body"  >
+                    <div class="position-relative mb-4">
+                        <table class="table table-striped table-valign-middle">
+                            <thead>
+                            <tr class="text-muted" scope="row">
+                                <th>       
+                                Coverage Period
+                                </th>
+                                <th>{{wealth_date_from}} to {{wealth_date_to}}<td>               
+                            </tr>
+                            <tr>
+                                <th>Stats Description </th>
+                                <th>Value</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>                                
+                                Average Net Wealth 
+                                </td>
+                                <th>R {{net_wealth_average|floatformat:2|intcomma}} &nbsp;&nbsp;&nbsp;&nbsp;</th>              
+                            </tr>
+                            <tr>
+                                <td>
+                                Highest Monthly Net Wealth 
+                                </td>
+                                <th class="text-success">R {{net_wealth_high|floatformat:2|intcomma}}</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                Lowest Monthly Net Wealth
+                                </td>
+                                <th class="text-danger">R {{net_wealth_low|floatformat:2|intcomma}}</th>
+                                <td>
+                            </tr>
+                            <tr>
+                                <td>
+                                Highest Performing Month
+                                </td>
+                                <th>{{highest_month}}</th>
+                                <td>
+                            </tr>
+                            <tr>
+                                <td>
+                                Lowest Performing Month
+                                </td>
+                                <th class="text-muted">{{lowest_month}}</th>
+                                <td>
+                            </tr>
+                            </tbody>
+                            </table>
+                    </div>
+                </div>
+            </div>      
+        </div>
+        <!-- /.card -->       
+        </div>
+        <!-- /.col-md-6 -->
+        <div class="col-lg-6" >
+        
+            <div class="card" style="background-color:rgb(226, 225, 230)">
+                <div class="card  card-outline" style="background-color:rgb(226, 225, 230)">
+                    <div class="card-header text-white border-0" style="background-color: rgb(44, 74, 102)">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="card-title">Net Wealth Over Time (Monthly) </h3>         
+                        </div>
+                    </div>
+                    <div class="card-body"  >
+                        <div class="position-relative mb-4">
+                            <canvas id="netWealthTrends" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>
+                        </div>
+                    </div>
+                </div>      
+            </div>
+            <!-- /.card -->
+        <!-- /.card -->
+
+        <div class="card" style="background-color:rgb(226, 225, 230)">
+            <div class="card  card-outline" style="background-color: rgb(226, 225, 230)">
+                <div class="card-header text-white" style="background-color: rgb(44, 74, 102)">
+                    <h3 class="card-title text-white">Monthly Net Wealth Trends by Source
+                    </h3 >
+                </div>
+                <div class="card-body" >
+                    <div class="position-relative mb-4">
+                        <canvas id="investmentPortfolio" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%;" ></canvas>
+                    </div>
+        
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- /.col-md-6 -->
+    </div>
+    <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<!-- Shares Chart JS Scripts -->
+<script>
+
+//Initial share value
+    var ctx = document.getElementById('investmentValues').getContext("2d");
+
+    var latestInvestmentChart = new Chart (ctx, {
+        type :'polarArea',
+        data : {
+            labels : {{latest_wealth_labels|safe}},
+            datasets: [{
+                label:'Investment Portfolio',
+                data : {{latest_wealth_values|safe}},
+                backgroundColor: [
+                        'rgba(4, 122, 114, 0.7)',
+                        'rgba(0,82,163, 0.7)',
+                        'rgba(46,150,255, 0.7)',
+                        ]
+                    }],
+                },
+                options: {
+                    maintainAspectRatio : false,
+                    responsive : true,
+                }
+            });
+
+
+    var ctx2 = document.getElementById('investmentPortfolio').getContext("2d");
+
+    var latestInvestmentChart = new Chart (ctx2, {
+        type :'bar',
+        tension:0.3,
+        data : {
+            labels : {{wealth_date_list|safe}},
+            datasets: [
+                        {
+                        label:'Bank Account Balance',
+                        data : {{bank_bal_list|safe}},
+                        backgroundColor: 'rgba(4, 122, 114, 0.7)',
+                        borderColor: 'rgba(4, 122, 114, 0.7)',
+                        borderWidth: 2,
+                        tension:0.2,
+                        },
+                        {
+                        label:'Notice Account Balance',
+                        data : {{notice_bal_list|safe}},
+                        backgroundColor: 'rgba(0,82,163, 0.7)',
+                        borderColor: 'rgba(0,82,163, 0.7)',
+                        borderWidth: 2,
+                        tension:0.2,
+                        },
+                        { 
+                        label:'Shares Total Value',
+                        data : {{shares_total_list|safe}},
+                        backgroundColor: 'rgba(46,150,255, 0.7)',
+                        borderColor: 'rgba(46,150,255, 0.7)',
+                        borderWidth: 2,
+                        tension:0.2,
+                        }
+                    ]
+                },
+                options: {
+                    yAxes: [{
+                        beginAtZero:true
+                    }],
+                    maintainAspectRatio : false,
+                    responsive : true,
+                }
+            });
+
+    var ctx3 = document.getElementById('netWealthTrends').getContext("2d");
+
+    var latestInvestmentChart = new Chart (ctx3, {
+        type :'line',
+        
+        data : {
+            labels : {{wealth_date_list|safe}},
+            datasets: [
+                        {
+                        label:'Net Wealth',
+                        data : {{net_wealth_list|safe}},
+                        backgroundColor: 'rgba(184,134,11, 0.7)',
+                        borderColor: 'rgba(46,150,255, 0.7)',
+                        borderWidth: 2,
+                        tension:0.2,
+                        fill: true,
+                        },
+                    ]
+                },
+                options: {
+                    yAxes: [{
+                        beginAtZero:true,
+                    }],
+                    maintainAspectRatio : false,
+                    responsive : true,
+                }
+            });
+    
+    /*var ctx3 = document.getElementById('netWealthTrends').getContext("2d");
+    var netWealthChart = new Charta(ctx3, {
+        type:'line',
+        data: {
+        labels: {{date_list|safe}},
+        datasets: [{
+                label : 'Net Wealth over Time',
+                data : {{net_wealth_list|safe}},
+                backgroundColor:  'rgba(0,82,163, 0.7),
+                borderColor: 'rgba(0,82,163, 0.)',
+                borderWidth: 2,
+                tension:0.2,
+                }
+            ],
+        },
+        options: {
+            yAxes: [{
+                beginAtZero:true
+            }],
+            maintainAspectRatio : false,
+            responsive : true,
+        }
+    });
+//Current Share Value
+/*var ctx2 = document.getElementById('currentShares').getContext("2d");
+
+var sharesChart = new Chart (ctx2, {
+    type :'pie',
+    data : {
+        labels : {{trade_name_list|safe}},
+        datasets: [{
+            label:'Initial Share Value Distribution',
+            data : {{current_value_list|safe}},
+            backgroundColor: [
+                    'rgba(255, 225, 0.7)',
+                    'rgba(0,82,163, 0.7)',
+                    'rgba(46,150,255, 0.7)',
+                    'rgba(0,117,235, 0.7)',
+                    'rgba(255,0,0, 0.7)',
+                    'rgba(100,140,17, 0.7)',
+                    'rgba(228,113,122, 0.7)',
+                    ]
+                }],
+            },
+            options: {
+                maintainAspectRatio : false,
+                responsive : true,
+            }
+        });
+
+//Shares performance trends over time and
+//Shares performance trends over time and
+var ctx3 = document.getElementById('shareTrends').getContext("2d"); 
+
+var trendsChart = new Chart (ctx3, {
+    type:'line',
+    data: {
+        labels: {{share_labels|safe}},
+        datasets: [
+            { 
+                label:'MTN',
+                data:{{mtn_values|safe}},
+                backgroundColor: 'rgba(255, 225, 0, 0.8)', 
+                borderColor: 'rgba(255,225,0, 0.8)',
+                borderWidth: 2,
+                tension:0.2,             
+            },
+            { 
+                label:'SOL',
+                data:{{sol_values|safe}},
+                backgroundColor: 'rgba(0,82,163, 0.8)',
+                borderColor: 'rgba(0,82,163, 0.8)',
+                borderWidth: 2,
+                tension:0.2,              
+            },
+            { 
+                label:'SOL-BEE',
+                data:{{solbe_values|safe}},
+                backgroundColor: 'rgba(46,150,255, 0.8)', 
+                borderColor: 'rgba(46,150,255, 0.8)',
+                borderWidth: 2,
+                tension:0.2,            
+            },
+            { 
+                label:'TLK',
+                data:{{telkom_values|safe}},
+                backgroundColor: 'rgba(0,117,235, 0.8)', 
+                borderColor: 'rgba(0,117,235, 0.8)',
+                borderWidth: 2,
+                tension:0.2,            
+            },
+            { 
+                label:'VOD',
+                data:{{vod_values|safe}},
+                backgroundColor: 'rgba(255,0,0, 0.9)', 
+                borderColor: 'rgba(255,0,0, 0.9)',
+                borderWidth: 2,
+                tension:0.2,            
+            },
+            { 
+                label:'MLC-PTN',
+                data:{{phuthuma_values|safe}},
+                backgroundColor: 'rgba(100,140,17, 0.8)', 
+                borderColor: 'rgba(100,140,17, 0.8)',
+                borderWidth: 2,
+                tension:0.2,            
+            }, 
+            {
+                label:'VOD-BEE',
+                data:{{yebo_values|safe}},
+                backgroundColor: 'rgba(228,113,122, 0.9)', 
+                borderColor: 'rgba(228,113,122, 0.9)',
+                borderWidth: 2,
+                tension:0.2,
+            },         
+        ]}
+    });*/
+</script>
+
+
+
+{% endblock content %}
+
+
+
+
+

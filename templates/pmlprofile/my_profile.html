@@ -1,192 +1,243 @@
 {% extends 'layout.html' %}
 {% load static %}
 
-{% block title %}-{{profile_detail.shortname}} Profile{% endblock title %}
+{% block title %}-{{my_profile.shortname}} Profile{% endblock title %}
 
 
 {% block content %}
-{% if user.is_authenticated %}
-<!-- Content Wrapper. Contains page content -->
+
 <div class="content-wrapper">
-<!-- Content Header (Page header) -->
-<section class="content-header">
-    <div class="container-fluid">
-    <div class="row mb-2">
-        <div class="col-sm-6 text-center">
-        <h1>
-            {{user.username}} Profile
-        </h1> 
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6 text-right">
+            <h3>Member Profile: {{my_profile.user.last_name}} {{my_profile.user.first_name}} {{my_profile.middlename}} </h3>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{% url 'pmlprofile:profiles' %}">Membership</a></li>
+              <li class="breadcrumb-item active">User Profile</li>
+            </ol>
+          </div>
         </div>
-        <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{% url 'pmlprofile:profiles' %}">Membership List</a></li>
-            <li class="breadcrumb-item active">Member Profile</li>
-        </ol>
-        </div>
-    </div>
-    </div><!-- /.container-fluid -->
-</section>
+      </div><!-- /.container-fluid -->
+    </section>
 
-<!-- Main content -->
-<section class="content">
-{% include 'partials/_alerts.html'%}
-    <!-- Default box -->
-    <div class="card card-solid">
-    <div class="card-body">
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
         <div class="row">
-        <div class="col-12 col-sm-6">
-            <!-- <h3 class="d-inline-block d-sm-none">LOWA Men’s Renegade GTX Mid Hiking Boots Review</h3> -->
-            <div class="col-12">
-                <div class="col-4 bg-light">
-                    <div class="card text-justify " style="width: 40rem;">
-                        <img class="rounded-circle justify-center mx-auto" src="{{user.profile.photo.url}} " height="250" width="250"  class="card-img-top" alt="...">
-                        
-                        <h4>{{user.email}}</h4>
-                    <div class="card-body"> 
-                        <h4 class="card-title"> 
-                        <strong class="text-center"> 
-                            Membership Status: 
-                            {% if profile_detail.status == 'Active' %}
-                                <span class="text-info"> {{profile_detail.status}} </span> 
-                            {% elif profile_detail.status == 'Deceased' %}
-                                <span class="text-danger"> {{object.status}} </span> 
-                            {%elif profile_detail.status == 'Suspended' or profile_detail.status == 'Terminated' %}
-                                <span class="text-warning"> {{object.status}} </span> 
-                            {% endif %}
-                        </strong>
-                        </h4>
-                        
-                    </div>
-                        <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;{{object.mobile_phone}} &nbsp;&nbsp;&nbsp;
-                            <a href="mailto:{{object.user.email}}"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp; {{object.user.email}}</a>
+          <div class="col-md-3">
+
+            <!-- Profile Image -->
+            <div class="card card-light bg-light card-outline">
+              <div class="card-body box-profile">
+                <div class="text-center">
+                  <img class="profile-user-img img-fluid img-circle"
+                       src="{{my_profile.photo.url}}"
+                       alt="User profile picture">
+                </div>
+
+                <p class="text-muted text-center">Member Status:         
+                    {% if my_profile.status == 'Active' %}
+                        <span class="text-info"> {{my_profile.status}} </span> 
+                    {% elif my_profile.status == 'Deceased' %}
+                        <span class="text-danger"> {{my_profile.status}} </span> 
+                    {% elif my_profile.status == 'Suspended' or my_profile.status == 'Terminated' %}
+                        <span class="text-warning"> {{my_profile.status}} </span> 
+                    {% endif %}
+                </p>  
+                <p class="text-muted text-center">
+                    <ul >
+                        <li class="list-group-item" class="text-center"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{my_profile.mobile_phone}} <br>
+                            <a href="mailto:{{my_profile.user.email}}"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{my_profile.user.email}}</a>
                         </li>
-                        </ul>            
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="col-12 col-sm-6">          
-            <div class="col-4 bg-light">
-                <div class="card text-justify " style="width: 45rem;">
-                    
-                <div class="card-body bg-info ">
-                    <h4 class="card-title"> 
-                    <strong class="text-center"> 
-                        Date of Birth: {{profile_detail.birth_date}}
-                    </strong>
-                    </h4>
-                    
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <h4> Residential Address </h3> 
-                    </li>
-                    <li class="list-group-item"> <h6>{{object.address}} </h6></li>
-                    <li class="list-group-item"> <h6>{{object.town_city}}</h6> </li>
-                    <li class="list-group-item"> <h6>{{object.district_metro}}</h6></li> 
-                    <li class="list-group-item"><h6>{{object.province}} </h6></li>   
-                        
-                    
-                        <br>
-                    </ul>             
-                </div>         
-            </div>
-            </div>
-    </div>
+                    </ul>
+                </p>      
                 
-</div>
-        <div class="mx-auto">
-            {% if user.is_authenticated %}         
-                <li class="list-group-item">
-                    <div class="btn btn-info">
-                        <a href="{% url 'pmlprofile:profile_update' %}"> <span class="text-white"> Edit Profile</span> </a> 
-                    </div> 
-                    <div class="btn btn-info ml-3">
-                        <a href="{% url 'pmlprofile:certificate' %}"> 
-                            <span class="text-white">
-                            <i class="class="fa fa-file-pdf" aria-hidden="true"></i>
-                            Print Certificate</span> 
-                        </a> 
-                    </div>                
-                </li>                                
-            {% endif %}
-        </div> 
+                
 
-
-<!-- Beneficiary Data Table -->
-
+                <ul class="list-group list-group-unbordered mb-3">
+                    <li class="list-group-item">
+                        <b>Date of Birth: <a class="float-right text-secondary">{{my_profile.birth_date|date:'d M Y'}}</a> </b>
+                    </li>
     
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-        <div class="col-12">
-            
+                </ul>
 
-
-            <div class="card align-center">
                 
-                <div class="card-header text-center bg-light">                     
-                    <li class="list-group-item">
-                        <h4> <strong class="bg-light">Registered Beneficiaries</strong>  </h4> 
-                    </li>
-                </div>
+            </div>
+            <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            <!-- About Me Box -->
+            <div class="card card-info bg-light">
+                <div class="card-header">
+                    <h3 class="card-title">Residential Address</h3>
+            </div>
             <!-- /.card-header -->
+            <div class="card-body">
+                <strong> {{my_profile.address|safe}}</strong>
+                <hr>
+                <strong> {{my_profile.town_city}} </strong>
+                <hr>
+                <strong> {{my_profile.district_metro}}</strong>
+                <hr>
+                <strong> {{my_profile.province}}</strong>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-9">
+            <div class="card">
+              <div class="card-header p-2">
+                <ul class="nav nav-pills ">
+                  
+                  <button class="btn btn-light btn-block"> <h4> <b>Beneficiaries</b></h4></button>
+            
+                </ul>
+                </div><!-- /.card-header -->
                 <div class="card-body">
-                    <table id="example2" class="table table-bordered table-striped">
-                    <thead> 
+                <div class="tab-content">
+                
+                    
+            <div class=" active tab-pane" id="timeline">
+                    
+                <table class="table table-bordered">
+                    <thead>
                         <tr>
-                            <th>Beneficiary ID</th>
-                            <th>Beneficiary Name</th>
-                            <th>Beneficiary Type</th>
-                            <th>Birth Date</th>
-                            <th>Age this Year</th>
-                            <th>Status</th>
-                            <th>Paid-up</th>
-                            <th>Paid-up date</th>
+                       
+                        <th>Name </th>
+                        <th>Relation</th>
+                        <th>Date of Birth</th>
+                        <th style="width: 40px">Status</th>
+                        <th>Paid-up</th>
+                        <th>Paid-up Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for beneficiary in profile_detail.beneficiaries.all %}
-
+                    {% for beneficiary in my_profile.beneficiaries.all %}
                         {% if beneficiary.beneficiary_status == 'Deceased' %}
-                            <tr class="text-danger">                      
-                                <td>{{beneficiary.id}}</td>
-                                <td>{{beneficiary.name}}</td>
-                                <td>{{beneficiary.beneficiary_type}}</td>
-                                <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
-                                <td> N/A </td>
-                                <td>{{beneficiary.beneficiary_status}}</td>
-                                <td>{{beneficiary.is_paid}}</td>
-                                <td>{{beneficiary.paid_date}}</td>
+                        <tr class="text-muted">     
+                        
+                        <td>{{beneficiary.name}}</td>
+                        <td>{{beneficiary.beneficiary_type}}</td>
+                        <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
+                        <td>
+                            <i class="fas fa-circle fa-2x text-red"></i>
+                            </div>      
+                        </td>
+                        <!-- <td><span class="badge bg-danger">{{beneficiary.beneficiary_status}}</span></td> -->
+                        <td>{% if beneficiary.is_paid %} Yes
+                            {% else %} No
+                            {% endif %}
+                        </td>
+                        <td>{{beneficiary.paid_date|date:'d F, Y'}}</td>                   
+                        </tr>
+                        <tr>
+                        {% elif beneficiary.beneficiary_status == 'Article 20.3' %}                               
+                        <tr class="text-muted">    
+                            <td>{{beneficiary.name}}</td>
+                            <td>{{beneficiary.beneficiary_type}}</td>
+                            <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
+                            <td>
+                                <i class="fas fa-circle fa-2x text-secondary"></i>
+                            </td>
+                            <td>No</td> 
+                            {% if beneficiary.is_paid %}
+                                <td> Yes ({{beneficiary.paid_date|date:'d F, Y'}}) </td> 
+                            {% else %}
+                                <td> <span class="badge bg-light"> Cover lapses: {{my_profile.lapse_date|date:'d F, Y'}}</span> </td>
+                            {% endif %}
+                        
+                    
                             </tr>
+                        
                         {% else %}
-                            <tr>                             
-                                <td>{{beneficiary.id}}</td>
-                                <td>{{beneficiary.name}}</td>
-                                <td>{{beneficiary.beneficiary_type}}</td>
-                                <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
-                                <td> {{beneficiary.age}}</td>
-                                <td>{{beneficiary.beneficiary_status}}</td>
-                                <td>{{beneficiary.is_paid}}</td>
-                                <td>{{beneficiary.paid_date}}</td>
-                            </tr>    
+                        <tr>     
+                        
+                            <td>{{beneficiary.name}}</td>
+                            <td>{{beneficiary.beneficiary_type}}</td>
+                            <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
+                            <td>                                     
+                                <i class="fas fa-circle fa-2x text-green"></i>
+                                    
+                        </div>
+
+                
+                            <!-- <td><span class="badge bg-success">{{beneficiary.beneficiary_status}}</span></td> -->
+                            <td>{% if beneficiary.is_paid %} Yes
+                                {% else %} No
+                                {% endif %}
+                            </td>
+                            <td>{{beneficiary.paid_date|date:'d F, Y'}}</td>                   
+                        </tr>
+                        <tr>
                         {% endif %}
                     {% endfor %}
-                </tfoot>
-                    </table>
+                    </tbody>
+                    </table>         
+
+                </div>
+
+                <div class="tab-pane" id="settings">
+                    <!-- The timeline -->
+                    <div class="timeline timeline-inverse">
+                    <!-- timeline time label -->
+                    
+                    <!-- /.timeline-label -->
+                    <div class="tab-pane" id="settings">
+                    
+                    
+                        <div class="col-md-12 mx-auto"> 
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3595.5430564937187!2d28.737803115631802!3d-25.686437883671008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1eeaab94f3f19a2b%3A0xf4b06cc2174fe136!2s4103%20Section%20B%2C%20Ekangala%20B%2C%20Ekangala%2C%201021!5e0!3m2!1sen!2sza!4v1624665851568!5m2!1sen!2sza" width="950" height="500" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+    
+                    </div>
+                    
+                </div>
+                </div>              
+                </div>
+                
                 </div>
             </div>
+        
         </div>
-    </div>
-    <!-- /.card-body -->
-    </div>
-    <!-- /.card -->
+        </div>
+    <!-- /.row -->
+    </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
 
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <div class="text-center">
+                    <a href="{% url 'pmlprofile:profile_update'  %}" class="btn btn-info">Update Profile</a>
+                    <a href="{% url 'pmlprofile:pdf_cert' request.user.id %}" class="btn btn-primary" target="_blank">Print Certificate</a>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="jumbotron text-center">
+                    <h3>Legend: Beneficiary Status</h3> 
+                    <i class="fas fa-circle fa-2x text-green text-small mr-2"></i>Active  &nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fas fa-circle fa-2x text-red text-small mr-2"></i>Deceased
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fas fa-circle fa-2x text-secondary text-small mr-2"></i>Article 20.3
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fas fa-circle fa-2x text-warning text-small mr-2"></i>Inactive
+                </div>
+            </div>
+    </div><!-- /.container-fluid -->
 </section>
-<!-- /.content -->
+
+</div>
 <!-- /.content-wrapper -->
 
-{% endif %}
+
+
+
 {% endblock content %}

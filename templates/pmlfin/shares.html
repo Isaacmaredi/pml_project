@@ -1,0 +1,276 @@
+{% extends "layout.html" %}
+{% load humanize %}
+{% load static %}
+
+
+{% block title  %}| Shares {% endblock title  %}
+
+{% block content %}
+
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+    <div class="row mb-2">
+        <div class="col-sm-6">
+        <h1 class="m-0">Investment Portfolio - Shares Performance</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'dash:summary' %}">Main Dashboard</a></li>
+            <li class="breadcrumb-item active">Shares</li>
+        </ol>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6" >
+
+            <div class="card" style="background-color: #65778a;">
+                <div class="card-header border-0" style="background-color: rgb(44, 74, 102)">
+                <h3 class="card-title text-white">Initial Shares Portfolio</h3>
+                </div>
+                <div class="card-body table-responsive p-0">
+                <table class="table table-md" style="border-top: 1px solid; background-color:rgb(195, 194, 199)">
+                    <thead>
+                    <tr height>
+                    <th>Comapny Name</th>
+                    <th>No. of Shares</th>
+                    <th>Purchase Price</th>
+                    <th> Total Value @ Purchase</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                
+                    {% for co in qs_co %}
+                        <tr>
+                            <td>
+                                <img src="{{co.logo.url}}" alt="Logo" class="img-circle img-size-32 mr-2">
+                                {{co.name}}
+                            </td>
+                            <td>
+                                {{co.num_shares|intcomma}}
+                            </td>
+                            <td>
+                            {{co.purchase_price|intcomma}}
+                            </td>
+                            <th>
+                            R{{co.purchase_value|intcomma}}
+                            </th>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            <!-- /.card -->
+
+
+        <div class="card" style="background-color:rgb(195, 194, 199)">
+            <div class="card  card-outline" style="background-color:rgb(195, 194, 199)">
+                <div class="card-header text-white border-0" style="background-color: rgb(44, 74, 102)">
+                    <div class="d-flex justify-content-between">
+                        <h3 class="card-title">Shares Performance Trends</h3>          
+                    </div>
+                </div>
+                <div class="card-body"  >
+                    <div class="position-relative mb-4">
+                        <canvas id="shareTrends" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>      
+        </div>
+        <!-- /.card -->       
+        </div>
+        <!-- /.col-md-6 -->
+        <div class="col-lg-6" >
+        <div class="card" style="background-color:rgb(195, 194, 199)"> 
+            <div class="card  card-outline" style="background-color: rgb(195, 194, 199)">
+            <div class="card-header border-0" style="background-color:rgb(44, 74, 102)">
+                <h3 class="card-title text-white">Initial Share Value by Company</h3>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <strong class="text-white" style ="font-weight:bold;">
+                    (Total Value: R {{total_purchase_value|floatformat:2|intcomma}}) 
+                </strong>
+                
+            </div>
+            <div class="card-body">
+                <div class="position-relative mb-4">
+                    <canvas id="initialShares" height="340"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- /.card -->
+
+        <div class="card" style="background-color:rgb(195, 194, 199)">
+            <div class="card  card-outline" style="background-color: rgb(195, 194, 199)">
+                <div class="card-header text-white" style="background-color: rgb(44, 74, 102)">
+                    <h3 class="card-title text-white">Latest Share Value by Company
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong>(Total Value: R {{total_share_value|intcomma}})</strong>
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="position-relative mb-4">
+                        <canvas id="currentShares" height="340"></canvas>
+                    </div>
+        
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- /.col-md-6 -->
+    </div>
+    <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<!-- Shares Chart JS Scripts -->
+<script>
+
+//Initial share value
+    var ctx = document.getElementById('initialShares').getContext("2d");
+
+    var sharesChart = new Chart (ctx, {
+        type :'pie',
+        data : {
+            labels : {{trade_name_list|safe}},
+            datasets: [{
+                label:'Initial Share Value Distribution',
+                data : {{purchase_value_list|safe}},
+                backgroundColor: [
+                        'rgba(255, 225, 0.7)',
+                        'rgba(0,82,163, 0.7)',
+                        'rgba(46,150,255, 0.7)',
+                        'rgba(0,117,235, 0.7)',
+                        'rgba(255,0,0, 0.7)',
+                        'rgba(4, 122, 114, 0.7)',
+                        'rgba(228,113,122, 0.7)',
+                        ]
+                    }],
+                },
+                options: {
+                    maintainAspectRatio : false,
+                    responsive : true,
+                }
+            });
+
+//Current Share Value
+var ctx2 = document.getElementById('currentShares').getContext("2d");
+
+var sharesChart = new Chart (ctx2, {
+    type :'pie',
+    data : {
+        labels : {{trade_name_list|safe}},
+        datasets: [{
+            label:'Initial Share Value Distribution',
+            data : {{current_value_list|safe}},
+            backgroundColor: [
+                    'rgba(255, 225, 0.7)',
+                    'rgba(0,82,163, 0.7)',
+                    'rgba(46,150,255, 0.7)',
+                    'rgba(0,117,235, 0.7)',
+                    'rgba(255,0,0, 0.7)',
+                    'rgba(4, 122, 114, 0.7)',
+                    'rgba(228,113,122, 0.7)',
+                    ]
+                }],
+            },
+            options: {
+                maintainAspectRatio : false,
+                responsive : true,
+            }
+        });
+
+//Shares performance trends over time and
+//Shares performance trends over time and
+var ctx3 = document.getElementById('shareTrends').getContext("2d"); 
+
+var trendsChart = new Chart (ctx3, {
+    type:'line',
+    data: {
+        labels: {{share_labels|safe}},
+        datasets: [
+            { 
+                label:'MTN',
+                data:{{mtn_values|safe}},
+                backgroundColor: 'rgba(255, 225, 0, 0.8)', 
+                borderColor: 'rgba(255,225,0, 0.8)',
+                borderWidth: 2,
+                tension:0.2,             
+            },
+            { 
+                label:'SOL',
+                data:{{sol_values|safe}},
+                backgroundColor: 'rgba(0,82,163, 0.8)',
+                borderColor: 'rgba(0,82,163, 0.8)',
+                borderWidth: 2,
+                tension:0.2,              
+            },
+            { 
+                label:'SOL-BEE',
+                data:{{solbe_values|safe}},
+                backgroundColor: 'rgba(46,150,255, 0.8)', 
+                borderColor: 'rgba(46,150,255, 0.8)',
+                borderWidth: 2,
+                tension:0.2,            
+            },
+            { 
+                label:'TLK',
+                data:{{telkom_values|safe}},
+                backgroundColor: 'rgba(0,117,235, 0.8)', 
+                borderColor: 'rgba(0,117,235, 0.8)',
+                borderWidth: 2,
+                tension:0.2,            
+            },
+            { 
+                label:'VOD',
+                data:{{vod_values|safe}},
+                backgroundColor: 'rgba(255,0,0, 0.9)', 
+                borderColor: 'rgba(255,0,0, 0.9)',
+                borderWidth: 2,
+                tension:0.2,            
+            },
+            { 
+                label:'MLC-PTN',
+                data:{{phuthuma_values|safe}},
+                backgroundColor: 'rgba(4, 122, 114, 0.8)', 
+                borderColor: 'rgba(4, 122, 114, 0.8)',
+                borderWidth: 2,
+                tension:0.2,            
+            }, 
+            {
+                label:'VOD-BEE',
+                data:{{yebo_values|safe}},
+                backgroundColor: 'rgba(228,113,122, 0.9)', 
+                borderColor: 'rgba(228,113,122, 0.9)',
+                borderWidth: 2,
+                tension:0.2,
+            },         
+        ]}
+    });
+
+
+
+</script>
+
+
+
+{% endblock content %}
+
+
+
+
+

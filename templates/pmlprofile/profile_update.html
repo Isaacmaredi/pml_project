@@ -16,7 +16,7 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'pmlprofile:my_profile' request.user.id %}">My Profile Details </a></li>
                     <li class="breadcrumb-item active">Profile Update {{user.profile.shortname}}</li>
                 </ol>
             </div>
@@ -24,6 +24,10 @@
     </div><!-- /.container-fluid -->
 </section>
 <!-- Main content -->
+
+
+
+
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
@@ -41,19 +45,26 @@
             {% csrf_token %}
             <div class="card-body">
 
+
+<!-- Form Groups-->
+
+<!--end Form Groups-->
+
                 <div class="row" >
                     <div class="col-12" class="form-horizontal">
                         {{p_form.photo|as_crispy_field}}
                     </div>
 
                 </div>
-
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         {{p_form.shortname|as_crispy_field}}
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
                         {{p_form.middlename|as_crispy_field}}
+                    </div>
+                    <div class="col-4">
+                        {{p_form.birth_date|as_crispy_field}}
                     </div>
                 </div>
 
@@ -77,12 +88,6 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-12">
-                        {{p_form.alt_address|as_crispy_field}}
-                    </div>
-                </div>
-
-                <div class="row">
                     <div class="col-4">
                         {{p_form.town_city|as_crispy_field}}
                     </div>
@@ -93,6 +98,14 @@
                         {{p_form.province|as_crispy_field}}
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        {{p_form.alt_address|as_crispy_field|safe}}
+                    </div>
+                </div>
+
+                
                 <!-- {{u_form|crispy}}
                 {{p_form|crispy}} -->
             </div>
@@ -131,7 +144,7 @@
                     <h5> Names:  {{user.first_name}} {{user.profile.middlename}}</h5>              
                 </div>
                 <div class="card-footer">
-                    <h4>Residential Address: {{user.profile.address}}</h4>
+                    <h4>Residential Address: {{user.profile.address|safe}}</h4>
                 </div>
         <!-- /.card-body -->
         </div>

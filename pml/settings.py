@@ -38,16 +38,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     # Third Party APPS
     'django.contrib.humanize',
     'crispy_forms',
-    'sorl.thumbnail',
-    #Custom Apps
+    'phonenumber_field',
+        #Custom Apps
     'accounts',
     'pmlmain',
     'pmlprofile',
     'events',
     'docs',
+    'geoApp',
+    'pmladmin',
+    'dash',
+    'pmlfin',
 ]
 
 MIDDLEWARE = [
@@ -139,7 +144,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'pmlprofile:profiles'
+LOGIN_REDIRECT_URL = 'accounts:login_view'
 LOGIN_URL = 'accounts:login_view'
 
 from django.contrib.messages import constants as messages

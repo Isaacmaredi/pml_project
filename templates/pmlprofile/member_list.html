@@ -2,27 +2,96 @@
 
 {% load static %}
 
+{% block title %} Membership {% endblock title%}
+
 {% block content %} 
- 
+
 <div class="content-wrapper">     
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-            <h1>Membership List &nbsp;&nbsp;&nbsp; Total Membership: {{profiles.count}}</h1>
-            Total Active: {{actives}} &nbsp;&nbsp;&nbsp; Total Deceased: {{deceased}}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+    <div class="row mb-2">
+        <div class="col-sm-6">
+        <h1>Total Membership: &nbsp;&nbsp;{{total}} </h1> 
+        
+        </div>
+        
+        <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'pmlprofile:profiles' %}">Back</a></li>
+            <li class="breadcrumb-item active">Membership</li>
+        </ol>
+        </div>
+    </div>
+    <hr>
+
+    <div class="row mt-2 mb-1">
+        <div class="col-lg-3 col-6 text-center">
+            <!-- small box -->
+            <div class="small-box bg-success">
+            <div class="inner">
+                <h3>{{actives}}</h3>
+
+                <h5>Active Members</h5>
+            </div>
+            <div class="icon">
+            <i class="fas fa-user-plus"></i>
             </div>
             
-            <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Membership</li>
-            </ol>
             </div>
         </div>
-        </div><!-- /.container-fluid -->
-    </section>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6 text-center">
+            <!-- small box -->
+            <div class="small-box" style="background-color: rgb(191, 194, 197);">
+            <div class="inner">
+                <h3>{{suspended}}<sup style="font-size: 20px"></sup></h3>
+
+                <h5>Suspended Members</h5>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user"></i>
+            </div>
+            
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6 text-center">
+            <!-- small box -->
+            <div class="small-box bg-warning" >
+            <div class="inner">
+                <h3>{{terminated}}<sup style="font-size: 20"></h3>
+
+                <h5>Terminated Members</h5>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user-minus"></i>
+            </div>
+            
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6 text-center">
+            <!-- small box -->
+            <div class="small-box bg-maroon">
+            <div class="inner">
+                <h3>{{deceased}}</h3>
+
+                <h5>Deceased Members</h5>
+            </div>
+            <div class="icon">
+                <i class="fas fa-cross"></i>
+            </div>
+            
+            </div>
+            </div>        
+        <!-- ./col -->
+        </div>
+
+
+    </div>
+    <!--row--><!-- /.container-fluid -->
+</section>
 {% include 'partials/_alerts.html' %}
  
     <!-- Main content -->
@@ -61,20 +130,23 @@
                         <ul class="ml-4 mb-0 fa-ul text-muted">
                         <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: {{profile.address|safe}}</li>
                         <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: {{profile.mobile_phone}}</li>
+                        
                         </ul>
                     </div>
                     <div class="col-5 text-center">
-                        <img src="{{ profile.photo.url }}" alt="user-avatar" class="img-circle img-fluid">
+                        <div class="text-center">
+                            <img class="profile-user-img img-fluid img-circle"
+                                src="{{profile.photo.url}}"
+                                alt="Member profile picture">
+                        </div>                    
                     </div>
                     </div>
                 </div>
-                <div class="card-footer bg-secondary">
+                <div class="card-footer" style="background-color: rgb(199, 202, 206);">
                     <div class="text-right">
-                    <a href="#" class="btn btn-sm bg-teal">
-                        <i class="fas fa-comments"></i>
-                    </a>
-                    <a href="{% url 'pmlprofile:profile_detail' profile.id %}" class="btn btn-sm btn-info">
-                        <i class="fas fa-user"></i> View Profile
+            
+                    <a href="{% url 'pmlprofile:profile_detail' profile.id %}" class="btn btn-md btn-info">
+                        <i class="fas fa-user"></i>  View Profile
                     </a>
                     </div>
                 </div>
@@ -86,21 +158,55 @@
         <!-- /.card-body -->
         <div class="card-footer">
 
-            <nav aria-label="Contacts Page Navigation">
-            <ul class="pagination justify-content-center m-0">
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a class="page-link" href="#">6</a></li>
-                <li class="page-item"><a class="page-link" href="#">7</a></li>
-                <li class="page-item"><a class="page-link" href="#">8</a></li>
+        
+        </div>
+        <div class="mx-auto">
+        <nav aria-label="Contacts Page Navigation">
+            
+            
+    <div class="row">
+        <div class="col-md-12">
+            {% if page_obj.has_other_pages %}
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a href="?page={{page_obj.previous_page_number}}" class="page-link">Previous</a>
+                </li>
+            
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link">Previous</a>
+                </li>
+                {% endif %}
+                {% for i in page_obj.paginator.page_range %}
+                {% if page_obj.number == i %}
+                    <li class="page-item active">
+                    <a class="page-link">{{i}}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                    <a href="?page={{i}}" class="page-link">{{i}}</a>
+                    </li>
+                {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a href="?page={{page_obj.next_page_number}}" class="page-link">Next</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link">Next</a>
+                </li>
+                {% endif %}
             </ul>
-            </nav> 
-
+            {% endif %}
+        </div>
         </div>
 
+        <!-- ################# -->
+        </nav> 
+    </div>
+    </div>
         <!-- /.card-footer -->
     </div>
         <!-- /.card -->

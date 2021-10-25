@@ -1,0 +1,62 @@
+[
+{
+    "model": "pmlprofile.committee",
+    "pk": 2,
+    "fields": {
+        "name": "Finance Committee",
+        "shortname": "FINCOM",
+        "term_starts": "2018-07-01",
+        "term_ends": "2021-08-30"
+    }
+},
+{
+    "model": "pmlprofile.committee",
+    "pk": 3,
+    "fields": {
+        "name": "Constitutional Committee",
+        "shortname": "CONCOM",
+        "term_starts": "2018-07-01",
+        "term_ends": "2021-08-30"
+    }
+},
+{
+    "model": "pmlprofile.committee",
+    "pk": 4,
+    "fields": {
+        "name": "Disciplinary Committee",
+        "shortname": "DC",
+        "term_starts": "2018-07-01",
+        "term_ends": "2021-08-30"
+    }
+},
+{
+    "model": "pmlprofile.committee",
+    "pk": 5,
+    "fields": {
+        "name": "Events Committee",
+        "shortname": "COMPCOM",
+        "term_starts": "2018-07-01",
+        "term_ends": "2021-08-30"
+    }
+},
+{
+    "model": "pmlprofile.committee",
+    "pk": 6,
+    "fields": {
+        "name": "Compassion Committee",
+        "shortname": "ECOM",
+        "term_starts": "2018-07-01",
+        "term_ends": "2021-08-30"
+    }
+},
+{
+    "model": "pmlprofile.committee",
+    "pk": 7,
+    "fields": {
+        "name": "Executive Committee",
+        "shortname": "EXCO",
+        "term_starts": "2018-07-01",
+        "term_ends": "2021-10-31"
+    }
+}
+]

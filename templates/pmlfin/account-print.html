@@ -1,0 +1,204 @@
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Print your statement </title>
+</head>
+<body>
+<div class="wrapper">
+<!-- Main content -->
+<section class="content-header">
+    <div class="container-fluid">
+    <div class="row mb-2">
+        <div class="col-sm-6">
+        <h1>Statement of Account for {{member_account.shortname}}
+        </h1> 
+        </div>
+        <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'pmlprofile:profiles'%}">Membership</a></li>
+            <li class="breadcrumb-item active">{{ member_account.shortname}} Account</li>
+        </ol>
+        </div>
+    </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+        <div class="callout callout-info">
+            <h5><i class="fas fa-info"></i> Account Details for: {{member_account.user.last_name}}  {{member_account.user.first_name}} {{member_account.middlename}}</h5>
+            This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
+        </div>
+
+
+        <!-- Main content -->
+
+        <div class="invoice p-3 mb-3">
+            <!-- title row -->
+            <div class="row">
+            <div class="col-12">
+                <h4>
+                <img src="{% static 'img/pml-logo1.png' %}" alt="PML Logo" height="50" width="80" >
+                <small class="float-right">Date: 2/10/2014</small>
+                </h4> 
+
+            </div>
+            <!-- /.col -->
+            </div>
+            <!-- info row -->
+            <div class="row invoice-info">
+            <div class="col-sm-4 invoice-col">
+                <span style= "font-style:italic; text-decoration: 
+                            underline; font-weight: bold; color:rgb(99, 5, 18)"> 
+                    Payments due to:
+                </span>     
+                <address>
+                <strong>Progress Men's League</strong><br>
+                Private Bag X104<br>
+                Ekangala, 1022 <br>
+                <span style= "font-style: italic; font-weight:bold; color:rgb(11, 18, 116)"> 
+                Bank: Fisrt National Bank <br>
+                Acc No.: 621 2783 91 <br>
+                </span>
+                
+                Phone: +27 82 837 0298 &nbsp;&nbsp;&nbsp;&nbsp; Email: <a href="mailto:treasury@pml.org">treasury@pml.org </a>
+                
+                </address>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-4 invoice-col">
+                <span style= "font-style:italic; text-decoration: underline;
+                        font-weight: bold; color:rgb(99, 5, 18)"> 
+                    Payment Information:
+                </span>  
+                <address>
+                <strong> Mr. {{member_account.user.first_name}}  
+                    {% if member_account.middlename == None %} 
+                    {% else %} 
+                    {{member_account.middlename}}
+                    {% endif %}
+                    {{member_account.user.last_name}}
+                </strong><br>
+                {{member_account.address}}<br>
+                {{member_account.town_city}}<br>
+                {{member_account.district_metro}} <br>
+                Phone: {{member_account.mobile_phone}}<br>
+                Email: <a href="mailto:{{member_account.user.email}}"> {{member_account.user.email}}</a>  
+                </address>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-4 invoice-col">
+                <b>Invoice #007612</b><br>
+                <br>
+                <b>Order ID:</b> 4F3S8J<br>
+                <b>Payment Due:</b> 2/22/2014<br>
+                <b>Account:</b> 968-34567
+            </div>
+            <!-- /.col -->
+            </div>
+            <!-- /.row -->
+            <hr>
+            <!-- Table row -->
+            <div class="row">
+            <div class="col-12 table-responsive">
+                <table class="table table-striped">
+                <thead>
+                <tr style="background-color:rgb(209, 209, 203); color:black">
+                    <th>Date</th>
+                    <th>Balance BF</th>
+                    <th>Premiums</th>
+                    <th>Funeral T\U</th>
+                    <th>Transport T\U</th>
+                    <th>Fines</th>
+                    <th>Total Debits</th>
+                    <th>Deposits</th>
+                    <th>Adjustments</th>
+                    <th>Total Receipts</th>
+                    <th>Closing Balance</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for acc in member_account.profile.all %}
+                <tr>
+                    <td>{{acc.date|date:'M Y'}}</td>
+                    <td>{{acc.balance_brought_forward}}</td>
+                    <td>{{acc.premiums}}</td>
+                    <td>{{acc.funeral_topup}}</td>
+                    <td>{{acc.transport_topup}}</td>
+                    <td>{{acc.fines}}</td>
+                    <th>{{acc.total_debits}}</th>
+                    <td>{{acc.cash_deposit}}</td>
+                    <td>{{acc.adjustments}}</td>
+                    <th>{{acc.total_receipts}}</th>
+                    <th>{{acc.total_outstanding}}</th>
+                </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+            </div>
+            <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+            <!-- accepted payments column -->
+            <div class="col-6">
+                <p class="lead">Payment Methods:</p>
+                <img src="../../dist/img/credit/visa.png" alt="Visa">
+                <img src="../../dist/img/credit/mastercard.png" alt="Mastercard">
+                <img src="../../dist/img/credit/american-express.png" alt="American Express">
+                <img src="../../dist/img/credit/paypal2.png" alt="Paypal">
+
+                <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem
+                plugg
+                dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
+                </p>
+            </div>
+            <!-- /.col -->
+            <div class="col-6">
+                <p class="lead">Amount Due 2/22/2014</p>
+
+                <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                    <th style="width:50%">Subtotal:</th>
+                    <td>$250.30</td>
+                    </tr>
+                    <tr>
+                    <th>Tax (9.3%)</th>
+                    <td>$10.34</td>
+                    </tr>
+                    <tr>
+                    <th>Shipping:</th>
+                    <td>$5.80</td>
+                    </tr>
+                    <tr>
+                    <th>Total:</th>
+                    <td>$265.24</td>
+                    </tr>
+                </table>
+                </div>
+            </div>
+            <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+</div>
+<!-- ./wrapper -->
+<!-- Page specific script -->
+<script>
+window.addEventListener("load", window.print());
+</script>
+</body>
+</body>
+</html>
+

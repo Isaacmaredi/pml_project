@@ -68,17 +68,17 @@
 
                 {% if attendance.is_present  %}
                     <tr>
-                        <td>{{attendance.register.meeting}}</td>
-                        <td>{{attendance.register.member.user.last_name}} {{attendance.member.user.first_name}} {{attendance.member.middlename}}</td>
-                        <td>{{attendance.register.is_present}}</td>
-                        <td>{{attendance.register.absence_reason}}</td>
+                        <td>{{attendance.meeting}}</td>
+                        <td>{{attendance.member.user.last_name}} {{attendance.member.user.first_name}} {{attendance.member.middlename}}</td>
+                        <td>{{attendance.is_present}}</td>
+                        <td>{{attendance.absence_reason}}</td>
                     </tr>
                 {% else %}
                     <tr class="text-danger">
-                        <td>{{attendance.register.meeting}}</td>
-                        <td>{{attendance.register.member.user.last_name}} {{attendance.member.user.first_name}} {{attendance.member.middlename}}</td>
-                        <td>{{attendance.register.is_present}}</td>
-                        <td>{{attendance.register.absence_reason}}</td>
+                        <td>{{attendance.meeting}}</td>
+                        <td>{{attendance.member.user.last_name}} {{attendance.member.user.first_name}} {{attendance.member.middlename}}</td>
+                        <td>{{attendance.is_present}}</td>
+                        <td>{{attendance.absence_reason}}</td>
                     </tr>    
 
                 {% endif %}

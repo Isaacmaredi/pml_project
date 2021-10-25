@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib import auth, messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+
+from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
+
 from django.contrib.auth.models import User
 from pmlprofile.models import Profile
 
@@ -64,3 +67,12 @@ def logout_view(request):
         messages.success(request, 'You are now logged out')
         return redirect('index')
 
+class MyPasswordChangeView(PasswordChangeView):
+    template_name = 'accounts/password_change_form.html'
+    success_url = reverse_lazy ('accounts:change_password_done')
+    
+class MyPasswordChangeDoneView(PasswordChangeDoneView):
+    template_name = 'accounts/password_change_done.html'
+    
+    
+    

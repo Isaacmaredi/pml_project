@@ -26,6 +26,9 @@ urlpatterns = [
     path('pmlprofile/', include('pmlprofile.urls'), name='pmlprofile'),
     path('events/',include('events.urls'), name='events'),
     path('docs/', include('docs.urls'), name='docs'),
+    path('geoApp/', include('geoApp.urls'), name='geoApp'),
+    path('dash/', include('dash.urls'), name='dash'),
+    path('pmlfin/', include('pmlfin.urls'), name='pmlfin'),
 ]
 
 
@@ -34,3 +37,4 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     
 admin.site.site_header ='PML Admin Portal' 
+admin.site.index_title ='Manage the PML Portal'

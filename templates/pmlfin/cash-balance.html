@@ -1,0 +1,278 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            <h1>12 Months Cashflow</h1>
+            </div>
+            <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active">Cashflow</li>
+            </ol>
+            </div>
+        </div>
+        </div>
+<!-- /.container-fluid -->
+</section>
+    <!-- Main content -->
+<section class="content">
+    <div class="container-fluid"> 
+        <div class="row">
+            <div class="col-8">
+                    <div class="card card-info card-outline" style="background-color: #f2f3f4;">
+                        <div class="card-header" style="background-color:rgb(44, 74, 102)">
+                        <h3 class="card-title text-white">
+                            <i class="far fa-chart-bar text-white"></i>
+                            <strong> Monthly Cash Balances</strong> 
+                        </h3> 
+                        </div>
+                        <div class="card-body">
+                        <canvas id="cashBalance" style="min-height: 310px; height: 310px; max-height: 310px; max-width: 100%;"></canvas>
+                        </div>
+                        <!-- /.card-body-->
+                    </div>
+            </div>
+            <div class="col-4">
+                <div class="card card-info card-outline" style="background-color: #f2f3f4;">
+                <div class="card-header " style="background-color: rgb(44, 74, 102)" >
+                    <h3 class="card-title text-white">
+                        <strong>Summary Statistics - Monthly Cash Balances</strong>  
+                    </h3>    
+                </div>
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-striped table-valign-middle">
+                    <thead>
+                    <tr class="text-muted" scope="row">
+                        <th>       
+                        Coverage Period
+                        </th>
+                        <th>{{date_from}} to {{date_to}}</td>               
+                    </tr>
+                    <tr>
+                        <th>Stats Description </th>
+                        <th>Value</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>                                
+                        Average Monthly Balance 
+                        </td>
+                        <th>R {{mean_closing_bal|floatformat:2|intcomma}} &nbsp;&nbsp;&nbsp;&nbsp;</th>              
+                    </tr>
+                    <tr>
+                        <td>
+                        Maximum Monthly Balance
+                        </td>
+                        <th class="text-success">R {{max_closing_bal|floatformat:2|intcomma}}</th>
+                    </tr>
+                    <tr>
+                        <td>
+                        Minimum Monthly Balance
+                        </td>
+                        <th class="text-danger">R {{min_closing_bal|floatformat:2|intcomma}}</th>
+                        <td>
+                    </tr>
+                    <tr>
+                        <td>
+                        Lowest Balance Month
+                        </td>
+                        <th>{{min_month}}</th>
+                        <td>
+                    </tr>
+                    <tr>
+                        <td>
+                        Highest Balance Month
+                        </td>
+                        <th>{{max_month}}</th>
+                        <td>
+                    </tr>
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-8">
+            <div class="card card-info card-outline" style="background-color: #f2f3f4;">
+                <div class="card-header card-outline" style="background-color:rgb(44, 74, 102)" >
+                    <h3 class="card-title text-white">
+                        <i class="far fa-chart-bar"></i>
+                       <strong>Monthly Income and Expenses</strong>  
+                    </h3> 
+                    </div>
+                    <div class="card-body">
+                    <canvas id="incomeExpense" style="min-height: 310px; height: 310px; max-height: 310px; max-width: 100%;"></canvas>
+                    </div>
+                    <!-- /.card-body-->
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card card-info card-outline">
+                <div class="card-header  border-info" style="background-color:rgb(44, 74, 102)">
+                    <h3 class="card-title text-white"> <strong>12-Month Summary Statistics - Income/Expenses</strong> </h3>          
+                </div>
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-striped table-valign-middle">
+                    <thead>
+                    <tr class="text-muted" scope="row">
+                        <th>       
+                        Coverage Period
+                        </th>
+                        <th>{{date_from}} to {{date_to}}</td>               
+                    </tr>
+                    <tr>
+                        <th>Description </th>
+                        <th>Income</th>
+                        <th>Expenses</th>
+                    </tr>
+                    
+                    </thead>
+                    <tbody>
+            
+                    <tr>
+                        <td>   
+                            Average
+                        </td>
+                        <th>R {{mean_income|floatformat:2|intcomma}}</th>
+                        <th>R {{mean_expenses|floatformat:2|intcomma}}</th>
+                    </tr>                                  
+                    <tr>
+                        <td>
+                        Maximum
+                        </td>
+                        <th class="text-success">R {{max_income|floatformat:2|intcomma}}</th>
+                        <th class="text-danger">R {{max_expenses|floatformat:2|intcomma}}</th>
+                    </tr>
+                    <tr>
+                        <td>
+                        Minimum
+                        </td>
+                        <th class="text-danger">R {{min_income|floatformat:2|intcomma}}</th>
+                        <th class="text-success">R {{min_expenses|floatformat:2|intcomma}}</th>
+                    </tr>
+                    <tr>
+                        <td>
+                        Lowest
+                        </td>
+                        <th class="text-muted">{{min_month_income}}</th>
+                        <th>{{min_month_expenses}}</th>
+                    </tr>
+                    <tr>
+                        <td>
+                        Highest
+                        </td>
+                        <th>{{max_month_income}}</th>
+                        <th class="text-muted">{{max_month_expenses}}</th>
+                    </tr>
+                    </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</div>
+
+<script>
+    //Monthy Cash Ba
+    var ctx = document.getElementById('cashBalance').getContext('2d');
+
+    var memberDeathChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: {{date_list|safe}},
+        datasets: [{
+            label: 'Closing Cash Balance',
+            fill:'origin',
+            
+            data: {{cash_list|safe}},
+                fillOpacity:0.5,
+                fillColor: 'gray',
+                backgroundColor     : 'rgba(60,141,188,0.7)',
+                borderColor         : 'rgba(184,134,11,0.7)',
+                borderWidth: 2,
+                tension:0.2,
+                fill: true,
+        
+                /*pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(60,141,188,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(60,141,188,1)',*/
+            }]
+        },
+        options: {
+           
+            maintainAspectRatio : false,
+            responsive : true,
+            legend: {
+            display: false
+            },
+            scales: {
+            xAxes: [{
+                gridLines : {
+                display : false,
+                }
+            }],
+            yAxes: [{
+                gridLines : {
+                display : false,
+                }
+            }]
+            }
+        }
+    });
+
+//Monthly Income and Expenses
+
+    var ctx2 = document.getElementById('incomeExpense').getContext('2d');
+    var incomeExpenseChart = new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: {{date_list2|safe}},
+            datasets: [{
+                label: 'Total Income',
+                data: {{income_list|safe}},
+                backgroundColor: [
+                'rgba(0, 128, 0, 0.6)',
+                ],
+                borderColor: [
+                'rgba(0, 128, 0, 0.6)',
+                ],
+                borderWidth: 2,
+                tension:0.2,
+            },
+            {
+                label: 'Total Expenses',
+                data: {{expenses_list|safe}},
+                backgroundColor: [
+                'rgba(255,0,43, 0.6)',
+                ],
+                borderColor: [
+                'rgba(255,0,43, 0.6)',
+                ],
+                borderWidth: 2,
+                tension:0.2,
+            }
+            
+            ]
+        }
+    })
+//End Monthly Income and Expenses
+
+</script>
+
+{% endblock %}

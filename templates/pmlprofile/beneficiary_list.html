@@ -11,7 +11,7 @@
     <div class="container-fluid">
     <div class="row mb-2">
         <div class="col-sm-6">
-        <h1>PML Beneficiaries (Total: {{beneficiaries.count}}, Active: {{beneficiaries.active_count}}) </h1> 
+        <h1> Total Beneficiaries: &nbsp;&nbsp;{{beneficiaries.count}} </h1>
         </div>
         <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -20,6 +20,71 @@
         </ol>
         </div>
     </div>
+    <hr>
+<div class="row mt-2 mb-1">
+        <div class="col-lg-3 col-6 text-center">
+            <!-- small box -->
+            <div class="small-box bg-info">
+            <div class="inner">
+                <h3>{{active}}</h3>
+
+                <h5>Active Beneficiaries</h5>
+    
+            </div>
+            <div class="icon">
+            <i class="fas fa-user-plus"></i>
+            </div>
+            
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6 text-center">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+            <div class="inner">
+                <h3>{{inactive}}<sup style="font-size: 20px"></sup></h3>
+
+                <h5>Inactive Beneficiaries</h5>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user-minus"></i>
+            </div>
+            
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6 text-center">
+            <!-- small box -->
+            <div class="small-box" style="background-color: rgb(199, 202, 206);">
+            <div class="inner">
+                <h3>{{article20}}<sup style="font-size: 20"></h3>
+
+                <h5>Article 20.3 Beneficiaries</h5>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user"></i>
+            </div>
+            
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6 text-center">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+            <div class="inner">
+                <h3>{{deceased}}</h3>
+
+                <h5>Deceased Beneficiaries</h5>
+            </div>
+            <div class="icon">
+                <i class="fas fa-cross"></i>
+            </div>
+            
+            </div>
+            </div>        
+        <!-- ./col -->
+        </div>
+
     </div><!-- /.container-fluid -->
     </section>
 
@@ -32,11 +97,12 @@
                         <div class="card-header">
                         <h3 class="card-title">Choose format for printing or column display</h3>
                         </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                    <table id="example1" class="table table-bordered table-striped">
+                        <!--card-header -->
+                        <div class="card-body"> 
+                        <table id="example1" class="table table-bordered table-striped">
                         <thead>
-                        <tr>                    
+                        <tr>    
+                            <th>Member ID</th>                
                             <th>Name</th>
                             <th>Beneficiary Type</th>
                             <th>Birth Date</th>
@@ -52,22 +118,31 @@
 
                     {% if beneficiary.beneficiary_status == 'Deceased' %}
                         <tr class="text-danger">
+                            
+                            <td>{{beneficiary.member.id}}</td>
                             <td>{{beneficiary.name}}</td>
                             <td>{{beneficiary.beneficiary_type}}</td>
                             <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
                             <td> N/A </td>
-                            <td>{{beneficiary.beneficiary_status}}</td>
-                            <td>{{beneficiary.is_paid}}</td>
+                            <td> {{beneficiary.beneficiary_status}}</td>
+                             <td>{% if beneficiary.beneficiary_status%}Yes 
+                                {% else %} No
+                                {% endif %}
+                            </td>
                             <td>{{beneficiary.paid_date}}</td>
                         </tr>
                     {% else %}
                         <tr>
+                            <td>{{beneficiary.member.id}}</td>
                             <td>{{beneficiary.name}}</td>
                             <td>{{beneficiary.beneficiary_type}}</td>
                             <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
                             <td> {{beneficiary.age}}</td>
-                            <td>{{beneficiary.beneficiary_status}}</td>
-                            <td>{{beneficiary.is_paid}}</td>
+                            <td> {{beneficiary.beneficiary_status}}</td>
+                            <td>{% if not beneficiary.beneficiary_status%}Yes 
+                                {% else %} No
+                                {% endif %}
+                            </td>
                             <td>{{beneficiary.paid_date}}</td>
                         </tr>    
 
@@ -78,9 +153,10 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                        <<th>Principal ID</th>
+                        <th>Member ID</th>                
                         <th>Name</th>
                         <th>Beneficiary Type</th>
+                        <th>Birth Date</th>
                         <th>Age this Year</th>
                         <th>Status</th>
                         <th>Paid-up</th>

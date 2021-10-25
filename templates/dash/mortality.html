@@ -1,0 +1,508 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %} Summary Graphs{% endblock title %}
+
+
+{% block content %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+    <div class="row mb-2">
+        <div class="col-sm-6">
+        <h1>Main Profile Dashboard</h1>
+        </div>
+        <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Profile Dashboard</li>
+        </ol>
+        </div>
+    </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+        <!-- AREA CHART -->
+        <div class="card card-primary">
+            <div class="card-header">
+            <h3 class="card-title"> 
+                <span class="text-center"> 
+                    <b> Membership Yearly Death Count &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                        
+                    </b> 
+                </span>  
+            </h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+                </button>
+            </div>
+            </div>
+            <div class="card-body">
+            <div class="chart">
+                <canvas id="memberDeathRate" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
+            </div>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+        </div>
+        <!-- /.col (LEFT) -->
+        <div class="col-md-6">
+        <!-- LINE CHART -->
+        <div class="card card-primary">
+            <div class="card-header">
+            <h3 class="card-title"> 
+                <b>Primary Statistics - Member Death Count Over Time
+                </b>
+            </h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+                </button>
+            </div>
+            </div>
+            <div class="card-body">
+            <div class="chart">
+                {{data|safe}}
+            </div>
+            </div>
+            <!-- /.card-body -->
+        </div>
+
+        </div>
+        <!-- /.col (RIGHT) -->
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="card card-danger">
+                <div class="card-header">
+                <h3 class="card-title"> 
+                    <span class="text-center"> 
+                        <b> Beneficiary Deaths Over Time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                            (Total:&nbsp;&nbsp;&nbsp;{{active_member_tot}})
+                        </b> 
+                    </span>  
+                </h3>
+    
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                </div>
+                <div class="card-body">
+                <canvas id="benDeathRate" style="min-height: 450px; height: 450px; max-height: 450px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.card-body -->
+            </div>
+
+        </div>
+    </div>
+    <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<!-- ./wrapper -->
+
+
+<script>
+// members 
+    var ctx = document.getElementById('memberDeathRate').getContext('2d');
+
+    var memberDeathChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: {{year_list|safe}},
+        datasets: [{
+            label: 'Number Deaths per Year',
+            data: {{year_death_count|safe}},
+            borderColor: 'blue',
+            backgroundColor: 'rgba(255, 0, 0, 0.8)',
+            fill: false
+            }]
+        },
+        options: {
+            tension: 0.2,
+            maintainAspectRatio : false,
+            responsive : true,
+            scales:{
+                yAxes:[{
+                    ticks:{
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+//beneficiary death rate chart
+
+    var ctx2 = document.getElementById('benDeathRate').getContext('2d');
+
+    var memberDeathChart = new Chart(ctx2, {
+    type: 'line',
+    data: {
+        labels: {{ben_year_list|safe}},
+        datasets: [{
+            label: 'Number of Deaths per Year',
+            data: {{ben_death_count|safe}},
+            borderColor: 'gray',
+            backgroundColor: 'rgba(255, 0, 0, 0.8)',
+            fill: false
+            }]
+        },
+        options: {
+            tension:0.2,
+            maintainAspectRatio : false,
+            responsive : true,
+
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+
+
+    {% comment %} var ctx2 = document.getElementById('donut-chart2').getContext('2d');
+
+    var benChart = new Chart(ctx2, {
+    type: 'doughnut',
+    data: {
+        labels: {{ben_status_list|safe}},
+        datasets: [{
+            label: 'Member Status',
+            data: {{ben_counts|safe}},
+            backgroundColor: ['#00a65a','#f56954','#f39c12','#a3a2a0'],
+            }]
+        },
+        options: {
+            maintainAspectRatio : false,
+            responsive : true,
+        }
+    }); {% endcomment %}
+
+    // Member Age Group bar chart
+
+    {% comment %} var ctx3 = document.getElementById('memberAgeChart').getContext('2d');
+
+    var benChart = new Chart(ctx3, {
+    type: 'bar',
+    data: {
+        labels: {{member_age_group_labels|safe}},
+        datasets: [{
+            label: 'Member Count by Age Group',
+            data: {{member_age_group_data|safe}},
+            backgroundColor: [
+                'rgba(0, 76, 76, 0.9)',
+                'rgba(0, 102, 102, 0.9)',
+                'rgba(0, 128, 128, 0.9)',
+                'rgba(102, 178, 178, 0.9)',
+                'rgba(178, 216, 216, 0.9)',
+                'rgba(255, 159, 64, 0.9)'
+            ],
+            borderColor: [
+                'rgba(0, 76, 76, 0.9)',
+                'rgba(0, 102, 102, 0.9)',
+                'rgba(0, 128, 128, 0.9)',
+                'rgba(102, 178, 178, 0.9)',
+                'rgba(178, 216, 216, 0.9)',
+                'rgba(255, 159, 64, 0.9)'
+            ],
+            borderWidth: 1
+            }]
+        },
+            options: {
+                indexAxis: 'y',
+                scales: {
+                    xAxes: [{
+                    gridLines : {
+                        display : false,
+                    }
+                    }],
+                    yAxes: [{
+                    gridLines : {
+                        display : false,
+                    }
+                    }]
+                }, 
+            }
+    });
+
+    //Beneficiary Age Group bar chart chart
+
+    var ctx3 = document.getElementById('benAgeChart').getContext('2d');
+
+    var benChart = new Chart(ctx3, {
+    type: 'bar',
+    data: {
+        labels: {{ben_age_group_labels|safe}},
+        datasets: [{
+            label: 'Beneficiary Count by Age Group',
+            data: {{ben_age_group_data|safe}},
+            backgroundColor: [
+                'rgba(13, 71, 161, 0.9)', 
+                'rgba(21, 101, 192, 0.9)',
+                'rgba(25, 118, 210, 0.9)',   
+                'rgba(30, 136, 229, 0.9)',  
+                'rgba(33, 150, 243, 0.9)',
+                'rgba(66, 165, 245, 0.9)', 
+                'rgba(100, 181, 246, 0.9)', 
+                'rgba(144, 202, 249, 0.9)'
+            ],
+            borderColor: [
+                'rgba(13, 71, 161, 0.9)', 
+                'rgba(21, 101, 192, 0.9)',
+                'rgba(25, 118, 210, 0.9)',   
+                'rgba(30, 136, 229, 0.9)',  
+                'rgba(33, 150, 243, 0.9)',
+                'rgba(66, 165, 245, 0.9)', 
+                'rgba(100, 181, 246, 0.9)', 
+                'rgba(144, 202, 249, 0.9)'
+            ],
+
+            title: {
+                display: true,
+                text: 'Chart.js Bar Chart'
+                },
+
+            borderWidth: 1
+            }]
+        },
+            options: {
+                indexAxis: 'y',
+                scales: {
+                xAxes: [{
+                    gridLines : {
+                        display : false,
+                    }
+                    }],
+                    yAxes: [{
+                    gridLines : {
+                        display : false,
+                    }
+                    }]
+                }
+            }
+        }); {% endcomment %}
+// Beneficiary types by status grouped bar chart
+    {% comment %} var ctx4 = document.getElementById('benTypeChart').getContext('2d');
+
+    var benTypeChart = new Chart(ctx4, {
+    type: 'bar',
+    data: {
+        labels: {{ben_type_list|safe}},
+        datasets: [
+                {
+                    label               : 'Active',
+                    backgroundColor     : 'rgba(0, 180, 0, 0.8)',
+                    borderColor         : 'rgba(0, 180, 0, 0.8)',
+                    pointRadius         : false,
+                    pointColor          : '#3b8bba',
+                    pointStrokeColor    : 'rgba(0, 180, 20, 0.8)',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgba(0, 180, 0, 0.8)',
+                    data                : {{ben_active|safe}},
+                },
+                {
+                    label : 'Article 20',
+                    backgroundColor     : 'rgba(180, 180, 180, 0.8)',
+                    borderColor         : 'rgba(180, 180, 180, 0.8)',
+                    pointRadius         : false,
+                    pointColor          : 'rgba(180, 180, 180, 0.8)',
+                    pointStrokeColor    : '#c1c7d1',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgba(180, 180, 180, 0.8)',
+                    data                : {{ben_article20|safe}},
+                },
+
+                {
+                    label               : 'Deceased',
+                    backgroundColor     : 'rgba(255, 0, 0, 0.8)',
+                    borderColor         : 'rgba(255, 0, 0, 0.8)',
+                    pointRadius         : false,
+                    pointColor          : 'rgba(255, 0, 0, 0.8)',
+                    pointStrokeColor    : '#c1c7d1',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgba(1255, 0, 0, 0.8)',
+                    data                : {{ben_deceased|safe}},
+                },
+
+                {
+                    label               : 'Inactive',
+                    backgroundColor     : 'rgba(254, 184, 8, 0.8)',
+                    borderColor         : 'rgba(254, 184, 8, 0.8)',
+                    pointRadius         : false,
+                    pointColor          : 'rgba(254, 184, 8, 0.8)',
+                    pointStrokeColor    : '#c1c7d1',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgba(254, 184, 8, 0.8)',
+                    data                : {{ben_inactive|safe}},
+                },
+
+                ]
+
+
+            },
+            options: {
+                indexAxis: 'x',
+                scales: {
+                xAxes: [{
+                    gridLines : {
+                        display : false,
+                    }
+                    }],
+                    yAxes: [{
+                    gridLines : {
+                        display : false,
+                    }
+                    }]
+                }
+            }
+        }); {% endcomment %}
+
+//Beneficiary types by age group members
+
+{% comment %} var ctx5 = document.getElementById('benAgeTypeChart').getContext('2d');
+
+    var benTypeChart = new Chart(ctx5, {
+    type: 'bar',
+    data: {
+        labels: {{ben_age_type_list|safe}},
+        datasets: [
+                {
+                    label               : 'Child',
+                    backgroundColor     : 'rgba(60, 0, 116, 0.8)',
+                    borderColor         : 'rgba(60, 0, 116, 0.8)',
+                    pointRadius         : false,
+                    pointColor          : '#3b8bba',
+                    pointStrokeColor    : 'rgba(60, 0, 116, 0.8)',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgba(223, 180, 14, 0.8)',
+                    data                : {{ben_child|safe}},
+                },
+                {
+                    label               : 'Father',
+                    backgroundColor     : 'rgba(3, 71, 244, 0.8)',
+                    borderColor         : 'rgba(3, 71, 244, 0.8)',
+                    pointRadius         : false,
+                    pointColor          : 'rgba(180, 45, 201, 0.8)',
+                    pointStrokeColor    : '#c1c7d1',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgba(180, 45, 201, 0.8)',
+                    data                : {{ben_father|safe}},
+                },
+
+                {
+                    label               : 'Father-in-Law',
+                    backgroundColor     : 'rgba(253, 27, 27, 0.8)',
+                    borderColor         : 'rgba(253, 27, 27, 0.8)',
+                    pointRadius         : false,
+                    pointColor          : 'rgba(255, 0, 0, 0.8)',
+                    pointStrokeColor    : '#c1c7d1',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgba(1255, 0, 0, 0.8)',
+                    data                : {{ben_father|safe}},
+                },
+
+                {
+                    label               : 'Mother',
+                    backgroundColor     : 'rgba(4, 105, 56, 0.8)',
+                    borderColor         : 'rgba(4, 105, 56, 0.8)',
+                    pointRadius         : false,
+                    pointColor          : 'rgba(254, 184, 8, 0.8)',
+                    pointStrokeColor    : '#c1c7d1',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgba(254, 184, 8, 0.8)',
+                    data                : {{ben_mil|safe}},
+                },
+
+                {
+                    label               : 'Mother-in-Law',
+                    backgroundColor     : 'rgba(254, 184, 8, 0.8)',
+                    borderColor         : 'rgba(254, 184, 8, 0.8)',
+                    pointRadius         : false,
+                    pointColor          : 'rgba(254, 184, 8, 0.8)',
+                    pointStrokeColor    : '#c1c7d1',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgba(254, 184, 8, 0.8)',
+                    data                : {{ben_mil|safe}},
+                },
+
+                {
+                    label               : 'Proxy Parent',
+                    backgroundColor     : 'rgba(221, 98, 8, 0.8)',
+                    borderColor         : 'rgba(221, 98, 8, 0.8)',
+                    pointRadius         : false,
+                    pointColor          : 'rgba(221, 98, 8, 0.8)',
+                    pointStrokeColor    : '#c1c7d1',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgba(221, 98, 8, 0.8)',
+                    data                : {{ben_proxy|safe}},
+                },
+
+                {
+                    label               : 'Spouse',
+                    backgroundColor     : 'rgba(253, 27, 248, 0.8)',
+                    borderColor         : 'rgba(253, 27, 248, 0.8)',
+                    pointRadius         : false,
+                    pointColor          : 'rgba(4, 184, 238, 0.8)',
+                    pointStrokeColor    : '#c1c7d1',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgba(4, 184, 238, 0.8)',
+                    data                : {{ben_spouse|safe}},
+                },
+
+                ]
+
+
+            },
+            options: {
+                indexAxis: 'x',
+                scales: {
+                xAxes: [{
+                    gridLines : {
+                        display : false,
+                    }
+                    }],
+                    yAxes: [{
+                    gridLines : {
+                        display : false,
+                    }
+                    }]
+                }
+            }
+        }); {% endcomment %}
+
+
+
+</script>
+
+{% endblock content %}

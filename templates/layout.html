@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PML {% block title %}{% endblock title %}  </title>
+<title>Progress Men's League {% block title %}{% endblock title %}  </title>
 
 <!-- Google Font: Source Sans Pro -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -36,13 +36,17 @@
 <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
 <!-- summernote -->
 <link rel="stylesheet" href="{% static 'plugins/summernote/summernote-bs4.min.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.0/dist/chart.min.js"></script>
+<!--Font Awesome kit-->
+<script src="https://kit.fontawesome.com/412b530513.js" crossorigin="anonymous"></script>
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
 <div class="wrapper">
 
 <!-- Preloader -->
 <div class="preloader flex-column justify-content-center align-items-center">
-<img class="animation__shake" src="{% static 'img/pml_logo3.png' %}" alt="PML Logo" height="60" width="60">
+<img class="animation__shake" src="{% static 'img/pml-logo1.png' %}" alt="PML Logo" height="60" width="60">
 </div>
 
 <!-- Navbar -->
@@ -107,21 +111,27 @@
             {% if request.user.is_authenticated %}
             <div class="dropdown-menu bg-dark">
                 <div class="text-warning">
-                    <a class="dropdown-item text-warning" href="{% url 'pmlprofile:my_profile' profile.id %} ">
+                    <a class="dropdown-item text-warning" href="{% url 'pmlprofile:my_profile' request.user.id %}">
                         <span class="font-italic text-lowercase">my</span>Profile
                     </a>
             
                     <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-warning" href="#"> <span class="font-italic text-lowercase">my</span>
+                        <a class="dropdown-item text-warning" href="{% url 'pmlfin:acc_detail' request.user.id %}"> <span class="font-italic text-lowercase">my</span>
                             Financials
                         </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-warning" href="#">Change Password</a>
+                    <a class="dropdown-item text-warning" href="{% url 'accounts:change_password' %}">Change Password</a>
                 </div>
             </div>
             {% endif %}
                 
-        </li>        
+        </li>  
+            {% if request.user.is_staff%}
+            <li class="nav-item nav-item d-none d-sm-inline-block">
+                <a class="nav-link" href=" {% url 'admin:index' %} " target="_blank"> 
+                <i class="fa fa-lock text-warning" aria-hidden="true" ></i> Admin</a>
+            {% endif %}
+            </li>      
             <li class="nav-item mr-3 nav-item d-none d-sm-inline-block">
                 <a  href="javascript:{document.getElementById('logout').submit()}" class="nav-link">
                     <i class="fas fa-sign-out-alt text-warning"></i> Logout
@@ -131,12 +141,8 @@
                     <input type="hidden">
                 </form>
             </li>
-        {% if request.user.is_staff%}
-        <li class="nav-item nav-item d-none d-sm-inline-block">
-            <a class="nav-link" href=" {% url 'admin:index' %} " target="_blank"> 
-            <i class="fa fa-lock text-warning" aria-hidden="true" ></i> Admin</a>
-        </li>
-        {% endif %}
+        
+        
     </ul>
 
     <li class="nav-item">
@@ -152,8 +158,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
 <!-- Brand Logo -->
 <a href="{% url 'index' %}" class="brand-link">
-    <img src="{% static 'img/pml_logo3.png' %}" alt="PML Logo" class="brand-image img-circle elevation-3" width="100"0 height="100" style="opacity: .95">
-    <span class="brand-text font-weight-light"> <strong class="text-light">PML Home </strong></span>
+    <img src="{% static 'img/pml-logo2.png' %}" alt="PML Logo" class="brand-image img-circle elevation-3" width="100"0 height="100" style="opacity: .95">
+    <span class="brand-text font-weight-light"> <strong class="text-light">Home </strong></span>
 </a>
 
 
@@ -169,7 +175,9 @@
     </div>
 
     <nav class="mt-2">
-
+    <p class="text-center">
+     <b class="text-light text-center">DASHBOARD</b>
+    </p>
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
         <li class="nav-item menu-open">
@@ -181,18 +189,35 @@
                 </p>
             </a>
         <ul class="nav nav-treeview">
+            <div class="text-info">
+
+                <li class="nav-item ">
+                    <a href="{% url 'dash:summary' %}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Membership/Beneficiaries</p>
+                    </a>
+                </li>
+
             <li class="nav-item ">
-            <a href="./index2.html" class="nav-link">
+                <a href="{% url 'dash:mortality' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Mortality </p>
+                </a>
+            </li>
+
+            <li class="nav-item ">
+            <a href="{% url 'pmlprofile:profile_dash' %}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Membership</p>
             </a>
             </li>
-            <li class="nav-item">
-            <a href="./index3.html" class="nav-link">
+             <li class="nav-item">
+            <a href="{% url 'pmlprofile:ben_dash' %}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Beneficiaries</p>
             </a>
-            </li>
+            </li> 
+        </div>
         </ul>
         </li>
 
@@ -201,30 +226,36 @@
                 <i class="nav-icon fas fa-copy"></i>
                 <p class="text-warning">
                 Financials</strong>
-    
-                <i class="right fas fa-angle-left"></i>
+            <i class="right fas fa-angle-left"></i>
                 </p>
             </a>
             <ul class="nav nav-treeview ">
-                <div class="text-warning">
+                <div class="text-info">
                     <li class="nav-item">
-                        <a href="./index.html" class="nav-link">
+                        <a href="{% url 'pmlfin:cashflow' %}" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Cash Flow &amp; Wealth</p>
+                            <p>Cash Flow</p>
                         </a>
                         </li>
                         <li class="nav-item">
-                        <a href="./index2.html" class="nav-link">
+                        <a href="{% url 'pmlfin:shares' %}" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Investment Portfolio</p>
                         </a>
                         </li>
                         <li class="nav-item">
-                        <a href="./index3.html" class="nav-link">
+                            <a href="{% url 'pmlfin:wealth'%}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Net Wealth</p>
+                            </a>
+                            </li>
+                        <li class="nav-item">
+                        <a href="{% url 'pmlfin:member-accounts' %} " class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Accounts Summary</p>
                         </a>
                         </li>
+                        {% comment %} {% url 'pmlprofile:member_accounts' %} {% endcomment %}
                 </div>
                 
             </ul>
@@ -239,23 +270,25 @@
             </p>
         </a>
         <ul class="nav nav-treeview">
+        <div class="text-info">
             <li class="nav-item">
-            <a href="pages/layout/top-nav.html" class="nav-link">
+            <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Meetings Attendance</p>
             </a>
             </li>
             <li class="nav-item">
-            <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+            <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Funeral Attendance</p>
             </a>
             </li>
+        </div>
         </ul>
         </li>
 
         <li class="nav-item">
-        <a href="pages/gallery.html" class="nav-link">
+        <a href="{% url 'geoApp:profile_geo' %}" class="nav-link">
             <i class="nav-icon fa fa-map-marker"></i>
             <p class="text-warning">
             Where Am I Online?
@@ -302,6 +335,16 @@
 <script>
 $.widget.bridge('uibutton', $.ui.button)
 </script>
+
+<!--Bokeh CDN -->
+<script src = "https://cdn.bokeh.org/bokeh/release/bokeh-2.3.3.min.js"> </script>
+<script src = "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.3.min.js"></script>
+<script src = "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.3.min.js"></script>
+<script src = "https://cdn.bokeh.org/bokeh/release/bokeh-api-2.3.3.min.js"></script>
+{{ script1 | safe }}
+{{ script2 | safe }}
+{{ script3 | safe }}
+{{ script4 | safe }}
 <!-- Bootstrap 4 -->
 <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <!-- ChartJS -->
@@ -329,8 +372,9 @@ $.widget.bridge('uibutton', $.ui.button)
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{% static 'dist/js/pages/dashboard.js' %}"></script>
 <!--Custom js-->
-<script src="{% static 'js/custom.js' %}"></script>"
+<script src="{% static 'js/main.js' %}"></script>"
 <!--Data Tables js-->
+
 
 <script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
