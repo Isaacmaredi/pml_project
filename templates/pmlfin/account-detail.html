@@ -122,10 +122,10 @@
                 <table class="table table-striped table-bordered">
                 <thead>
                 <tr class="bg-light" >  
-                    <th colspan="2" class="text-center" style="color:rgb(9,76,177);border-left:solid; border-top:solid;">MONTHLY BALANCE BROUGHHT FOWARD</th>       
-                    <th colspan="5" class="text-center" style="color:rgb(9,76,177); border-right:solid; border-left:solid;border-top:solid">DEBITS</th>
-                    <th colspan="3" class="text-center" style="color:rgb(9,76,177);border-right:solid; border-left:solid;border-top:solid">RECEIPTS</th>
-                    <th style="color:rgb(9,76,177);border-right:solid; border-left:solid;border-top:solid"> MONTHLY OUTSTANDING/SURPLUS </th>
+                    <th colspan="2" class="text-center" style="border-left:solid; border-top:solid;">MONTHLY BALANCE BROUGHHT FOWARD</th>       
+                    <th colspan="5" class="text-center" style=" border-right:solid; border-left:solid;border-top:solid">DEBITS</th>
+                    <th colspan="3" class="text-center" style="border-right:solid; border-left:solid;border-top:solid">RECEIPTS</th>
+                    <th style="border-right:solid; border-left:solid;border-top:solid"> MONTHLY OUTSTANDING(+ve)/SURPLUS(-ve) </th>
                 </tr>
                 <tr>
                     <th style="border-left:solid">Transaction Date</th>
@@ -168,9 +168,11 @@
             <!-- accepted payments column -->
             <div class="col-6">
                 <div class="text-muted">       
-                    <h6 class="alert alert-light"> <span style="text-decoration: underline">Important Note: </span>
-                        &nbsp;&nbsp;&nbsp; A positive( > 0 ) balance amount means your account is in <b class="text-danger">arrears </b>. Please remit asap.  
-                    
+                    <h6 class="alert alert-light"> <span style="text-decoration: underline">
+                                Important Note: </span>
+                        &nbsp;&nbsp;&nbsp; 
+                        A positive( > 0 ) balance amount means your account is in 
+                        <b class="text-danger">arrears </b>. Please remit asap.                  
                     </h6> 
                         
                 </div>
@@ -247,5 +249,4 @@
 </section>
 <!-- /.content -->
 </div>
-
 {% endblock content %}
