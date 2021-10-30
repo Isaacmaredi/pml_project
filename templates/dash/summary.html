@@ -212,7 +212,7 @@
         datasets: [{
             label: 'Member Status',
             data: {{member_status_count|safe}},
-            backgroundColor: ['#00a65a','#f56954','#f39c12','#00c0ef'],
+            backgroundColor: ['rgba(0,166,90,0.7)','rgba(245,105,84, 0.7)','rgba(243, 156, 18, 0.7)','rgba(163, 162, 160, 0.7)'],
             }]
         },
         options: {
@@ -224,13 +224,13 @@
     var ctx2 = document.getElementById('donut-chart2').getContext('2d');
 
     var benChart = new Chart(ctx2, {
-    type: 'pie',
+    type: 'doughnut',
     data: {
         labels: {{ben_status_list|safe}},
         datasets: [{
             label: 'Member Status',
             data: {{ben_counts|safe}},
-            backgroundColor: ['#00a65a','#f56954','#f39c12','#a3a2a0'],
+            backgroundColor: ['rgba(0, 166, 90, 0.7)','rgba(245, 105, 84, 0.7)','rgba(243, 156, 18, 0.7)','rgba(163, 162, 160, 0.7)'],
             }]
         },
         options: {
@@ -409,10 +409,10 @@
                 scales: {
                         
                     x:{
-                        stacked: true,
+                        stacked: false,
                     },
                     y:{
-                        stacked: true,
+                        stacked: false,
                     },
 
                 //xAxes: [{

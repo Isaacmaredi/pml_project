@@ -1,36 +1,140 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memebrs Location Location</title>
+{% extends 'layout.html' %}
+{% load static %}
 
-<style type="text/css">
-#map { 
-    height:600px; 
-    width:100%;
-}
-</style> 
+{% block title %}| Member Locations{% endblock title %}
 
-</head>
-<body>
 
-    <h3>Mapping Members Locations </h3>
-    <div id="map"> </div>    
 
+{% block content %}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+    <div class="row mb-2">
+        <div class="col-sm-6 text-right">
+        <h1>Members Location Spread </h1>
+        </div>
+        <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'pmlprofile:profiles' %}">Membership</a></li>
+            <li class="breadcrumb-item active">Locations</li>
+        </ol>
+        </div>
+    </div>
+</div><!-- /.container-fluid -->
+</section>
+
+    <!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+        <div class="col-sm-12">
+
+            <div id="map" style="height:850px; width:100%;" > </div>            
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- <h1> {{mytext}}  </h1>
+    {% for q in qs %}
+
+        <p> {{q.member}} - Longitude: {{q.lat}}, Longitude: {{q.lng}}</p> <br>
+
+    {% endfor %} -->
+  
+  
 <script>
-function initMap() {
-    const ekangala = {lat:-25.683569, lng:28.739950};
 
-    const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 8,
-        center: ekangala,
-    });
-    const marker = new google.maps.Marker({
-        position: ekangala,
-        map: map,
-    });
+    function initMap() { 
+        var ekangala = {lat:-25.819869,lng: 28.751809};
+        var map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 8,
+            center: ekangala
+        
+        });
+        
+       /* addMarker({
+            coords:{lat:-25.025381,lng:29.583771},
+            content: '<h2> ID Maredi</h2>',
+            });
+        addMarker({
+            coords:{lat:-25.819869,lng: 28.751809},
+            content: '<h2> JJ Chili</h2>',
+            });
+        addMarker({
+            coords:{lat:-25.796210,lng:29.438669},
+            content: '<h2> TT Ntuli</h2>',
+        });
+        addMarker({
+            coords:{lat:-25.943020,lng:28.148219},
+            content: '<h2> MJ Jiyane</h2>',
+        })*/
+    
+    /*var markers = [
+
+            {
+            coords:{lat:-25.819869,lng: 28.751809},
+            content: '<h2> JJ Chili</h2>'
+            },
+            {coords: {lat:-25.025381, lng:29.583771},
+            content:'<h2> ID Maredi </h2>'
+            },
+            {coords: {lat:-25.796210, lng:29.438669},
+            content:'<h2>TT Ntuli  </h2>'
+            },
+            {
+            coords: {lat:-25.943020, lng:28.148219},
+            content: '<h2> MJ Jiyane</h2>' 
+            }
+        ];
+        
+        for (i = 0; 1 < markers.length; i++) {
+            addMarker( markers[i]);
+        }*/
+
+
+        function loadMarkers(){
+            {% for location in qs %}
+            var point = new google.maps.LatLng({{location.lat}},{{location.lng}});
+            var infoWindow = new google.maps.InfoWindow({
+                content: '{{location.member}} - {{location.member.address}}' 
+            });
+            var marker = new google.maps.Marker({
+            position: point,
+            map: map,
+            anchor:infoWindow.content,
+
+            });
+            marker.addListener('click', function (){
+                infoWindow.open({
+                anchor:marker, 
+                map});
+            });
+            {% endfor %}
+
+        };
+
+            loadMarkers();
+
+      /*  function addMarker (props){
+            var marker = new google.maps.Marker({
+            position: props.coords,
+            describe:  props.content,
+            map: map,
+        });
+        if (props.content){
+            var infowindow = new google.maps.InfoWindow({
+                content:props.content
+            });
+            marker.addListener('click', function (){
+                infowindow.open(map, marker);
+            })
+        }
+        
+    } */
 }
 
 </script>
@@ -38,5 +142,5 @@ function initMap() {
     <script async
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhdxKNC7AjvofvPbH7IksFxScfz1v8l5g&callback=initMap">
 </script>
-</body>
-</html>
+{% endblock content %}
+
