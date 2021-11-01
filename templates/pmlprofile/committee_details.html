@@ -6,40 +6,59 @@
 
 {% block content %}
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper"> 
 
-<!-- Content Header (Page header) -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6 text-center">
-                <h1>
-                    Members of {{committees.name}}
-                    
-                </h1> 
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{% url 'pmlprofile:committees' %}">Committees</a></li>
-                    <li class="breadcrumb-item active">{{committees.shortname}}</li>
-                </ol>
-            </div>
+    <div class="row mb-2">
+        <div class="col-sm-6">
+        <h1>Incumbent Members of {{committees.name}}</h1>
         </div>
-        <div class="jumbotron">
-            {% for member in committees.incumbents.all %}
-            <p> <b>{{member.portfolio}}: </b> &nbsp;&nbsp; {{member.member.user.last_name}} {{member.member.user.first_name}} {{member.member.middlename}} </p>
-            {% endfor %}
+        <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'pmlprofile:committees' %}">Committees</a></li>
+            <li class="breadcrumb-item active">{{committees.name}}</li>
+        </ol>
         </div>
+    </div>
     </div><!-- /.container-fluid -->
+</section>
 
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+        <div class="card" >
+            <div class="card-header float-sm-right" style="background-color:rgba(41, 41, 44, 0.986);color:rgb(248, 248, 247)"> 
+            <h3 class="card-title text-center" style:"font-weight: bold">Term of Office:  {{committees.term_starts|date:'d F Y'}} to {{committees.term_ends|date:'d F Y'}}</h3>
+            </div>
+            <!-- /.card-header -->        
+            <div class="card-body" style="text-align:center;">    
+            <div class="row mt-4 mb-4">           
+                {% for member in committees.incumbents.all %}
+                <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+                    <div class="position-relative p-3 bg-gray mt-4" style="height: 180px">
+                        <div class="ribbon-wrapper ribbon-xl">
+                        <div class="ribbon bg-warning text-sm">
+                            <strong>{{member.portfolio}}</strong> 
+                        </div>
+
+                        </div>
+                        <strong>Mr. {{member.member.user.last_name}}</strong>   {{member.member.user.first_name}} {{member.member.middlename}}<br />
+                        <div> 
+                            <img src="{{member.member.photo.url}}" alt="Member Photo" class="profile-user-img img-fluid img-circle"> <!--style="width:60%; height: 20em; background-color:rgba(0,0,0,0.8);-->
+                        </div>
+                    </div>
+                    </div>
+                    {% endfor %}         
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
 </section>
 </div>
-<!-- Main content -->
-
-<!-- /.content -->
-
-<!-- /.content-wrapper -->
-
-
 {% endblock content %}

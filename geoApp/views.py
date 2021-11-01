@@ -24,27 +24,27 @@ import json
 def profile_geo(request):
     qs = Location.objects.all()
     
-    members = []
-    lat = []
-    lng = []
-    address = []
+    member_list= []
+    lat_list = []
+    lng_list = []
+    address_list = []
     for obj in qs:
-        members.append(str(obj))
-        address.append(obj.member.address)
-        lat.append(float(obj.lat))
-        lng.append(float(obj.lng))
+        member_list.append(str(obj))
+        address_list.append(obj.member.address)
+        lat_list.append(float(obj.lat))
+        lng_list.append(float(obj.lng))
         
-    ltlng = [(lat[i],lng[i]) for i in range(len(lat))]
+    ltlng = [(lat_list[i],lng_list[i]) for i in range(len(lat_list))]
 
     loc_dict = Location.objects.values()
     print(loc_dict)
 
-    names = [name for name in members ]
+    names = [name for name in member_list]
     
 
     
-    objects = qs.values('member','lat','lng')
-    geo_df = pd.DataFrame.from_records(objects)
+    # objects = qs.values('member','lat','lng')
+    # geo_df = pd.DataFrame.from_records(objects)
     # print(geo_df)
     
     
@@ -56,9 +56,9 @@ def profile_geo(request):
     ctx = "Testing"
     context ={
         'qs':qs,
-        'members': members,
-        'lat': lat,
-        'lng': lng,
+        'member_list': member_list,
+        'lat_list': lat_list,
+        'lng_list': lng_list,
     }
     
     return render(request, 'geoApp/members.html',context)

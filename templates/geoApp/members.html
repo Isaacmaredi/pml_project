@@ -13,7 +13,7 @@
     <div class="container-fluid">
     <div class="row mb-2">
         <div class="col-sm-6 text-right">
-        <h1>Members Location Spread </h1>
+        <h1>Member Geographic Spread </h1>
         </div>
         <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -37,104 +37,45 @@
     </div>
 </section>
 
-
-    <!-- <h1> {{mytext}}  </h1>
-    {% for q in qs %}
-
-        <p> {{q.member}} - Longitude: {{q.lat}}, Longitude: {{q.lng}}</p> <br>
-
-    {% endfor %} -->
-  
-  
 <script>
 
     function initMap() { 
         var ekangala = {lat:-25.819869,lng: 28.751809};
         var map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 8,
+            zoom: 9,
             center: ekangala
         
         });
         
-       /* addMarker({
-            coords:{lat:-25.025381,lng:29.583771},
-            content: '<h2> ID Maredi</h2>',
-            });
+    // Loop through coordinates and member queryset 
+
+    {% for location in qs %}
         addMarker({
-            coords:{lat:-25.819869,lng: 28.751809},
-            content: '<h2> JJ Chili</h2>',
-            });
-        addMarker({
-            coords:{lat:-25.796210,lng:29.438669},
-            content: '<h2> TT Ntuli</h2>',
+            coords:{
+            lat:{{location.lat}},
+            lng:{{location.lng}}
+            },
+            content:'<h4> {{location.member}}</h4> {{location.member.address}}',
+           /* imageIcon:'http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_purple.png' */      
         });
-        addMarker({
-            coords:{lat:-25.943020,lng:28.148219},
-            content: '<h2> MJ Jiyane</h2>',
-        })*/
+    {% endfor %}
+
+    function addMarker(props){
+        var marker = new google.maps.Marker({
+            position:props.coords,
+            map:map,
+            icon:props.imageIcon,
+        });
+    var infoWindow = new google.maps.InfoWindow({
+            content:props.content
+        });
+
+        marker.addListener('click', function(){
+            infoWindow.open(map, marker)
+        });
     
-    /*var markers = [
+    }
 
-            {
-            coords:{lat:-25.819869,lng: 28.751809},
-            content: '<h2> JJ Chili</h2>'
-            },
-            {coords: {lat:-25.025381, lng:29.583771},
-            content:'<h2> ID Maredi </h2>'
-            },
-            {coords: {lat:-25.796210, lng:29.438669},
-            content:'<h2>TT Ntuli  </h2>'
-            },
-            {
-            coords: {lat:-25.943020, lng:28.148219},
-            content: '<h2> MJ Jiyane</h2>' 
-            }
-        ];
-        
-        for (i = 0; 1 < markers.length; i++) {
-            addMarker( markers[i]);
-        }*/
-
-
-        function loadMarkers(){
-            {% for location in qs %}
-            var point = new google.maps.LatLng({{location.lat}},{{location.lng}});
-            var infoWindow = new google.maps.InfoWindow({
-                content: '{{location.member}} - {{location.member.address}}' 
-            });
-            var marker = new google.maps.Marker({
-            position: point,
-            map: map,
-            anchor:infoWindow.content,
-
-            });
-            marker.addListener('click', function (){
-                infoWindow.open({
-                anchor:marker, 
-                map});
-            });
-            {% endfor %}
-
-        };
-
-            loadMarkers();
-
-      /*  function addMarker (props){
-            var marker = new google.maps.Marker({
-            position: props.coords,
-            describe:  props.content,
-            map: map,
-        });
-        if (props.content){
-            var infowindow = new google.maps.InfoWindow({
-                content:props.content
-            });
-            marker.addListener('click', function (){
-                infowindow.open(map, marker);
-            })
-        }
-        
-    } */
 }
 
 </script>
