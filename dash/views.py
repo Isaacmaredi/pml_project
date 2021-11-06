@@ -78,7 +78,7 @@ def summary_dash(request):
     qs = Profile.objects.all()
     q = qs.values('shortname','birth_date','status')
     df_member = pd.DataFrame.from_records(q)
-    # member_csv = df_member.to_csv(r'member.csv')
+    member_csv = df_member.to_csv(r'member.csv')
 
     # Beneficiary Quesryset to pandas csv 
     qs1 = Beneficiary.objects.all()

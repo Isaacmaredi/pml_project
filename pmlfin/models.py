@@ -92,7 +92,7 @@ class Share(models.Model):
         super(Share, self).save(*args, **kwargs)
     
 class Wealth(models.Model):
-    date = models.DateField(default=timezone.now)
+    date = models.DateField()
     closing_cash_balance = models.DecimalField(default=Decimal('0.0'), decimal_places=2, max_digits=10)
     notice_acc_balance = models.DecimalField(default=Decimal('0.0'), decimal_places=2, max_digits=10)
     monthly_shares_total = models.DecimalField(default=Decimal('0.0'), decimal_places=2, max_digits=10)
