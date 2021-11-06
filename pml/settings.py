@@ -152,8 +152,9 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger'
 }
 
-try DEBUG = True:
-    import .local_settings.py
-except ImportError:
+try:
+    from .local_settings import *
+except:
     pass
+
 
