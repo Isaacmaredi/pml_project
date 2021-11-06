@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView,DetailView                             
 from django.views.generic.edit import UpdateView, CreateView
-from .models import Meeting, Attendance
+from .models import Meeting, Attendance, Funeral, FuneralAttendance
 
 # Create your views here.
 
@@ -15,6 +15,12 @@ class MeetingList(ListView):
     template_name = 'events/meeting_list.html'
     
     ordering = ['-date',]
+    
+class FuneralList(ListView):
+    model = Funeral
+    context_object_name = 'funerals'
+    template_name = 'events/funerals.html'
+
 
 class MeetingDetail(DetailView):
     model = Meeting

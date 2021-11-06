@@ -9,4 +9,5 @@ urlpatterns = [
     path('meeting_create/',views.MeetingCreateView.as_view(), name='meeting_create'),
     # path('meeting_update/',views.MeetingUpdate.as_view(), name='meeting_update'),   
     path('attendance/<int:pk>/',views.AttendanceListView.as_view(), name='attendance'),
+    path('funerals/',views.FuneralList.as_view(), name='funerals'),
 ]

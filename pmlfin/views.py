@@ -45,6 +45,19 @@ class AccountDetail(LoginRequiredMixin, DetailView):
         context = super(AccountDetail, self).get_context_data(*args, **kwargs)
         context['today'] = date.today()
         return context  
+
+class AccountDetailPrint(LoginRequiredMixin, DetailView):
+    context_object_name = 'member_account'
+    model = Profile
+    template_name = 'pmlfin/account-print.html'
+    
+    def get_object(self):
+        return self.model.objects.get(pk=self.request.user.pk)
+    
+    def get_context_data(self, *args, **kwargs):    
+        context = super(AccountDetailPrint, self).get_context_data(*args, **kwargs)
+        context['today'] = date.today()
+        return context  
     
 # Monthly cashflow analysis
 @login_required
@@ -92,8 +105,6 @@ def cashflow(request):
     
     date_from = date_range[0]
     date_to = date_range[1]
-
-    # print(cash_list)
     
     expenses_list = list(cash_df['expenses'])[-12:]
     income_list = list(cash_df['income'])[-12:]
@@ -184,10 +195,7 @@ def shares_view(request):
     
     latest_df['curr_value'] = latest_df['current_value'].astype(float)
     total_share_value = latest_df['curr_value'].sum() 
-    # print(share_df)
-    # print()
-    # print(latest_df)
-    # print('Total Share Value:', total_share_value)
+
     current_value_list = list(latest_df['curr_value'])
     
     context = {
@@ -225,10 +233,8 @@ def net_wealth(request):
     
     wealth_df['year'] = pd.DatetimeIndex(wealth_df['date']).year
     wealth_df['month_int'] =pd.DatetimeIndex(wealth_df['date']).month
-    wealth_df['month'] = wealth_df['month_int'].apply(lambda x: calendar.month_abbr[x])
-    wealth_df['month_year'] = wealth_df['month'] + ' ' + wealth_df['year'].astype(str)
-    print(wealth_df)
-    
+    wealth_df['month'] = wealth_df['month_int'].apply(lambda x: calendar.month_abbr[x])  
+    wealth_df['month_year'] = wealth_df['month'] + '-' + wealth_df['year'].astype(str)
     
     bank_bal_list = list(wealth_df['bank_bal'])[-6:]
     notice_bal_list = list(wealth_df['notice_bal'])[-6:]

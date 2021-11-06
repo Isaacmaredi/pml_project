@@ -13,7 +13,7 @@
     <div class="container-fluid">
     <div class="row mb-2">
         <div class="col-sm-6 text-right">
-        <h1>Member Geographic Spread </h1>
+        <h1>Member Geographic Locations </h1>
         </div>
         <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -66,7 +66,7 @@
             map:map,
             icon:props.imageIcon,
         });
-    var infoWindow = new google.maps.InfoWindow({
+        var infoWindow = new google.maps.InfoWindow({
             content:props.content
         });
 
@@ -78,10 +78,6 @@
 
 }
 
-</script>
 
-    <script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhdxKNC7AjvofvPbH7IksFxScfz1v8l5g&callback=initMap">
-</script>
 {% endblock content %}
 

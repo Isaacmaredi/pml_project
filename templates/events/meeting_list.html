@@ -55,17 +55,18 @@
                     <th style="width: 15%">
                         Host
                     </th>
-                    <th style="width: 20%">
+                    <th style="width: 30%">
                         Venue
                     </th>
+                   
                 
-                    <th style="width: 30%" class="project-actions text-right"> 
+                    {% comment %} <th style="width: 30%" class="project-actions text-right"> 
                         <a class="btn btn-success btn-sm" href="{% url 'events:meeting_create' %}">
                             <i class="fas fa-plus-circle">
                             </i>
                         <strong> Add Meeting</strong>
                         </a> 
-                    </th>                
+                    </th>                 {% endcomment %}
                 </tr>
             </thead>
             <tbody>
@@ -75,32 +76,43 @@
                         {{ meeting.id}}
                     </td>
                     <td>
-                        <a href="#">
+                        <a href="{% url 'events:meeting' meeting.id %}">
                             {{meeting.meeting_type}}
                         </a>
                     </td>
                     <td>
                         {{meeting.date}}
                     </td>
+
                     <td>
-                        {{meeting.host.user.last_name}} {{meeting.host.user.first_name}} {{meeting.host.middlename}}
-                    </td>                                  
+
+                    {% if meeting.host.user.last_name %}
+                        {{meeting.host.user.last_name}} {{meeting.host.user.first_name}}  {{meeting.host.middlename}} 
+                    {% else %}
+                        Executive Committee
+                    {% endif %}
+                    </td>  
+                    
+                    
                     <td>
+                        {% if meeting.host.address %}
                         {{meeting.host.address}}
+                        {% else %}
+                        {{meeting.alt_venue}}
+                        {% endif %} 
                     </td>
-                    <td class="project-actions text-right">
-                    <ul class="list-inline"> 
-                        <a class="btn btn-primary btn-sm" href="{% url 'events:meeting' meeting.id %}">
+                     <td class="project-actions text-right"> 
+                        {% comment %} <a class="btn btn-primary btn-sm" href="{% url 'events:meeting' meeting.id %}">
                             <i class="fas fa-folder">
                             </i>
                             View Details
-                        </a>
-                        <a class="btn btn-info btn-sm" href="#">
+                        </a> {% endcomment %}
+                        <a class="btn btn-info btn-sm" href="{% url 'events:meeting' meeting.id %}">
                             <i class="fas fa-pencil-alt">
                             </i>
                         Attendance Register
                         </a> 
-                    </ul>
+                    
                             
                     </td>
                 </tr>   

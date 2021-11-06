@@ -13,11 +13,11 @@
     <div class="container-fluid">
     <div class="row mb-2">
         <div class="col-sm-6">
-        <h1>Main Profile Dashboard</h1>
+        <h1>Membership and Beneficiary Profile Summary</h1>
         </div>
         <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'pmlprofile:profiles' %}">Membership Home</a></li>
             <li class="breadcrumb-item active">Profile Dashboard</li>
         </ol>
         </div>
@@ -32,7 +32,7 @@
         <div class="col-md-6">
         <!-- AREA CHART -->
         <div class="card card-primary">
-            <div class="card-header" style="background-color: rgb(112, 145, 175);" >
+            <div class="card-header" style="background-color: rgba(76, 77, 78, 0.973);" >
             <h3 class="card-title"> 
                 <span class="text-center"> 
                     <b> Membership Count by Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -61,7 +61,7 @@
 
         <!-- DONUT CHART -->
         <div class="card card-danger">
-            <div class="card-header" style="background-color: rgb(44, 74, 102)" >
+            <div class="card-header" style="background-color: rgb(55, 97, 143)" >
             <h3 class="card-title"> 
                 <span class="text-center"> 
                     <b> Active Membership Count by Age Group &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -88,7 +88,7 @@
 
         <!-- PIE CHART -->
         <div class="card card-info">
-            <div class="card-header"  style="background-color: rgb(112, 145, 175);">
+            <div class="card-header"  style="background-color: rgb(76, 77, 78, 0.973);">
             <h3 class="card-title"> <b>Beneficiary Status Count by Type </b>  </h3>
 
             <div class="card-tools">
@@ -112,7 +112,7 @@
         <div class="col-md-6">
         <!-- LINE CHART -->
         <div class="card card-primary">
-            <div class="card-header" style="background-color: rgb(112, 145, 175);"  >
+            <div class="card-header" style="background-color: rgb(76, 77, 78, 0.973);"  >
             <h3 class="card-title"> 
                 <b>Beneficiary Count by Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                     Total:&nbsp;&nbsp;{{ben_total}}
@@ -139,7 +139,7 @@
 
         <!-- BAR CHART -->
         <div class="card card-danger">
-            <div class="card-header" style="background-color: rgb(44, 74, 102)"  >
+            <div class="card-header" style="background-color: rgb(55, 97, 143)"  >
             <h3 class="card-title" > 
                 <div class="d-flex align-items-center"> 
                     <b > Active Beneficiary Count by Age Group &nbsp;&nbsp; 
@@ -168,7 +168,7 @@
 
         <!-- STACKED BAR CHART -->
         <div class="card card-info">
-            <div class="card-header" style="background-color: rgb(112, 145, 175);">
+            <div class="card-header" style="background-color: rgb(76, 77, 78, 0.973);">
             <h3 class="card-title"> <b>Active Benenficiary Type Count by Age Group</b></h3>
 
             <div class="card-tools">
@@ -212,7 +212,7 @@
         datasets: [{
             label: 'Member Status',
             data: {{member_status_count|safe}},
-            backgroundColor: ['rgba(0,166,90,0.7)','rgba(245,105,84, 0.7)','rgba(243, 156, 18, 0.7)','rgba(163, 162, 160, 0.7)'],
+            backgroundColor: ['rgba(0,166,90,0.7)','rgba(245,105,84, 0.9)','rgba(243, 156, 18, 0.9)','rgba(163, 162, 160, 0.7)'],
             }]
         },
         options: {
@@ -228,9 +228,9 @@
     data: {
         labels: {{ben_status_list|safe}},
         datasets: [{
-            label: 'Member Status',
+            label: 'Beneficiary Status',
             data: {{ben_counts|safe}},
-            backgroundColor: ['rgba(0, 166, 90, 0.7)','rgba(245, 105, 84, 0.7)','rgba(243, 156, 18, 0.7)','rgba(163, 162, 160, 0.7)'],
+            backgroundColor: ['rgba(0, 166, 90, 0.7)','rgba(245, 105, 84, 0.9)','rgba(243, 156, 18, 0.9)','rgba(163, 162, 160, 0.7)'],
             }]
         },
         options: {

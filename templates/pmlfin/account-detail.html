@@ -234,6 +234,16 @@
             
 
             </div>
+
+            <!-- Print pdf -->
+
+            <div class="row no-print">
+                <div class="col-12">
+                  <a href="{% url 'pmlfin:acc_print' request.user.id %}" rel="noopener" target="_blank" type="button" type="button" class="btn btn-info float-right"><i class="fas fa-print"></i> Print Statement</a>
+                  
+                </div>
+              </div>
+
             <hr style="height:2px;border-width:0;color:gray;background-color:gray">
             <!-- /.row -->
 

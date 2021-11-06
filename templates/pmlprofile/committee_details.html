@@ -31,7 +31,7 @@
     <div class="row">
         <div class="col-12">
         <div class="card" >
-            <div class="card-header float-sm-right" style="background-color:rgba(41, 41, 44, 0.986);color:rgb(248, 248, 247)"> 
+            <div class="card-header float-sm-right" style="background-color:rgb(74, 94, 121);color:rgb(248, 248, 247)"> 
             <h3 class="card-title text-center" style:"font-weight: bold">Term of Office:  {{committees.term_starts|date:'d F Y'}} to {{committees.term_ends|date:'d F Y'}}</h3>
             </div>
             <!-- /.card-header -->        
@@ -39,16 +39,25 @@
             <div class="row mt-4 mb-4">           
                 {% for member in committees.incumbents.all %}
                 <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
-                    <div class="position-relative p-3 bg-gray mt-4" style="height: 180px">
+                    <div class="position-relative  p-3 mt-4" style="height: 180px; background-color:rgba(74, 94, 121,0.9)">
                         <div class="ribbon-wrapper ribbon-xl">
-                        <div class="ribbon bg-warning text-sm">
-                            <strong>{{member.portfolio}}</strong> 
+                            <div class="ribbon bg-warning text-sm" ">
+                            <small><strong>{{member.portfolio}}</strong> </small>   
+                            </div>
                         </div>
-
-                        </div>
-                        <strong>Mr. {{member.member.user.last_name}}</strong>   {{member.member.user.first_name}} {{member.member.middlename}}<br />
+                        <strong style="color:rgb(224, 206, 182)">Mr. {{member.member.user.last_name}}   {{member.member.user.first_name}} {{member.member.middlename}} </strong><br />
                         <div> 
                             <img src="{{member.member.photo.url}}" alt="Member Photo" class="profile-user-img img-fluid img-circle"> <!--style="width:60%; height: 20em; background-color:rgba(0,0,0,0.8);-->
+                        </div>
+                        <div>
+                            <h5> <span style="color:rgb(224, 206, 182)" ><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{{member.member.mobile_phone}}
+                                    &nbsp;| &nbsp; 
+                                </span>
+                                 <i class="fa fa-envelope" aria-hidden="true" style="color:rgb(224, 206, 182)"></i>&nbsp;&nbsp;&nbsp;
+                                 <a href="mailto:{{member.member.user.email}}" style="color:rgb(224, 206, 182)"> 
+                                {{member.member.user.email}}
+                                </a> 
+                        </h5> 
                         </div>
                     </div>
                     </div>

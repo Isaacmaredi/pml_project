@@ -10,5 +10,6 @@ urlpatterns = [
     path('cashflow/', views.cashflow, name='cashflow'),
     path('shares/', views.shares_view, name='shares'),
     path('acc_detail/<int:pk>/', views.AccountDetail.as_view(), name='acc_detail'),
+    path('acc_print/<int:pk>/', views.AccountDetailPrint.as_view(), name='acc_print'),
     path('wealth/',views.net_wealth, name='wealth')
 ]

@@ -1,26 +1,31 @@
 <html lang="en">
 {% load static %}
+{% load humanize %}
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Print your statement </title>
+    <title>} </title>
 </head>
 <body>
-<div class="wrapper">
 <!-- Main content -->
+
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
     <div class="row mb-2">
         <div class="col-sm-6">
-        <h1>Statement of Account for {{member_account.shortname}}
+        <h1>Statement of Account for {{ member_account.shortname}} as at:
+            <b> 
+                {% for obj in member_account.profile.all %}
+                {% if forloop.first %}
+                    {{ obj.date|date:'d M Y'}}
+                {% endif %}
+                {% endfor %}
+            </b> 
         </h1> 
         </div>
-        <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{% url 'pmlprofile:profiles'%}">Membership</a></li>
-            <li class="breadcrumb-item active">{{ member_account.shortname}} Account</li>
-        </ol>
-        </div>
+
     </div>
     </div><!-- /.container-fluid -->
 </section>
@@ -29,51 +34,49 @@
     <div class="container-fluid">
     <div class="row">
         <div class="col-12">
-        <div class="callout callout-info">
-            <h5><i class="fas fa-info"></i> Account Details for: {{member_account.user.last_name}}  {{member_account.user.first_name}} {{member_account.middlename}}</h5>
-            This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
-        </div>
-
-
         <!-- Main content -->
-
+        {% if user.is_authenticated %} 
         <div class="invoice p-3 mb-3">
             <!-- title row -->
             <div class="row">
-            <div class="col-12">
-                <h4>
-                <img src="{% static 'img/pml-logo1.png' %}" alt="PML Logo" height="50" width="80" >
-                <small class="float-right">Date: 2/10/2014</small>
-                </h4> 
+                <div class="col-12">
+                    <h4>
+                        <div class= "text-center">
+                            <img src="{% static 'img/pml-logo1.png' %}" alt="PML Logo" height="80" width="120" >
+                        </div>
+                        <small class="float-left" style = "text-decoration: underline; 
+                            font-style: italic; font-weight: bold"> 
+                            Member Ref.: PML1991-{{member_account.id}}{{member_account.user.first_name|slice:1}}{{member_account.middlename|slice:1}}
+                        </small>
+                        <small class="float-right" style = "text-decoration: underline; 
+                            font-style: italic; font-weight: bold">
+                            Statement Date: {{today|date:'d F Y'}} 
+                        </small>
+                    </h4> 
+                </div>
 
-            </div>
             <!-- /.col -->
             </div>
+            <hr style="height:2px;border-width:0;color:gray;background-color:gray">
             <!-- info row -->
             <div class="row invoice-info">
             <div class="col-sm-4 invoice-col">
                 <span style= "font-style:italic; text-decoration: 
-                            underline; font-weight: bold; color:rgb(99, 5, 18)"> 
+                            underline; font-weight: bold; color:rgb(9, 76, 177)"> 
                     Payments due to:
                 </span>     
                 <address>
                 <strong>Progress Men's League</strong><br>
                 Private Bag X104<br>
                 Ekangala, 1022 <br>
-                <span style= "font-style: italic; font-weight:bold; color:rgb(11, 18, 116)"> 
-                Bank: Fisrt National Bank <br>
-                Acc No.: 621 2783 91 <br>
-                </span>
-                
-                Phone: +27 82 837 0298 &nbsp;&nbsp;&nbsp;&nbsp; Email: <a href="mailto:treasury@pml.org">treasury@pml.org </a>
-                
+                Phone: +27 82 837 0298 &nbsp;&nbsp;|&nbsp;&nbsp; Email: <a href="mailto:treasury@pml.org">treasury@pml.org </a>               
                 </address>
             </div>
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
                 <span style= "font-style:italic; text-decoration: underline;
-                        font-weight: bold; color:rgb(99, 5, 18)"> 
-                    Payment Information:
+                        font-weight: bold; color:rgb(9, 76, 177)"> 
+                    Account Information:
                 </span>  
                 <address>
                 <strong> Mr. {{member_account.user.first_name}}  
@@ -85,56 +88,64 @@
                 </strong><br>
                 {{member_account.address}}<br>
                 {{member_account.town_city}}<br>
-                {{member_account.district_metro}} <br>
-                Phone: {{member_account.mobile_phone}}<br>
+                Phone: {{member_account.mobile_phone}} &nbsp;&nbsp;&nbsp;|&nbsp;
                 Email: <a href="mailto:{{member_account.user.email}}"> {{member_account.user.email}}</a>  
                 </address>
             </div>
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
-                <b>Invoice #007612</b><br>
-                <br>
-                <b>Order ID:</b> 4F3S8J<br>
-                <b>Payment Due:</b> 2/22/2014<br>
-                <b>Account:</b> 968-34567
+                <span style= "font-style:italic; text-decoration: underline;
+                font-weight: bold; color:rgb(9, 76, 177)"> 
+                <b>Banking Details</b><br>
+            </span>
+                <b>Bank: First National Bank </b> <br>
+                    Acc No.: 621 2783 91 <br>
+                    Acc Type: Current <br>
+                    Branch: Bronkhosrtspruit<br>      
             </div>
             <!-- /.col -->
             </div>
             <!-- /.row -->
-            <hr>
+            <!-- <hr style="height:1px;border-width:0;color:gray;background-color:gray"> -->
             <!-- Table row -->
             <div class="row">
             <div class="col-12 table-responsive">
-                <table class="table table-striped">
+                <table class="table table-striped table-bordered">
                 <thead>
-                <tr style="background-color:rgb(209, 209, 203); color:black">
-                    <th>Date</th>
+                <tr class="bg-light" >  
+                    <th colspan="2" class="text-center" style="border-left:solid; border-top:solid;">MONTHLY BALANCE BROUGHHT FOWARD</th>       
+                    <th colspan="5" class="text-center" style=" border-right:solid; border-left:solid;border-top:solid">DEBITS</th>
+                    <th colspan="3" class="text-center" style="border-right:solid; border-left:solid;border-top:solid">RECEIPTS</th>
+                    <th style="border-right:solid; border-left:solid;border-top:solid"> MONTHLY OUTSTANDING(+ve)/SURPLUS(-ve) </th>
+                </tr>
+                <tr>
+                    <th style="border-left:solid">Transaction Date</th>
                     <th>Balance BF</th>
-                    <th>Premiums</th>
+                    <th style="border-left:solid">Premiums</th>
                     <th>Funeral T\U</th>
                     <th>Transport T\U</th>
                     <th>Fines</th>
-                    <th>Total Debits</th>
+                    <th style="border-right:solid">Total Debits</th>
                     <th>Deposits</th>
                     <th>Adjustments</th>
-                    <th>Total Receipts</th>
-                    <th>Closing Balance</th>
+                    <th style="border-right:solid">Total Receipts</th>
+                    <th style="border-right:solid">Closing Balance</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for acc in member_account.profile.all %}
                 <tr>
-                    <td>{{acc.date|date:'M Y'}}</td>
+                    <td style="border-left:solid">{{acc.date|date:'d F Y'}}</td>
                     <td>{{acc.balance_brought_forward}}</td>
-                    <td>{{acc.premiums}}</td>
+                    <td style="border-left:solid">{{acc.premiums}}</td>
                     <td>{{acc.funeral_topup}}</td>
                     <td>{{acc.transport_topup}}</td>
                     <td>{{acc.fines}}</td>
-                    <th>{{acc.total_debits}}</th>
+                    <th style="border-right:solid">{{acc.total_debits}}</th>
                     <td>{{acc.cash_deposit}}</td>
                     <td>{{acc.adjustments}}</td>
-                    <th>{{acc.total_receipts}}</th>
-                    <th>{{acc.total_outstanding}}</th>
+                    <th style="border-right:solid">{{acc.total_receipts}}</th>
+                    <th style="border-right:solid">{{acc.total_outstanding|floatformat:2|intcomma}}</th>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -143,54 +154,95 @@
             <!-- /.col -->
             </div>
             <!-- /.row -->
-
+            <hr style="height:2px;border-width:0;color:gray;background-color:gray">
             <div class="row">
             <!-- accepted payments column -->
             <div class="col-6">
-                <p class="lead">Payment Methods:</p>
-                <img src="../../dist/img/credit/visa.png" alt="Visa">
-                <img src="../../dist/img/credit/mastercard.png" alt="Mastercard">
-                <img src="../../dist/img/credit/american-express.png" alt="American Express">
-                <img src="../../dist/img/credit/paypal2.png" alt="Paypal">
-
-                <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
-                Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem
-                plugg
-                dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
-                </p>
-            </div>
-            <!-- /.col -->
-            <div class="col-6">
-                <p class="lead">Amount Due 2/22/2014</p>
-
-                <div class="table-responsive">
-                <table class="table">
-                    <tr>
-                    <th style="width:50%">Subtotal:</th>
-                    <td>$250.30</td>
-                    </tr>
-                    <tr>
-                    <th>Tax (9.3%)</th>
-                    <td>$10.34</td>
-                    </tr>
-                    <tr>
-                    <th>Shipping:</th>
-                    <td>$5.80</td>
-                    </tr>
-                    <tr>
-                    <th>Total:</th>
-                    <td>$265.24</td>
-                    </tr>
-                </table>
+                <div class="text-muted">       
+                    <h6 class="alert alert-light"> <span style="text-decoration: underline">
+                                Important Note: </span>
+                        &nbsp;&nbsp;&nbsp; 
+                        A positive( > 0 ) balance amount means your account is in 
+                        <b class="text-danger">arrears </b>. Please remit asap.                  
+                    </h6> 
+                        
                 </div>
             </div>
             <!-- /.col -->
+            <div class="col-6">
+                <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <th colspan="2" class="text-center" style="background-color: rgb(235, 232, 232)">
+                            Latest Account Summary: 
+                            {% for obj in member_account.profile.all %}
+                                {% if forloop.first %}
+                                {{ obj.date|date:'M Y'}}
+                                {% endif %}
+                            {% endfor %} 
+                        </th>
+                    </thead>
+                    <tr>
+                    <td style="width:50%">Net Movement</td>
+                    <td>
+                        <b> 
+                            {% for obj in member_account.profile.all %}
+                            {% if forloop.first %}
+                                R {{ obj.net_movement|floatformat:2|intcomma}}
+                            {% endif %}
+                            {% endfor %}
+                        </b> 
+
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>Outstanding/Surplus Balance</td>
+                    <td>
+                        <b> 
+                            {% for obj in member_account.profile.all %}
+                                {% if forloop.first %}
+                                    {% if obj.total_outstanding < 0 %}
+                                        <span class="text-primary">R {{ obj.total_outstanding|floatformat:2|intcomma}}</span>
+                                    
+                                    {% elif obj.total_outstanding > 0 and obj.total_outstanding < 500.00 %}
+                                        <span class="text-secondary">R {{ obj.total_outstanding|floatformat:2|intcomma}}</span>
+                                    {% elif obj.total_outstanding >= 500.00 and obj.total_outstanding < 1000.00 %}
+                                        <span style="color:rgb(216, 156, 4)">R {{ obj.total_outstanding|floatformat:2|intcomma}}</span>
+                                    {% else %} 
+                                        <span class="text-danger">R {{ obj.total_outstanding|floatformat:2|intcomma}}</span>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </b> 
+
+                    </td>
+                    </tr>
+                </table>
+                
+                </div>
             </div>
+            <!-- /.col -->
+            
+
+            </div>
+
+            <!-- Print pdf -->
+        </div>
+            <hr style="height:2px;border-width:0;color:gray;background-color:gray">
             <!-- /.row -->
+
+            <!-- this row will not appear when printing -->
+    
+        </div>
+        
+        {% endif %}
+        <!-- /.invoice -->
         </div><!-- /.col -->
     </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
+</div><!-- /.container-fluid -->
 </section>
+<!-- /.content -->
+</div>
 <!-- /.content -->
 </div>
 <!-- ./wrapper -->

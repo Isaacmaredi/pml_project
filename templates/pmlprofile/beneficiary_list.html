@@ -24,11 +24,11 @@
 <div class="row mt-2 mb-1">
         <div class="col-lg-3 col-6 text-center">
             <!-- small box -->
-            <div class="small-box bg-info">
+            <div class="small-box bg-success">
             <div class="inner">
                 <h3>{{active}}</h3>
 
-                <h5>Active Beneficiaries</h5>
+                <h5>Active</h5>
     
             </div>
             <div class="icon">
@@ -44,7 +44,7 @@
             <div class="inner">
                 <h3>{{inactive}}<sup style="font-size: 20px"></sup></h3>
 
-                <h5>Inactive Beneficiaries</h5>
+                <h5>Inactive </h5>
             </div>
             <div class="icon">
                 <i class="fas fa-user-minus"></i>
@@ -57,9 +57,9 @@
             <!-- small box -->
             <div class="small-box" style="background-color: rgb(199, 202, 206);">
             <div class="inner">
-                <h3>{{article20}}<sup style="font-size: 20"></h3>
+                <h3>{{article20}}<sup style="font-size: 20px"></h3>
 
-                <h5>Article 20.3 Beneficiaries</h5>
+                <h5>Article 20.3 </h5>
             </div>
             <div class="icon">
                 <i class="fas fa-user"></i>
@@ -74,7 +74,7 @@
             <div class="inner">
                 <h3>{{deceased}}</h3>
 
-                <h5>Deceased Beneficiaries</h5>
+                <h5>Deceased </h5>
             </div>
             <div class="icon">
                 <i class="fas fa-cross"></i>
@@ -94,9 +94,6 @@
             <div class="row justify-content-center">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                        <h3 class="card-title">Choose format for printing or column display</h3>
-                        </div>
                         <!--card-header -->
                         <div class="card-body"> 
                         <table id="example1" class="table table-bordered table-striped">
@@ -104,10 +101,10 @@
                         <tr>    
                             <th>Member ID</th>                
                             <th>Name</th>
-                            <th>Beneficiary Type</th>
-                            <th>Birth Date</th>
-                            <th>Age this Year</th>
+                            <th>Type</th>
                             <th>Status</th>
+                            <th>Birth Date</th>
+                            <th>Age</th>
                             <th>Paid-up</th>
                             <th>Paid-up date</th>
                         </tr>
@@ -117,29 +114,55 @@
                     {% for beneficiary in beneficiaries %}
 
                     {% if beneficiary.beneficiary_status == 'Deceased' %}
-                        <tr class="text-danger">
-                            
+                        <tr> 
                             <td>{{beneficiary.member.id}}</td>
                             <td>{{beneficiary.name}}</td>
                             <td>{{beneficiary.beneficiary_type}}</td>
+                            <th> <strong class="btn btn-danger btn-block" disabled="true"> {{beneficiary.beneficiary_status}}</strong></th>
                             <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
-                            <td> N/A </td>
-                            <td> {{beneficiary.beneficiary_status}}</td>
-                             <td>{% if beneficiary.beneficiary_status%}Yes 
+                            <td> N/A </td>           
+                            <td>{% if beneficiary.beneficiary_status%} 
+                                <span class="text-danger" >Yes </span> 
                                 {% else %} No
                                 {% endif %}
                             </td>
-                            <td>{{beneficiary.paid_date}}</td>
+                            <th>{{beneficiary.paid_date}}</th>
                         </tr>
+
+                    {% elif beneficiary.beneficiary_status == "Article 20.3" %}
+                    <tr>    
+                        <td>{{beneficiary.member.id}}</td>
+                        <td>{{beneficiary.name}}</td>
+                        <td>{{beneficiary.beneficiary_type}}</td>
+                        <th > <strong class="btn btn-secondary btn-block" > {{beneficiary.beneficiary_status}}</strong></th>
+                        <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
+                        <td> N/A </td>    
+                        <td> No</td>
+                        <td>{{beneficiary.paid_date}}</td>
+                    </tr>
+
+                    {% elif beneficiary.beneficiary_status == "Inactive" %}
+                    <tr>    
+                        <td>{{beneficiary.member.id}}</td>
+                        <td>{{beneficiary.name}}</td>
+                        <td>{{beneficiary.beneficiary_type}}</td>
+                        <th> <strong class="btn btn-warning btn-block" disabled>{{beneficiary.beneficiary_status}}</strong></th>
+                        <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
+                        <td> N/A </td>
+                        <td>No</td>
+                        <td>{{beneficiary.paid_date}}</td>
+                    </tr>
+
                     {% else %}
                         <tr>
                             <td>{{beneficiary.member.id}}</td>
                             <td>{{beneficiary.name}}</td>
                             <td>{{beneficiary.beneficiary_type}}</td>
+                            <th> <strong class="btn btn-success btn-block" > {{beneficiary.beneficiary_status}}</strong></th>
                             <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
-                            <td> {{beneficiary.age}}</td>
-                            <td> {{beneficiary.beneficiary_status}}</td>
-                            <td>{% if not beneficiary.beneficiary_status%}Yes 
+                            <td> {{beneficiary.age}}</td>  
+                            <td>{% if not beneficiary.beneficiary_status%}
+                                <span class="text-danger" >Yes </span> 
                                 {% else %} No
                                 {% endif %}
                             </td>
@@ -155,10 +178,10 @@
                         <tr>
                         <th>Member ID</th>                
                         <th>Name</th>
-                        <th>Beneficiary Type</th>
-                        <th>Birth Date</th>
-                        <th>Age this Year</th>
+                        <th>Type</th>
                         <th>Status</th>
+                        <th>Birth Date</th>
+                        <th>Age</th>
                         <th>Paid-up</th>
                         <th>Paid-up date</th>
                         </tr>

@@ -49,9 +49,9 @@
                             <tr>
                             <th scope="col">Acc Date</th>
                             <th scope="col">Name</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Rating</th>
-                            <th scope="col">Total Outstanding</th>                   
+                            <th scope="col">Outstanding/Surplus</th> 
+                            <th scope="col">Status Indicator</th>
+                            <th scope="col">Status Rating</th>                                         
                             </tr>
                     </thead>
             <tbody>
@@ -65,6 +65,7 @@
                                 {{account.name.user.first_name}} 
                                 {{account.name.middlename}}
                             </th>
+                            <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
                             <td>
                                 <span style="color: #68da80";>
                                     <i class="fas fa-star"></i>
@@ -83,6 +84,7 @@
                                 {{account.name.user.first_name}} 
                                 {{account.name.middlename}}
                             </th>
+                            <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
                             <td>
                                 <span style="color: #b4a483"">
                                     <i class="fas fa-star"></i>                              
@@ -100,6 +102,7 @@
                                 {{account.name.user.first_name}} 
                                 {{account.name.middlename}}
                             </th>
+                            <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
                             <td>
                                 <span style="color:#d4af37";>
                                     <i class="fas fa-star"></i>
@@ -116,6 +119,7 @@
                                 {{account.name.user.first_name}} 
                                 {{account.name.middlename}}
                             </th>
+                            <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
                             <td>
                                 <span style="color:#cac2c2";>          
                                     <i class="fas fa-star"></i>
@@ -130,6 +134,7 @@
                                 {{account.name.user.first_name}} 
                                 {{account.name.middlename}}
                             </th>
+                            <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
                             <td>
                                 <span style="color:#d8d788";>
                                     <i class="fas fa-flag"></i>
@@ -144,6 +149,7 @@
                                 {{account.name.user.first_name}} 
                                 {{account.name.middlename}}
                             </th>
+                            <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
                             <td>
                                 <span class="text-warning">
                                     <!-- <span class="text-md">♦</span>  -->
@@ -158,6 +164,7 @@
                                 {{account.name.user.first_name}} 
                                 {{account.name.middlename}}
                             </th>
+                            <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
                             <td>
                                 <span class="text-danger">
                                     <!-- <span class="text-md">♦</span> -->
@@ -166,7 +173,7 @@
                             </td>
                             <td>Red Flag</td>
                         {% endif %}
-                        <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
+                        
                     </tr>   
             {% endfor %}
             </tbody>
@@ -175,9 +182,9 @@
                             <tr>
                                 <th scope="col">Acc Date</th>
                                 <th scope="col">Name</th>
-                                 <th scope="col">Total Balance</th>      
-                                <th scope="col">Status</th>
-                                <th scope="col">Rating</th>
+                                 <th scope="col">Outstanding/Surplus</th>      
+                                <th scope="col">Status Indicator</th>
+                                <th scope="col">Status Rating</th>
                                                  
                             </tr>
                         

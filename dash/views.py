@@ -34,8 +34,8 @@ def main_dash(request):
     ben_counts = ben_status['ben_counts'].to_list()
     ben_total  = ben_df.shape[0]
     
-    member_csv = member_df.to_csv(r'member.csv')
-    beneficiary_csv = ben_df.to_csv(r'beneficiary.csv')
+    # member_csv = member_df.to_csv(r'member.csv')
+    # beneficiary_csv = ben_df.to_csv(r'beneficiary.csv')
     context = {
         'status_list': status_list,
         'counts':counts,
@@ -78,13 +78,12 @@ def summary_dash(request):
     qs = Profile.objects.all()
     q = qs.values('shortname','birth_date','status')
     df_member = pd.DataFrame.from_records(q)
-    member_csv = df_member.to_csv(r'member.csv')
+    # member_csv = df_member.to_csv(r'member.csv')
 
     # Beneficiary Quesryset to pandas csv 
     qs1 = Beneficiary.objects.all()
     q1 = qs1.values('name', 'birth_date', 'beneficiary_type','beneficiary_status')
     df_ben = pd.DataFrame.from_records(q1)
-    
     
     df_member = df_member.drop(df_member[df_member.status =="Deceased"].index)
     df_member = df_member.drop(df_member[df_member.status =="Terminated"].index)
@@ -127,9 +126,6 @@ def summary_dash(request):
     member_age_group_list.sort()
     member_age_group_dict = dict(Counter(member_age_group_list))
 
-    # print(member_age_group_list)
-
-    
     member_age_group_keys = member_age_group_dict.keys()
     member_age_group_values = member_age_group_dict.values()
     
@@ -178,9 +174,7 @@ def summary_dash(request):
     for y in ben_age_group_values:
             ben_age_group_data.append(y)
             
-            
     # Beneiciaries by type and status 
-    
     ben_qs = Beneficiary.objects.all()
     ben_qs = ben_qs.values('beneficiary_type', 'beneficiary_status')
     ben_df_stats = pd.DataFrame.from_records(ben_qs)
@@ -306,37 +300,29 @@ def mortality(request):
     death_year_df = member_mortality_df['year'].value_counts().rename_axis('year').reset_index(name='death_count').sort_index()
     
     death_year_df = death_year_df.sort_values(by='year')
-    print(death_year_df)
     
     year_list = list(death_year_df['year'])
     year_death_count = list(death_year_df['death_count'])
 
     stats = death_year_df.describe()
     stats_df = pd.DataFrame(stats)
-    # print(stats_df)
     
-    
-    # print(stats_df)
-    # print( 'Average Death: ', stats_df['death_count'].mean())
     data = pd.DataFrame(stats_df).to_html()
     
     ben_mortality = Beneficiary.objects.filter(beneficiary_status='Deceased')
     qb = ben_mortality.values('name','beneficiary_status','paid_date')
     ben_mortality_df = pd.DataFrame.from_records(qb)
-    # 
     
     ben_mortality_df['year'] = pd.DatetimeIndex(ben_mortality_df['paid_date']).year
-    # print(ben_mortality_df)
+    
     ben_death_year= ben_mortality_df['year'].value_counts().rename_axis('year').reset_index(name='death_count').sort_index()
 
     ben_death_year = ben_death_year.sort_values(by='year')
-    # print(ben_death_year)
     
     ben_year_list = list(ben_death_year['year'])
     ben_death_count = list(ben_death_year['death_count'])
     
-    # print(ben_year_list)
-    # print(ben_death_count)
+    
     
     context = {
         'stats_df': stats_df,
@@ -345,10 +331,7 @@ def mortality(request):
         'year_death_count':year_death_count,
         'ben_year_list': ben_year_list,
         'ben_death_count':ben_death_count,
-    }
-    
-    
-    
+    }   
     
     return render(request, 'dash/mortality.html',context)
     

@@ -27,14 +27,26 @@
             </div>
         </div>
         <div class="jumbotron">
+            {% if meeting.host.user.last_name %}
             <p><b>Meeting Host:</b> {{meeting.host.user.last_name}} 
                     {{meeting.host.user.first_name}}
                 {{meeting.host.middlename}}
+            {% else %}
+            <b>Meeting Host:</b> &nbsp;&nbsp;Executive Committee
+            {% endif %}
+
             </p>
-            <p> <b>Address: </b> &nbsp;&nbsp; {{meeting.host.address}} </p>
+            <p> <b>Address: </b> &nbsp;&nbsp;&nbsp;&nbsp;
+            {% if meeting.host.address %}
+            {{meeting.host.address}} 
+            {% else %}
+            {{meeting.alt_venue}}
+            {% endif %}
+            
+            </p>
             <p> <b>Town: </b> &nbsp;&nbsp; {{meeting.host.town_city}} </p> </br>
-            <p> <b>Email: </b> &nbsp;&nbsp; {{meeting.host.user.email}} </p>
-            <p> <b>Phone: </b> &nbsp;&nbsp; {{meeting.host.mobile_phone}} </p>
+            <p> <b>Total Present: </b> &nbsp;&nbsp; {{present}} </p>
+            <p> <b>Toal Absent</b> &nbsp;&nbsp; {{absent}} </p>
             <p> </p>
 
         </div>
@@ -54,7 +66,8 @@
                     <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
-                    <tr>                    
+                     
+                    <tr>                
                         <th>Event</th>
                         <th>Member</th>
                         <th>Is Present</th>

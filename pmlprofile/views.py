@@ -408,7 +408,7 @@ def profile_dash(request):
 class ProfileListView(LoginRequiredMixin, ListView):
     context_object_name = "profiles"
     model = Profile
-    paginate_by = 6
+    paginate_by = 9
     template_name = 'pmlprofile/member_list.html'
     
     def get_context_data(self,*args,**kwargs):
