@@ -88,6 +88,10 @@ class Profile(models.Model):
     lapse_date = models.DateField(auto_now=False, blank=True, null=True)
     age_group = models.CharField(max_length=50, blank=True, null=True)
     
+    class Meta:
+        verbose_name_plural = 'Member Profiles'
+        ordering =('user__id',)
+    
     def get_absolute_url(self):
         return reverse('pmlprofile:profile_detail' ,kwargs={'pk': self.pk})
     
