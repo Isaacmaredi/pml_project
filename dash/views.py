@@ -78,7 +78,6 @@ def summary_dash(request):
     qs = Profile.objects.all()
     q = qs.values('shortname','birth_date','status')
     df_member = pd.DataFrame.from_records(q)
-    member_csv = df_member.to_csv(r'member.csv')
 
     # Beneficiary Quesryset to pandas csv 
     qs1 = Beneficiary.objects.all()
@@ -321,8 +320,6 @@ def mortality(request):
     
     ben_year_list = list(ben_death_year['year'])
     ben_death_count = list(ben_death_year['death_count'])
-    
-    
     
     context = {
         'stats_df': stats_df,

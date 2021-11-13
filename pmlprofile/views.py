@@ -571,35 +571,35 @@ class IncumbentUpdateView(LoginRequiredMixin, UpdateView):
     
 
 #Chartjs plots
-def ben_dash(request):
-    actives = 0
-    article20 = 0
-    inactives = 0
-    deceased = 0
-    status_count = []
-    status_label = ['Active', 'Article 20.3', 'Inactive', 'Deceased']
-    qs = Beneficiary.objects.values()
-    total = Beneficiary.objects.all().count()
+# def ben_dash(request):
+#     actives = 0
+#     article20 = 0
+#     inactives = 0
+#     deceased = 0
+#     status_count = []
+#     status_label = ['Active', 'Article 20.3', 'Inactive', 'Deceased']
+#     qs = Beneficiary.objects.values()
+#     total = Beneficiary.objects.all().count()
     
-    for i in qs:
-        if 'Active' in i.values():
-            actives += 1
-        elif 'Article 20.3' in i.values():
-            article20 += 1
-        elif 'Inactive' in i.values():
-            inactives += 1
-        elif 'Deceased' in i.values():
-            deceased += 1 
-    status_count.extend([actives, article20, inactives, deceased])
-    print(status_label)
-    print(status_count)
-    context = {
-        'status_label': status_label,
-        'status_count': status_count,
-        'total':total,
-    }
-    print(status_label)
-    print(status_count)
+#     for i in qs:
+#         if 'Active' in i.values():
+#             actives += 1
+#         elif 'Article 20.3' in i.values():
+#             article20 += 1
+#         elif 'Inactive' in i.values():
+#             inactives += 1
+#         elif 'Deceased' in i.values():
+#             deceased += 1 
+#     status_count.extend([actives, article20, inactives, deceased])
+#     print(status_label)
+#     print(status_count)
+#     context = {
+#         'status_label': status_label,
+#         'status_count': status_count,
+#         'total':total,
+#     }
+#     print(status_label)
+#     print(status_count)
     
-    return render(request, 'pmlprofile/ben-dash.html', context)
+#     return render(request, 'pmlprofile/ben-dash.html', context)
     
