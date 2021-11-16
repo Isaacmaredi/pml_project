@@ -195,7 +195,7 @@
     data: {
         labels: {{date_list|safe}},
         datasets: [{
-            label: 'Closing Cash Balance',
+            label: 'Closing Cash Balances',
             fill:'origin',
             
             data: {{cash_list|safe}},
@@ -206,16 +206,10 @@
                 borderWidth: 2,
                 tension:0.2,
                 fill: true,
-        
-                /*pointRadius          : false,
-                pointColor          : '#3b8bba',
-                pointStrokeColor    : 'rgba(60,141,188,1)',
-                pointHighlightFill  : '#fff',
-                pointHighlightStroke: 'rgba(60,141,188,1)',*/
             }]
         },
         options: {
-           
+        
             maintainAspectRatio : false,
             responsive : true,
             legend: {

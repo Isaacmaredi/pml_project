@@ -208,10 +208,10 @@
     var memberChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
-        labels: {{member_status|safe}},
+        labels: {{member_status_list|safe}},
         datasets: [{
             label: 'Member Status',
-            data: {{member_status_count|safe}},
+            data: {{status_count|safe}},
             backgroundColor: ['rgba(0,166,90,0.7)','rgba(245,105,84, 0.9)','rgba(243, 156, 18, 0.9)','rgba(163, 162, 160, 0.7)'],
             }]
         },

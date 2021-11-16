@@ -1,0 +1,276 @@
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
+<div class="wrapper">
+
+<!-- Preloader -->
+<div class="preloader flex-column justify-content-center align-items-center">
+<img class="animation__shake" src="{% static 'img/pml-logo1.png' %}" alt="PML Logo" height="60" width="60">
+</div>
+
+<!-- Navbar -->
+{% if request.user.is_authenticated %}
+<nav class="main-header navbar navbar-expand navbar-dark navbar-light">
+<!-- Left navbar links -->
+<ul class="navbar-nav ">
+    <li class="nav-item">
+    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+    </li>
+
+    <li class="nav-item dropdown nav-item d-none d-sm-inline-block" >
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+        Profile Details
+    
+        </a>
+        <div class="dropdown-menu bg-dark">
+            <div class="text-warning">
+                <a class="dropdown-item text-warning" href="{% url 'pmlprofile:profiles' %}" class="nav-link"> Membership</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-warning" href="{% url 'pmlprofile:beneficiaries' %}">Beneficiaries</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-warning" href="{% url 'pmlprofile:committees' %}  ">Committees</a>
+            </div>
+            
+        </div>
+    </li>
+
+    <li class="nav-item dropdown nav-item d-none d-sm-inline-block" >
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+        Resources
+    
+        </a>
+        <div class="dropdown-menu bg-dark">
+            <div class="text-warning">
+                <a class="dropdown-item text-warning" href="{% url 'docs:minutes_list' %}"> Minutes</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-warning" href="#">Policies</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-warning" href="#">Reports</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-warning" href="#">Announcements</a>
+            </div>
+            
+        </div>
+
+    <li class="nav-item d-none d-sm-inline-block">
+        <a href="{% url 'events:meetings' %}" class="nav-link">Events</a>
+    </li>
+    </li>
+</ul>
+
+<!-- Right navbar links -->
+<ul class="navbar-nav ml-auto">
+    <!-- Navbar Search -->
+    <ul class="navbar-nav ml-auto justify-content-end">
+        <li class="nav-item dropdown nav-item d-none d-sm-inline-block">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-user-circle text-warning" aria-hidden="true">
+                </i> <span class="font-italic text-lowercase"></span>&nbsp;my</span>PML &nbsp; <span class="text-uppercase">({{user.first_name}})</span>  
+            </a>
+            {% if request.user.is_authenticated %}
+            <div class="dropdown-menu bg-dark">
+                <div class="text-warning">
+                    <a class="dropdown-item text-warning" href="{% url 'pmlprofile:my_profile' request.user.id %}">
+                        <span class="font-italic text-lowercase">my</span>Profile
+                    </a>
+            
+                    <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-warning" href="{% url 'pmlfin:acc_detail' request.user.id %}"> <span class="font-italic text-lowercase">my</span>
+                            Financials
+                        </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-warning" href="{% url 'accounts:change_password' %}">Change Password</a>
+                </div>
+            </div>
+            {% endif %}
+                
+        </li>  
+            {% if request.user.is_staff %}
+            <li class="nav-item nav-item d-none d-sm-inline-block">
+                <a class="nav-link" href=" {% url 'admin:index' %} " target="_blank"> 
+                <i class="fa fa-lock text-warning" aria-hidden="true" ></i> Admin</a>
+           
+            </li>   
+             {% endif %}   
+            <li class="nav-item mr-3 nav-item d-none d-sm-inline-block">
+                <a  href="javascript:{document.getElementById('logout').submit()}" class="nav-link">
+                    <i class="fas fa-sign-out-alt text-warning"></i> Logout
+                </a>
+                <form action="{% url 'accounts:logout' %}" method="POST" id="logout">
+                    {% csrf_token %}
+                    <input type="hidden">
+                </form>
+            </li>
+        
+        
+    </ul>
+
+    <li class="nav-item">
+    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+        <i class="fas fa-expand-arrows-alt"></i>
+    </a>
+    </li>
+    
+</ul>
+</nav>
+
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<!-- Brand Logo -->
+<a href="{% url 'index' %}" class="brand-link">
+    <img src="{% static 'img/pml-logo2.png' %}" alt="PML Logo" class="brand-image img-circle elevation-3" width="100"0 height="100" style="opacity: .95">
+    <span class="brand-text font-weight-light"> <strong class="text-light">Home </strong></span>
+</a>
+
+
+<div class="sidebar">
+
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+    <div class="image">
+        <img src="{{user.profile.photo.url}}" class="img-circle elevation-2" alt="User Image">
+    </div>
+    <div class="info">
+        <a href="#" class="d-block">{{user.username}}</a>
+    </div>
+    </div>
+
+    <nav class="mt-2">
+    <p class="text-center">
+     <b class="text-light text-center">DASHBOARD</b>
+    </p>
+    
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+        <li class="nav-item menu-open">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p class="text-warning">
+                    Profile Summary
+                <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+        <ul class="nav nav-treeview">
+            <div class="text-info">
+
+                <li class="nav-item ">
+                    <a href="{% url 'dash:summary' %}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Membership/Beneficiaries</p>
+                    </a>
+                </li>
+
+            <li class="nav-item ">
+                <a href="{% url 'dash:mortality' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Mortality </p>
+                </a>
+            </li>
+
+
+            </li> 
+        </ul>
+        </li>
+
+        <li class="nav-item menu-open">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p class="text-warning">
+                Financials</strong>
+            <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview ">
+                <div class="text-info">
+                    <li class="nav-item">
+                        <a href="{% url 'pmlfin:cashflow' %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Cash Flow</p>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="{% url 'pmlfin:shares' %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Investment Portfolio</p>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'pmlfin:wealth'%}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Net Wealth</p>
+                            </a>
+                            </li>
+                        <li class="nav-item">
+                        <a href="{% url 'pmlfin:member-accounts' %} " class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Accounts Summary</p>
+                        </a>
+                        </li>
+                        {% comment %} {% url 'pmlprofile:member_accounts' %} {% endcomment %}
+                </div>
+                
+            </ul>
+            </li>
+
+        <li class="nav-item menu-open">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-calendar-alt"></i>
+            <p class="text-warning">
+                Events 
+            <i class="fas fa-angle-left right"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+        <div class="text-info">
+            <li class="nav-item">
+            <a href="{% url 'events:meetings' %}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Meetings</p>
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="{% url 'events:funerals' %}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Funeral</p>
+            </a>
+            </li>
+        </div>
+        </ul>
+        </li>
+
+        <li class="nav-item">
+        <a href="{% url 'geoApp:profile_geo' %}" class="nav-link">
+            <i class="nav-icon fa fa-map-marker"></i>
+            <p class="text-warning">
+            Where Am I Online?
+            </p>
+        </a>
+        </li>                    
+
+        </ul>
+         
+    </ul>
+</nav>
+{% endif %}
+    <!-- /.sidebar-menu -->
+</div>
+<!-- /.sidebar -->
+</aside>
+
+<!--Main Content-->
+{% block content %}
+
+{% endblock content %}
+
+<!-- /.content-wrapper -->
+<footer class="main-footer">
+
+    
+<strong>Copyright &copy; Progress Men's League <script>document.write(new Date().getFullYear());</script></strong> 
+    All rights reserved.  Web design and development by: <a href="#">Masa Technologies</a>.
+</footer>
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+<!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->

@@ -23,6 +23,9 @@ def main_dash(request):
     status_list = member_status['status'].to_list()
     counts = member_status['counts'].to_list()
     total = member_df.shape[0]
+    
+    print(status_list)
+    print(counts)
 
     ben_qs = Beneficiary.objects.all()
     ben_qs = ben_qs.values('name','beneficiary_status')
@@ -50,19 +53,30 @@ def main_dash(request):
 @login_required
 def summary_dash(request):
     
-    member_status = []
-    member_status_count = []
+    # member_status = []
+    # member_status_count = []
     
-    ben_status = []
-    ben_status_count = []
+    # ben_status = []
+    # ben_status_count = []
 
     qs = Profile.objects.all().values('status').annotate(total=Count('status'))
     total_members = Profile.objects.all().count()
-    for status_label in qs:
-        member_status.append(status_label['status'])
+    # for status_label in qs:
+    #     member_status.append(status_label['status'])
     
-    for count in qs:
-        member_status_count.append(count['total'])
+    # for count in qs:
+    #     member_status_count.append(count['total'])
+    
+    qs = Profile.objects.all()
+    q = qs.values('shortname','status')
+    member_status_df = pd.DataFrame.from_records(q)
+    
+    member_status = member_status_df['status'].value_counts().rename_axis('status').reset_index(name='status_count')
+    
+    member_status_list = member_status['status'].to_list()
+    status_count = member_status['status_count'].to_list()
+    print(member_status_list)
+    print(status_count)
     
     ben_qs = Beneficiary.objects.all()
     ben_qs = ben_qs.values('name','beneficiary_status')
@@ -78,6 +92,7 @@ def summary_dash(request):
     qs = Profile.objects.all()
     q = qs.values('shortname','birth_date','status')
     df_member = pd.DataFrame.from_records(q)
+    # member_csv = df_member.to_csv(r'member.csv')
 
     # Beneficiary Quesryset to pandas csv 
     qs1 = Beneficiary.objects.all()
@@ -259,8 +274,8 @@ def summary_dash(request):
 
     
     context = {
-        'member_status': member_status,
-        'member_status_count': member_status_count,
+        'member_status_list': member_status_list,
+        'status_count': status_count,
         'total_members': total_members,
         'ben_status_list': ben_status_list,
         'ben_counts':ben_counts,
@@ -320,6 +335,8 @@ def mortality(request):
     
     ben_year_list = list(ben_death_year['year'])
     ben_death_count = list(ben_death_year['death_count'])
+    
+    
     
     context = {
         'stats_df': stats_df,
