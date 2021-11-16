@@ -56,12 +56,12 @@
             <li class="nav-item">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
-            <li class="nav-item d-none d-sm-inline-block">
-            <a href="index3.html" class="nav-link">Home</a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">Contact</a>
-            </li>
+            {% if request.user.is_staff %}
+            <li class="nav-item nav-item d-none d-sm-inline-block">
+                <a class="nav-link" href=" {% url 'admin:index' %} " target="_blank"> 
+                <i class="fa fa-lock text-warning" aria-hidden="true" ></i> Admin</a>
+            </li>  
+            {% endif %}
         </ul>
         <!--./left navbar links-->
         <!--Right Nabar Links-->
@@ -89,12 +89,6 @@
                 {% endif %}
             </li> 
 
-                {% if request.user.is_staff %}
-                <li class="nav-item nav-item d-none d-sm-inline-block">
-                    <a class="nav-link" href=" {% url 'admin:index' %} " target="_blank"> 
-                    <i class="fa fa-lock text-warning" aria-hidden="true" ></i> Admin</a>
-                </li>  
-                {% endif %}
             <li class="nav-item mr-3 nav-item d-none d-sm-inline-block">
                 <a  href="javascript:{document.getElementById('logout').submit()}" class="nav-link">
                     <i class="fas fa-sign-out-alt text-warning"></i> Logout
