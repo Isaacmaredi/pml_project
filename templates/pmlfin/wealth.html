@@ -13,11 +13,11 @@
     <div class="container-fluid">
     <div class="row mb-2">
         <div class="col-sm-6">
-        <h1 class="m-0">Total Net Wealth Over Time</h1>
+        <h1 class="m-0">Net Wealth and Trends Over Time</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{% url 'dash:summary' %}">Main Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'dash:summary' %}">Profile Dashboard</a></li>
             <li class="breadcrumb-item active">Wealth</li>
         </ol>
         </div><!-- /.col -->
@@ -46,7 +46,7 @@
             </div>
             <div class="card-body">
                 <div class="position-relative mb-4">
-                    <canvas id="investmentValues" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>
+                    <canvas id="investmentValues" style="min-height: 300px; height: 300px; max-height: 350px; max-width: 100%;"></canvas>
                 </div>
             </div>
         </div>
@@ -132,7 +132,7 @@
                     </div>
                     <div class="card-body"  >
                         <div class="position-relative mb-4">
-                            <canvas id="netWealthTrends" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>
+                            <canvas id="netWealthTrends" style="min-height: 350px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
                         </div>
                     </div>
                 </div>      
@@ -148,7 +148,7 @@
                 </div>
                 <div class="card-body" >
                     <div class="position-relative mb-4">
-                        <canvas id="investmentPortfolio" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%;" ></canvas>
+                        <canvas id="investmentPortfolio" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;" ></canvas>
                     </div>
         
                 </div>
