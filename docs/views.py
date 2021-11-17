@@ -19,3 +19,6 @@ def upload_minutes(request):
     }
     return render(request, 'docs/minutes_form.html',context)
 
+
+                    
+

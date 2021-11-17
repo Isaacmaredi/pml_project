@@ -120,7 +120,7 @@
                 <div class="row">
 
                     {% for obj in qs %}
-                    {% if obj.committee.name =='Executive Committee' %}
+                    {% if obj.committee.name == 'Executive Committee' %}
                     <div class="col-lg-4">
                         <div class="team-member">
                             <img class="mx-auto rounded-circle" src="{{obj.member.photo.url}}" alt="" />
