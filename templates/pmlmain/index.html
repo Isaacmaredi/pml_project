@@ -120,6 +120,7 @@
                 <div class="row">
 
                     {% for obj in qs %}
+                    {% if obj.committee =='Executive Committee' %}
                     <div class="col-lg-4">
                         <div class="team-member">
                             <img class="mx-auto rounded-circle" src="{{obj.member.photo.url}}" alt="" />
@@ -130,6 +131,7 @@
                             <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
+                    {% endif %}
                     {% endfor %}
                 </div>
                 <div class="row">
