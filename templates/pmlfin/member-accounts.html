@@ -63,7 +63,11 @@
                             <th scope="row" class="bg-success">
                                 {{account.name.user.last_name}} 
                                 {{account.name.user.first_name}} 
+                                {% if account.name.middlename %}
                                 {{account.name.middlename}}
+                                {% else %}
+                                ' '
+                                {% endif %}
                             </th>
                             <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
                             <td>
@@ -82,11 +86,15 @@
                             <th scope="row" class="bg-info">
                                 {{account.name.user.last_name}} 
                                 {{account.name.user.first_name}} 
+                                {% if account.name.middlename %}
                                 {{account.name.middlename}}
+                                {% else %}
+                                ' '
+                                {% endif %}
                             </th>
                             <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
                             <td>
-                                <span style="color: #b4a483"">
+                                <span style="color: #b4a483">
                                     <i class="fas fa-star"></i>                              
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i>
@@ -96,11 +104,15 @@
                             <td>Platinum</td>                                     
                 
                         {% elif account.total_outstanding <= -1000 %}
-                            <!-- <td ></td> -->
+                            
                             <th scope="row" class="bg-primary">
                                 {{account.name.user.last_name}} 
                                 {{account.name.user.first_name}} 
+                                {% if account.name.middlename %}
                                 {{account.name.middlename}}
+                                {% else %}
+                                ' '
+                                {% endif %}
                             </th>
                             <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
                             <td>
@@ -117,7 +129,11 @@
                             <th scope="row" class="bg-primary">
                                 {{account.name.user.last_name}} 
                                 {{account.name.user.first_name}} 
+                                {% if account.name.middlename %}
                                 {{account.name.middlename}}
+                                {% else %}
+                                ' '
+                                {% endif %}
                             </th>
                             <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
                             <td>
@@ -132,7 +148,11 @@
                             <th scope="row" class="bg-light">
                                 {{account.name.user.last_name}} 
                                 {{account.name.user.first_name}} 
+                                {% if account.name.middlename %}
                                 {{account.name.middlename}}
+                                {% else %}
+                                ' '
+                                {% endif %}
                             </th>
                             <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
                             <td>
@@ -147,7 +167,11 @@
                             <th scope="row" class="bg-warning">
                                 {{account.name.user.last_name}} 
                                 {{account.name.user.first_name}} 
+                                {% if account.name.middlename %}
                                 {{account.name.middlename}}
+                                {% else %}
+                                ' '
+                                {% endif %}
                             </th>
                             <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
                             <td>
@@ -162,7 +186,11 @@
                             <th scope="row" class="bg-danger">
                                 {{account.name.user.last_name}} 
                                 {{account.name.user.first_name}} 
+                                {% if account.name.middlename %}
                                 {{account.name.middlename}}
+                                {% else %}
+                                ' '
+                                {% endif %}
                             </th>
                             <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
                             <td>
@@ -182,10 +210,10 @@
                             <tr>
                                 <th scope="col">Acc Date</th>
                                 <th scope="col">Name</th>
-                                 <th scope="col">Outstanding/Surplus</th>      
+                                <th scope="col">Outstanding/Surplus</th>      
                                 <th scope="col">Status Indicator</th>
                                 <th scope="col">Status Rating</th>
-                                                 
+                                                
                             </tr>
                         
                 </tfoot>
