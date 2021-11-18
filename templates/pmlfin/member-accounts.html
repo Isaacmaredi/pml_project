@@ -31,7 +31,7 @@
     <div class="card">
     <div class="card-header">
 
-        <h3 class="card-title">Summary of Individual Account Balances as at {{first_rec.date}}</h3>
+        <h3 class="card-title">Summary of Individual Account Balances as at  <strong>{{first_rec.date}}</strong></h3>
 
         <div class="card-tools">
         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -57,7 +57,7 @@
             <tbody>
             {% for account in latest_accounts %}
                     <tr>
-                        <td scope="row">{{account.date|date:'M Y'}}</td>
+                        <td scope="row">{{account.date|date:'d F Y'}}</td>
                         {% if account.total_outstanding <= -3000 %}  
                             <!-- <td ></td> -->
                             <td scope="row" class="bg-success">
