@@ -122,7 +122,9 @@
                             {% if profile.status == 'Deceased' %} 
                                 <strong class="text-danger">{{profile.status}}</strong>
                             {% elif  profile.status == 'Suspended' %} 
-                                <strong class="text-warning">{{profile.status}}</strong>
+                                <strong class="text-secondary">{{profile.status}}</strong>
+                            {% elif  profile.status == 'Terminated' %} 
+                            <strong class="text-warning">{{profile.status}}</strong>
                             {% else %}
                                 <strong class="text-success">{{profile.status}}</strong>  
                             {% endif %}        
