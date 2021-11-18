@@ -47,7 +47,6 @@
             <table id="example2" class="table table-bordered table-striped">
                     <thead>
                             <tr>
-                            <th scope="col">Acc Date</th>
                             <th scope="col">Name</th>
                             <th scope="col">Outstanding/Surplus</th> 
                             <th scope="col">Status Indicator</th>
@@ -57,7 +56,6 @@
             <tbody>
             {% for account in latest_accounts %}
                     <tr>
-                        <th scope="row">{{account.date|date:'M Y'}}</th>
                         {% if account.total_outstanding <= -3000 %}  
                             <!-- <td ></td> -->
                             <td scope="row" class="bg-success">
@@ -208,7 +206,6 @@
                 <tfoot>
                     
                             <tr>
-                                <th scope="col">Acc Date</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Outstanding/Surplus</th>      
                                 <th scope="col">Status Indicator</th>
