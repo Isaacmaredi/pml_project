@@ -60,7 +60,7 @@
                         <th scope="row">{{account.date|date:'M Y'}}</th>
                         {% if account.total_outstanding <= -3000 %}  
                             <!-- <td ></td> -->
-                            <th scope="row" class="bg-success">
+                            <td scope="row" class="bg-success">
                                 {{account.name.user.last_name}} 
                                 {{account.name.user.first_name}} 
                                 {% if account.name.middlename %}
@@ -68,7 +68,7 @@
                                 {% else %}
                                 
                                 {% endif %}
-                            </th>
+                            </td>
                             <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
                             <td>
                                 <span style="color: #68da80";>
@@ -83,7 +83,7 @@
 
                         {% elif account.total_outstanding <= -2000 %}
                             <!-- <td ></td> -->
-                            <th scope="row" class="bg-info">
+                            <td scope="row" class="bg-info">
                                 {{account.name.user.last_name}} 
                                 {{account.name.user.first_name}} 
                                 {% if account.name.middlename %}
@@ -91,7 +91,7 @@
                                 {% else %}
                                 
                                 {% endif %}
-                            </th>
+                            </td>
                             <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
                             <td>
                                 <span style="color: #b4a483">
@@ -105,7 +105,7 @@
                 
                         {% elif account.total_outstanding <= -1000 %}
                             
-                            <th scope="row" class="bg-primary">
+                            <td scope="row" class="bg-primary">
                                 {{account.name.user.last_name}} 
                                 {{account.name.user.first_name}} 
                                 {% if account.name.middlename %}
@@ -113,7 +113,7 @@
                                 {% else %}
                             
                                 {% endif %}
-                            </th>
+                            </td>
                             <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
                             <td>
                                 <span style="color:#d4af37";>
@@ -126,7 +126,7 @@
 
                         {% elif account.total_outstanding <= 0 %}
                             <!-- <td ></td> -->
-                            <th scope="row" class="bg-primary">
+                            <td scope="row" class="bg-primary">
                                 {{account.name.user.last_name}} 
                                 {{account.name.user.first_name}} 
                                 {% if account.name.middlename %}
@@ -134,7 +134,7 @@
                                 {% else %}
                                 
                                 {% endif %}
-                            </th>
+                            </td>
                             <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
                             <td>
                                 <span style="color:#cac2c2";>          
@@ -145,7 +145,7 @@
                             <td>Silver</td>
         
                         {% elif account.total_outstanding < 500 %}
-                            <th scope="row" class="bg-light">
+                            <td scope="row" class="bg-light">
                                 {{account.name.user.last_name}} 
                                 {{account.name.user.first_name}} 
                                 {% if account.name.middlename %}
@@ -153,7 +153,7 @@
                                 {% else %}
 
                                 {% endif %}
-                            </th>
+                            </td>
                             <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
                             <td>
                                 <span style="color:#d8d788";>
@@ -164,7 +164,7 @@
                             <td>Silent</td>
                         
                         {% elif account.total_outstanding < 1000 %}
-                            <th scope="row" class="bg-warning">
+                            <td scope="row" class="bg-warning">
                                 {{account.name.user.last_name}} 
                                 {{account.name.user.first_name}} 
                                 {% if account.name.middlename %}
@@ -172,7 +172,7 @@
                                 {% else %}
 
                                 {% endif %}
-                            </th>
+                            </td>
                             <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
                             <td>
                                 <span class="text-warning">
@@ -183,7 +183,7 @@
                             <td>Yellow Flag</td>
 
                         {% else %}
-                            <th scope="row" class="bg-danger">
+                            <td scope="row" class="bg-danger">
                                 {{account.name.user.last_name}} 
                                 {{account.name.user.first_name}} 
                                 {% if account.name.middlename %}
@@ -191,7 +191,7 @@
                                 {% else %}
                                     
                                 {% endif %}
-                            </th>
+                            </td>
                             <th scope="row"> R {{ account.total_outstanding|floatformat:2|intcomma}}</th>
                             <td>
                                 <span class="text-danger">
