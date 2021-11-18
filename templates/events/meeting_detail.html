@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% load static %}
 
-{% block title %}| Meeting Details{% endblock title %}
+{% block title %}| Events Details{% endblock title %}
 
 
 {% block content %}
@@ -15,7 +15,7 @@
         <div class="row mb-2">
             <div class="col-sm-6 text-center">
                 <h1>
-                    Meeting Date: &nbsp;&nbsp; {{meeting.date|date:'jS F Y'}}
+                   Event Date: &nbsp;&nbsp; {{meeting.date|date:'jS F Y'}}
                     
                 </h1> 
             </div>
@@ -26,13 +26,13 @@
                 </ol>
             </div>
         </div>
-        <div class="jumbotron">
+        <div class="row mt-2 mb-1">
             {% if meeting.host.user.last_name %}
-            <p><b>Meeting Host:</b> {{meeting.host.user.last_name}} 
+            <p><b>Event Host:</b> {{meeting.host.user.last_name}} 
                     {{meeting.host.user.first_name}}
                 {{meeting.host.middlename}}
             {% else %}
-            <b>Meeting Host:</b> &nbsp;&nbsp;Executive Committee
+            <b>Event Host:</b> &nbsp;&nbsp;Executive Committee
             {% endif %}
 
             </p>

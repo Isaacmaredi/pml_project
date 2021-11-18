@@ -107,7 +107,7 @@
 <!-- Brand Logo -->
     <a href="{% url 'index' %}" class="brand-link">
         <img src="{% static 'img/pml-logo2.png' %}" alt="PML Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">PML Home</span>
+        <span class="brand-text font-weight-light">Home</span>
     </a>
 <!-- Sidebar -->
     <div class="sidebar">
@@ -115,6 +115,7 @@
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
             <img src="{{user.profile.photo.url}}" class="img-circle elevation-2" alt="User Image">
+            
         </div>
         <div class="info">
             <a href="#" class="d-block">{{user.username}}</a>
@@ -129,7 +130,7 @@
                 <a href="#" class="nav-link acive">
                     <i class="nav-icon fas fa-user" ></i>
                     <p class="text-warning">
-                </span >&nbsp;my</span>PML &nbsp; <span class="text-uppercase">({{user.first_name}})</span> 
+                        </span >&nbsp;my</span>PML &nbsp; <span class="text-uppercase">({{user.first_name}})</span> 
                     <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
@@ -158,7 +159,7 @@
 
                 <li class="nav-item menu-open">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-book"></i>
+                        <i class="nav-icon fas fa-book"></i>  
                         <p class="text-warning">
                         League Profile
                         <i class="fas fa-angle-left right"></i>
@@ -193,7 +194,7 @@
                 </li>
                 <li class="nav-item menu-open">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <i class="nav-icon fas fa-tachometer-alt"></i> 
                         <p class="text-warning">
                         Pofile Dashboard
                         <i class="right fas fa-angle-left"></i>
@@ -250,29 +251,13 @@
                         </li>       
                     </ul>
                 </li>
-
-                <li class="nav-item menu-open">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon far fa-calendar-alt"></i>
+                <li class="nav-item">
+                    <a href="{% url 'events:meetings' %}" class="nav-link">
+                        <i class="nav-icon fa fa-calendar"></i>
                         <p class="text-warning">
                         Events
-                        <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                        <a href="{% url 'events:meetings' %}" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Meetings</p>
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                        <a href="{% url 'events:funerals' %}" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Funerals</p>
-                        </a>
-                        </li>
-                    </ul>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'geoApp:profile_geo' %}" class="nav-link">
@@ -281,6 +266,20 @@
                         Where am I Online
                         </p>
                     </a>
+                </li>
+                <li class="nav-item">
+                    <li class="nav-item mr-3 nav-item d-none d-sm-inline-block">
+                        <a  href="javascript:{document.getElementById('logout').submit()}" class="nav-link">
+                            <i class="nav-icon fa fa-sign-out"></i> 
+                            <p class="text-warning">
+                            Logout
+                           </p> 
+                        </a>
+                        <form action="{% url 'accounts:logout' %}" method="POST" id="logout">
+                            {% csrf_token %}
+                            <input type="hidden">
+                        </form>
+                    </li>    
                 </li>
             </ul> 
         </nav>
