@@ -7,7 +7,7 @@ class Minutes(models.Model):
     doc = models.FileField(upload_to='minutes/%Y/%F')
     
     def __str__(self):
-        return f'Minutes - {self.title.meeting}'
+        return f'Minutes - {self.title}'
 
 
 
