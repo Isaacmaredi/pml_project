@@ -96,7 +96,7 @@
                             <td>{{beneficiary.member.id}}</td>
                             <td>{{beneficiary.name}}</td>
                             <td>{{beneficiary.beneficiary_type}}</td>
-                            <th> <strong class="btn btn-danger btn-block" disabled="true"> {{beneficiary.beneficiary_status}}</strong></th>
+                            <th> <strong class="btn btn-block bg-gradient-danger btn-xs" disabled="true"> {{beneficiary.beneficiary_status}}</strong></th>
                             <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
                             <td> N/A </td>           
                             <td>{% if beneficiary.beneficiary_status%} 
@@ -112,7 +112,7 @@
                         <td>{{beneficiary.member.id}}</td>
                         <td>{{beneficiary.name}}</td>
                         <td>{{beneficiary.beneficiary_type}}</td>
-                        <th > <strong class="btn btn-secondary btn-block" > {{beneficiary.beneficiary_status}}</strong></th>
+                        <th > <strong class="btn btn-block bg-gradient-secondary btn-xs" > {{beneficiary.beneficiary_status}}</strong></th>
                         <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
                         <td> N/A </td>    
                         <td> No</td>
@@ -124,7 +124,7 @@
                         <td>{{beneficiary.member.id}}</td>
                         <td>{{beneficiary.name}}</td>
                         <td>{{beneficiary.beneficiary_type}}</td>
-                        <th> <strong class="btn btn-warning btn-block" disabled>{{beneficiary.beneficiary_status}}</strong></th>
+                        <th> <strong class="btn btn-block bg-gradient-warning btn-xs" disabled>{{beneficiary.beneficiary_status}}</strong></th>
                         <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
                         <td> N/A </td>
                         <td>No</td>
@@ -136,7 +136,7 @@
                             <td>{{beneficiary.member.id}}</td>
                             <td>{{beneficiary.name}}</td>
                             <td>{{beneficiary.beneficiary_type}}</td>
-                            <th> <strong class="btn btn-success btn-block" > {{beneficiary.beneficiary_status}}</strong></th>
+                            <th> <strong class="btn btn-block bg-gradient-success btn-xs " > {{beneficiary.beneficiary_status}}</strong></th>
                             <td>{{beneficiary.birth_date|date:'d - M - Y'}}</td>
                             <td> {{beneficiary.age}}</td>  
                             <td>{% if not beneficiary.beneficiary_status%}
