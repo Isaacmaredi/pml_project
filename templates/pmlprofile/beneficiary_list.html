@@ -77,7 +77,8 @@
                         <table id="example1" class="table table-bordered table-striped">
                         <thead>
                         <tr>    
-                            <th>Member ID</th>                
+                            <th>Member ID</th> 
+                            <th>Beneficiary #</th>               
                             <th>Name</th>
                             <th>Type</th>
                             <th>Status</th>
@@ -94,6 +95,7 @@
                     {% if beneficiary.beneficiary_status == 'Deceased' %}
                         <tr> 
                             <td>{{beneficiary.member.id}}</td>
+                            <td>{{beneficiary.id}}</td>
                             <td>{{beneficiary.name}}</td>
                             <td>{{beneficiary.beneficiary_type}}</td>
                             <th> <strong class="btn btn-block bg-gradient-danger btn-xs" disabled="true"> {{beneficiary.beneficiary_status}}</strong></th>
@@ -110,6 +112,7 @@
                     {% elif beneficiary.beneficiary_status == "Article 20.3" %}
                     <tr>    
                         <td>{{beneficiary.member.id}}</td>
+                        <td>{{beneficiary.id}}</td>
                         <td>{{beneficiary.name}}</td>
                         <td>{{beneficiary.beneficiary_type}}</td>
                         <th > <strong class="btn btn-block bg-gradient-secondary btn-xs" > {{beneficiary.beneficiary_status}}</strong></th>
@@ -122,6 +125,7 @@
                     {% elif beneficiary.beneficiary_status == "Inactive" %}
                     <tr>    
                         <td>{{beneficiary.member.id}}</td>
+                        <td>{{beneficiary.id}}</td>
                         <td>{{beneficiary.name}}</td>
                         <td>{{beneficiary.beneficiary_type}}</td>
                         <th> <strong class="btn btn-block bg-gradient-warning btn-xs" disabled>{{beneficiary.beneficiary_status}}</strong></th>
@@ -134,6 +138,7 @@
                     {% else %}
                         <tr>
                             <td>{{beneficiary.member.id}}</td>
+                            <td>{{beneficiary.id}}</td>
                             <td>{{beneficiary.name}}</td>
                             <td>{{beneficiary.beneficiary_type}}</td>
                             <th> <strong class="btn btn-block bg-gradient-success btn-xs " > {{beneficiary.beneficiary_status}}</strong></th>

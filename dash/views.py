@@ -53,19 +53,9 @@ def main_dash(request):
 @login_required
 def summary_dash(request):
     
-    # member_status = []
-    # member_status_count = []
-    
-    # ben_status = []
-    # ben_status_count = []
 
     qs = Profile.objects.all().values('status').annotate(total=Count('status'))
     total_members = Profile.objects.all().count()
-    # for status_label in qs:
-    #     member_status.append(status_label['status'])
-    
-    # for count in qs:
-    #     member_status_count.append(count['total'])
     
     qs = Profile.objects.all()
     q = qs.values('shortname','status')
@@ -75,8 +65,6 @@ def summary_dash(request):
     
     member_status_list = member_status['status'].to_list()
     status_count = member_status['status_count'].to_list()
-    print(member_status_list)
-    print(status_count)
     
     ben_qs = Beneficiary.objects.all()
     ben_qs = ben_qs.values('name','beneficiary_status')
@@ -272,7 +260,6 @@ def summary_dash(request):
     for s in ben_type_spouse:
         ben_spouse.append(s)
 
-    
     context = {
         'member_status_list': member_status_list,
         'status_count': status_count,
@@ -335,8 +322,6 @@ def mortality(request):
     
     ben_year_list = list(ben_death_year['year'])
     ben_death_count = list(ben_death_year['death_count'])
-    
-    
     
     context = {
         'stats_df': stats_df,

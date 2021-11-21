@@ -248,7 +248,7 @@
     data: {
         labels: {{member_age_group_labels|safe}},
         datasets: [{
-            label: 'Member Count by Age Group',
+            label: 'Age Group Total',
             data: {{member_age_group_data|safe}},
             backgroundColor: [
                 'rgba(0, 76, 76, 0.9)',
@@ -295,7 +295,7 @@
     data: {
         labels: {{ben_age_group_labels|safe}},
         datasets: [{
-            label: 'Beneficiary Count by Age Group',
+            label: 'Age Group Total',
             data: {{ben_age_group_data|safe}},
             backgroundColor: [
                 'rgba(13, 71, 161, 0.9)', 
@@ -414,17 +414,6 @@
                     y:{
                         stacked: false,
                     },
-
-                //xAxes: [{
-                 //   gridLines : {
-                //        display : true,
-               //     },
-              //      }],
-               // yAxes: [{
-               // gridLines : {
-             //       display : true,
-              //  }
-               // }]
                 
                 }
             }
@@ -523,7 +512,6 @@ var ctx5 = document.getElementById('benAgeTypeChart').getContext('2d');
                 },
 
                 ]
-
 
             },
             options: {
