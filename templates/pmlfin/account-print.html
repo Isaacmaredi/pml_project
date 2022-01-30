@@ -113,17 +113,17 @@
                 <table class="table table-striped table-bordered">
                 <thead>
                 <tr class="bg-light" >  
-                    <th colspan="2" class="text-center" style="border-left:solid; border-top:solid;">MONTHLY BALANCE BROUGHHT FOWARD</th>       
+                    <th colspan="2" class="text-center" style="border-left:solid; border-top:solid;">PRIOR BALANCE</th>       
                     <th colspan="5" class="text-center" style=" border-right:solid; border-left:solid;border-top:solid">DEBITS</th>
                     <th colspan="3" class="text-center" style="border-right:solid; border-left:solid;border-top:solid">RECEIPTS</th>
-                    <th style="border-right:solid; border-left:solid;border-top:solid"> MONTHLY OUTSTANDING(+ve)/SURPLUS(-ve) </th>
+                    <th style="border-right:solid; border-left:solid;border-top:solid"> OUTSTANDING/SURPLUS </th>
                 </tr>
                 <tr>
                     <th style="border-left:solid">Transaction Date</th>
-                    <th>Balance BF</th>
+                    <th>Balance B/F</th>
                     <th style="border-left:solid">Premiums</th>
-                    <th>Funeral T\U</th>
-                    <th>Transport T\U</th>
+                    <th>Funeral T/U</th>
+                    <th>Transport T/U</th>
                     <th>Fines</th>
                     <th style="border-right:solid">Total Debits</th>
                     <th>Deposits</th>
@@ -133,7 +133,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for acc in member_account.profile.all %}
+                {% for acc in member_account.profile.all|slice:":3" %}
                 <tr>
                     <td style="border-left:solid">{{acc.date|date:'d F Y'}}</td>
                     <td>{{acc.balance_brought_forward}}</td>
