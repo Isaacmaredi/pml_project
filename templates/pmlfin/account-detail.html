@@ -142,7 +142,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for acc in member_account.profile.all %}
+                {% for acc in member_account.profile.all|slice:":4" %}
                 <tr>
                     <td style="border-left:solid">{{acc.date|date:'d F Y'}}</td>
                     <td>{{acc.balance_brought_forward}}</td>

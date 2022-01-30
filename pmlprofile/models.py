@@ -151,7 +151,7 @@ class Beneficiary(models.Model):
                 self.beneficiary_status = 'Inactive'
         elif self.member.status == "Suspended":
             self.beneficiary_status = "Inactive"
-                 
+                
         super(Beneficiary, self).save(args, kwargs)
         
     def age(self):
