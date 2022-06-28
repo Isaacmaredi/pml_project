@@ -111,8 +111,6 @@ class Profile(models.Model):
             self.lapse_date = self.status_date + lapse_delta
         super(Profile,self).save(*args, **kwargs)
     
-    
-    
     def __str__(self):
         return self.shortname
     

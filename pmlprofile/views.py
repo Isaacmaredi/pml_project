@@ -7,9 +7,11 @@ from django.utils.decorators import method_decorator
 from django.views.generic import ListView,DetailView
 from datetime import datetime, date
 from django.db.models import Count
+from django.contrib.auth.models import User
                                 
 from django.views.generic.edit import UpdateView, CreateView
-from .models import Profile, Beneficiary, Committee, Incumbent #MemberAccount
+from .models import Profile, Beneficiary, Committee, Incumbent 
+#MemberAccount
 from .forms import UserUpdateForm, ProfileUpdateForm 
 from django.urls import reverse, reverse_lazy
 
@@ -420,6 +422,17 @@ class ProfileListView(LoginRequiredMixin, ListView):
         context['terminated'] = Profile.objects.filter(status='Terminated').count()
         return context
 
+
+class UserLoginAdminView(LoginRequiredMixin,ListView):
+    model = User
+    context_object_name = 'users'
+    order_by = ['-last_login']
+    template_name = 'pmlprofile/member_logins.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(UserLoginAdminView, self).get_context_data(*args, **kwargs)
+        context['total'] = User.objects.all().count()
+        return context
 
 class ProfileDetails(LoginRequiredMixin, DetailView):
     context_object_name = 'profile_detail'

@@ -1,0 +1,97 @@
+{% extends 'layout.html' %}
+
+{% block title %} | PML Beneficiaries{% endblock title %}
+
+{% block content %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+<div class="container-fluid">
+<div class="row mb-2">
+    <div class="col-sm-6">
+    <h1> Total Latest User Logins: &nbsp;&nbsp;{{total}} </h1>
+    </div>
+    <div class="col-sm-6">
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item active">User Logins</li>
+    </ol>
+    </div>
+</div>
+<hr>
+
+
+</div><!-- /.container-fluid -->
+</section>
+
+<!-- Beneficiary Data Table -->
+<section class="content">
+<div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="card">
+                    <!--card-header -->
+                    <div class="card-body"> 
+                    <table id="example1" class="table table-bordered table-striped">
+                    <thead>    
+                        <tr>
+                            <th>No. #</th>
+                            
+                            <th > Username</th>          
+                            <th > Last Login Date & Time</th>                                                  
+                            <th> Member Name </th> 
+                            <th> User Persmission Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>  
+                        {% for member in users %}
+                        <tr>
+                            <td>
+                                {{ forloop.counter}}  
+                            </td>
+                            <th >
+                                {{member.username}}
+                            </th>
+                            {% if member.last_login %}
+                            <th>
+                                {{member.last_login|date:'d M Y - h m s'}}
+                            </th>
+                            {% else %}
+                            <th class="text-danger">
+                                Never logged in
+                            </th>
+                            {% endif %}
+                            <td>                        
+                                {{member.first_name}} {{member.last_name}}
+                            </td>
+                            <td >
+                                {% if member.is_superuser%}
+                                Admin Superuser
+                                {% elif member.user.is_staff%}
+                                Limited Admin User
+                                {% else %}
+                                Regular Guest User
+                                {% endif %}
+                            </td>             
+                            {% empty %} 
+                            <th colspan="8" class="text-center">No logins of user members recorded yet!</th>
+                        </tr> 
+                        
+                {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>  
+                
+</div>
+</div>
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock content %}
+
