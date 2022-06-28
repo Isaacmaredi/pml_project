@@ -70,12 +70,13 @@ def summary_dash(request):
     ben_qs = ben_qs.values('name','beneficiary_status')
     ben_df = pd.DataFrame.from_records(ben_qs)
     
+    # try:
     ben_status = ben_df['beneficiary_status'].value_counts().rename_axis('beneficiary_status').reset_index(name='ben_counts')
-
     ben_status_list = ben_status['beneficiary_status'].to_list()
     ben_counts = ben_status['ben_counts'].to_list()
     ben_total  = ben_df.shape[0]
-    
+    # except:
+        # raise KeyError ('No beneficiaries in database')
     # Members Queryset to pandas and csv     
     qs = Profile.objects.all()
     q = qs.values('shortname','birth_date','status')

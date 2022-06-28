@@ -111,9 +111,7 @@ class Profile(models.Model):
             self.lapse_date = self.status_date + lapse_delta
         super(Profile,self).save(*args, **kwargs)
     
-        print(timezone.now())
-        print(self.lapse_date)
-        
+    
     
     def __str__(self):
         return self.shortname
@@ -133,26 +131,6 @@ class Beneficiary(models.Model):
     class Meta:
         verbose_name_plural = 'Beneficiaries'
         ordering = ('member__id',)
-        
-    def save(self, *args, **kwargs):
-        print(self.member.status)
-        print(date.today())
-        print(self.member.lapse_date)
-        
-        if self.member.lapse_date is not None:
-            print(date.today() <= self.member.lapse_date)
-        else:
-            print('Lapse date not yet calculated')
-        
-        if self.member.lapse_date and self.member.status == "Deceased":
-            if date.today() <= self.member.lapse_date and self.beneficiary_status != "Deceased":
-                self.beneficiary_status = "Article 20.3" 
-            else:
-                self.beneficiary_status = 'Inactive'
-        elif self.member.status == "Suspended":
-            self.beneficiary_status = "Inactive"
-                
-        super(Beneficiary, self).save(args, kwargs)
         
     def age(self):
         birth_year = self.birth_date.year
