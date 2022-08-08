@@ -166,25 +166,25 @@ def shares_view(request):
     share_labels = share_df['month_year'].unique().tolist()
     
     mtn_df = share_df.loc[share_df['company'] == 1]
-    mtn_values = list(mtn_df['curr_value'])
+    mtn_values = list(mtn_df['curr_value'])[-12]
     
     sol_df = share_df.loc[share_df['company'] == 2]
-    sol_values = list(sol_df['curr_value'])
+    sol_values = list(sol_df['curr_value'])[-12]
     
     solbe_df = share_df.loc[share_df['company'] == 3]
-    solbe_values = list(solbe_df['curr_value'])
+    solbe_values = list(solbe_df['curr_value'])[-12]
     
     telkom_df = share_df.loc[share_df['company'] == 4]
-    telkom_values = list(telkom_df['curr_value'])
+    telkom_values = list(telkom_df['curr_value'])[-12]
     
     vod_df = share_df.loc[share_df['company'] == 5]
-    vod_values = list(vod_df['curr_value'])
+    vod_values = list(vod_df['curr_value'])[-12]
 
     phuthuma_df = share_df.loc[share_df['company'] == 6]
-    phuthuma_values = list(phuthuma_df['curr_value'])
+    phuthuma_values = list(phuthuma_df['curr_value'])[-12]
 
     yebo_df = share_df.loc[share_df['company'] == 7]
-    yebo_values = list(yebo_df['curr_value'])
+    yebo_values = list(yebo_df['curr_value'])[-12]
 
     latest_date = Share.objects.latest("date").date
     latest_share = Share.objects.filter(date=latest_date) 
@@ -196,7 +196,7 @@ def shares_view(request):
     latest_df['curr_value'] = latest_df['current_value'].astype(float)
     total_share_value = latest_df['curr_value'].sum() 
 
-    current_value_list = list(latest_df['curr_value'])
+    current_value_list = list(latest_df['curr_value'])[-12]
     
     context = {
         'qs_co': qs_co,
@@ -217,7 +217,7 @@ def shares_view(request):
     
     return render(request, 'pmlfin/shares.html', context)
 
-# Net Wealth analysis
+# Net Wealth analysis 
 def net_wealth(request):
     qs = Wealth.objects.all()
     qs1 = qs.values('date','closing_cash_balance','notice_acc_balance',
