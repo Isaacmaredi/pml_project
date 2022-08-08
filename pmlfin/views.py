@@ -163,7 +163,7 @@ def shares_view(request):
     
     share_df['curr_value'] = share_df['current_value'].astype(float)
     
-    share_labels = share_df['month_year'].unique().tolist()
+    share_labels = share_df['month_year'].unique().tolist()[-12]
     
     mtn_df = share_df.loc[share_df['company'] == 1]
     mtn_values = list(mtn_df['curr_value'])[-12]
