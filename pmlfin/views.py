@@ -163,28 +163,28 @@ def shares_view(request):
     
     share_df['curr_value'] = share_df['current_value'].astype(float)
     
-    share_labels = share_df['month_year'].unique().tolist()[-12]
+    share_labels = share_df['month_year'].unique().tolist()[-12:]
     
     mtn_df = share_df.loc[share_df['company'] == 1]
-    mtn_values = list(mtn_df['curr_value'])[-12]
+    mtn_values = list(mtn_df['curr_value'])[-12:]
     
     sol_df = share_df.loc[share_df['company'] == 2]
-    sol_values = list(sol_df['curr_value'])[-12]
+    sol_values = list(sol_df['curr_value'])[-12:]
     
     solbe_df = share_df.loc[share_df['company'] == 3]
-    solbe_values = list(solbe_df['curr_value'])[-12]
+    solbe_values = list(solbe_df['curr_value'])[-12:]
     
     telkom_df = share_df.loc[share_df['company'] == 4]
-    telkom_values = list(telkom_df['curr_value'])[-12]
+    telkom_values = list(telkom_df['curr_value'])[-12:]
     
     vod_df = share_df.loc[share_df['company'] == 5]
-    vod_values = list(vod_df['curr_value'])[-12]
+    vod_values = list(vod_df['curr_value'])[-12:]
 
     phuthuma_df = share_df.loc[share_df['company'] == 6]
-    phuthuma_values = list(phuthuma_df['curr_value'])[-12]
+    phuthuma_values = list(phuthuma_df['curr_value'])[-12:]
 
     yebo_df = share_df.loc[share_df['company'] == 7]
-    yebo_values = list(yebo_df['curr_value'])[-12]
+    yebo_values = list(yebo_df['curr_value'])[-12:]
 
     latest_date = Share.objects.latest("date").date
     latest_share = Share.objects.filter(date=latest_date) 
