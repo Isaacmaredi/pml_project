@@ -196,7 +196,7 @@ def shares_view(request):
     latest_df['curr_value'] = latest_df['current_value'].astype(float)
     total_share_value = latest_df['curr_value'].sum() 
 
-    current_value_list = list(latest_df['curr_value'])[-12]
+    current_value_list = list(latest_df['curr_value'])
     
     context = {
         'qs_co': qs_co,
