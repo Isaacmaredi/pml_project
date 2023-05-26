@@ -91,19 +91,23 @@ a.disabled {
                 <strong> {{profile_detail.district_metro}}</strong>
                 <hr>
                 <strong> {{profile_detail.province}}</strong>
+                {% if request.user.is_superuser %}
+                <hr>
+                <a href="{% url 'pmlprofile:membercert' profile_detail.id %}" class="btn btn-primary" target="_blank">Print Certificate</a>
+                {% endif %}
               </div>
               <!-- /.card-body -->
-            </div>
+            </div> 
             <!-- /.card -->
           </div>
-          <!-- /.col -->
+          <!-- /.col -->  
           <div class="col-md-9">
             <div class="card">
               <div class="card-header p-2">
                 <ul class="nav nav-pills ">
                   
                   <li class="nav-item nav-info"><a class="nav-link active" href="#timeline" data-toggle="tab">Beneficiaries</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#" data-toggle="tab" >Location</a></li>
+                  
                 </ul>
                 </div><!-- /.card-header -->
                 <div class="card-body">

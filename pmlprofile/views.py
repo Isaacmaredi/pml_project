@@ -458,7 +458,7 @@ def membercert_view(request, pk):
 
 # create a pdf
     pisa_status = pisa.CreatePDF(html, dest=response)
-
+  
     if pisa_status.err:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
@@ -485,7 +485,6 @@ def pdfcert_view(request,pk):
     template_path = 'pmlprofile/pdf-cert.html'
     cert_pdf = Profile.objects.get(pk=request.user.id)
     today = date.today()
-    print(today)
     context = {
         'cert_pdf': cert_pdf,
         'today': today, 

@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     # Third Party APPS
     'django.contrib.humanize',
     'crispy_forms',
-    'phonenumber_field',
+    # 'phonenumber_field',
         #Custom Apps
     'accounts',
     'pmlmain',

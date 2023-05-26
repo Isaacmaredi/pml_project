@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from datetime import datetime, date, timedelta
 from django.utils import timezone
 from django.urls import  reverse
-from phonenumber_field.modelfields import PhoneNumberField
 
 status_choices = [     
         ('Active','Active'),

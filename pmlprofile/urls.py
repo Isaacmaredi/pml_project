@@ -8,7 +8,7 @@ from .views import profile_update, pdfcert_view, membercert_view
 
 from django.contrib.auth.decorators import login_required
 
-app_name = 'pmlprofile'
+app_name = 'pmlprofile'  
 
 urlpatterns =[
     # path('member_list/',views.member_list_view, name='member_list'),

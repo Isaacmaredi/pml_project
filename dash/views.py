@@ -70,7 +70,6 @@ def summary_dash(request):
     ben_qs = ben_qs.values('name','beneficiary_status')
     ben_df = pd.DataFrame.from_records(ben_qs)
     
-    # try:
     ben_status = ben_df['beneficiary_status'].value_counts().rename_axis('beneficiary_status').reset_index(name='ben_counts')
     ben_status_list = ben_status['beneficiary_status'].to_list()
     ben_counts = ben_status['ben_counts'].to_list()
@@ -177,7 +176,7 @@ def summary_dash(request):
     for y in ben_age_group_values:
             ben_age_group_data.append(y)
             
-    # Beneiciaries by type and status 
+    # Beneiciaries by type and status   
     ben_qs = Beneficiary.objects.all()
     ben_qs = ben_qs.values('beneficiary_type', 'beneficiary_status')
     ben_df_stats = pd.DataFrame.from_records(ben_qs)
@@ -213,53 +212,73 @@ def summary_dash(request):
     ben_article20 = []
     ben_deceased = []
     ben_inactive = []
-    
-    ben_type_active = dict(ben_type_df['Active']).values()
-    ben_type_article20 = dict(ben_type_df['Article 20.3']).values()
-    ben_type_deceased = dict(ben_type_df['Deceased']).values()
-    ben_type_inactive = dict(ben_type_df['Inactive']).values()
-    
-    ben_type_child = dict(df_ben_age_type['Child']).values()  
-    ben_type_father = dict(df_ben_age_type['Father']).values()
-    ben_type_fil = dict(df_ben_age_type['Father-in-Law']).values()
-    ben_type_mother = dict(df_ben_age_type['Mother']).values()
-    ben_type_mil = dict(df_ben_age_type['Mother-in-Law']).values()
-    ben_type_proxy = dict(df_ben_age_type['Parent Proxy']).values()
-    ben_type_spouse = dict(df_ben_age_type['Spouse']).values()
+    try:
+        ben_type_active = dict(ben_type_df['Active']).values()
+    except KeyError:
+        ben_type_active = 0
+    try:
+        ben_type_article20 = dict(ben_type_df['Article 20.3']).values()['ben_type_article20']
+        for x in ben_type_article20:
+            ben_article20.append(x)
+    except KeyError:
+        ben_type_article20 = 0
+    try:
+        ben_type_deceased = dict(ben_type_df['Deceased']).values()
+        for y in ben_type_deceased:
+            ben_deceased.append(y)
+    except KeyError:
+        ben_type_deceased = 0
+    try:
+        ben_type_inactive = dict(ben_type_df['Inactive']).values()
+        for z in ben_type_inactive:
+            ben_inactive.append(z)
+    except KeyError:
+        ben_type_deceased = 0
+    try:
+        ben_type_child = dict(df_ben_age_type['Child']).values()
+        for child in ben_type_child:
+            ben_child.append(child)
+    except KeyError:
+        ben_type_child = 0 
+    try:
+        ben_type_father = dict(df_ben_age_type['Father']).values()
+        for father in ben_type_father:
+            ben_father.append(father)
+    except KeyError:
+        ben_type_father = 0
+    try:
+        ben_type_fil = dict(df_ben_age_type['Father-in-Law']).values()
+        for f in ben_type_fil:
+            ben_fil.append(f)
+    except KeyError:
+        ben_type_fil = 0
+    try:
+        ben_type_mother = dict(df_ben_age_type['Mother']).values()
+        for mother in ben_type_mother:
+            ben_mother.append(mother)
+    except KeyError:
+        ben_type_mother = 0
+    try:
+        ben_type_mil = dict(df_ben_age_type['Mother-in-Law']).values()
+        for m in ben_type_mil:
+            ben_mil.append(m)
+    except KeyError:
+        ben_type_mil = 0
+    try:
+        ben_type_proxy = dict(df_ben_age_type['Parent Proxy']).values()
+        for p in ben_type_proxy:
+            ben_proxy.append(p)
+    except KeyError:
+        ben_type_proxy = 0
+    try:
+        ben_type_spouse = dict(df_ben_age_type['Spouse']).values()
+        for s in ben_type_spouse:
+            ben_spouse.append(s)
+    except KeyError:
+        ben_type_spouse = 0
     
     for i in ben_type_active:
         ben_active.append(i)
-
-    for x in ben_type_article20:
-        ben_article20.append(x)
-    
-    for y in ben_type_deceased:
-        ben_deceased.append(y)
-    
-    for z in ben_type_inactive:
-        ben_inactive.append(z)
-        
-    
-    for child in ben_type_child:
-        ben_child.append(child)
-    
-    for father in ben_type_father:
-        ben_father.append(father)
-    
-    for f in ben_type_fil:
-        ben_fil.append(f)
-    
-    for mother in ben_type_mother:
-        ben_mother.append(mother)
-    
-    for m in ben_type_mil:
-        ben_mil.append(m)
-    
-    for p in ben_type_proxy:
-        ben_proxy.append(p)
-    
-    for s in ben_type_spouse:
-        ben_spouse.append(s)
 
     context = {
         'member_status_list': member_status_list,
